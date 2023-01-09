@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
+require('dotenv').config()
 
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
@@ -20,6 +21,9 @@ if(process.env.DATABASE_URL){
   };
 }
 
-const db = new Sequelize(
-  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
+const db = new Sequelize(process.env.DATABASE_URL, 
+  {dialectOptions: {ssl: {rejectUnauthorized: false}}})
+  //process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
+
+console.log("connected!")
 module.exports = db
