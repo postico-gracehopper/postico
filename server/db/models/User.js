@@ -134,11 +134,12 @@ User.authenticate = async function ({ username, password }) {
 };
 
 User.findByToken = async function (token) {
+  if (token === null || token === undefined) return null;
   try {
     const { id } = await jwt.verify(token, process.env.JWT_SECRET);
-    const user = User.findByPk(id);
+    const user = await User.findByPk(id);
     if (!user) {
-      throw 'nooo';
+      throw 'No user found with id';
     }
     return user;
   } catch (ex) {
