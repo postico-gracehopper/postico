@@ -7,7 +7,7 @@ const ShoppingCart = db.define('shoppingCart', {
     defaultValue: 0,
     //TODO when items are added to shopping cart items then we add their price to this total
   },
-  //associate with ShoppingCartItems model and Users model through magic method: i.e. when someone creates a cart for the first time:
+  //associate with ShoppingCartItems model and Users model (if necessary) through magic method: i.e. when someone creates a cart for the first time:
   //  - create a new ShoppingCart instance (it will create a shopping cart id)
   //  - if a logged in user, associate with User model using "set" magic method (e.g. ShoppingCart.setUser(User object))
   //  - create a new ShoppingCartItem instance (it will create a shopping cart item id)
