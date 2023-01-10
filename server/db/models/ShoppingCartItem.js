@@ -7,7 +7,7 @@ const ShoppingCartItem = db.define('shoppingCartItem', {
     defaultValue: 0,
   },
 });
-//associate with ShoppingCartItems model and Products model through magic method: i.e. when someone adds an item type to cart for the FIRST time:
+//associate with ShoppingCart model and Products model through magic method: i.e. when someone adds an item type to cart for the FIRST time:
 //  - create a new ShoppingCartItem instance (it will create a shopping cart item id)
 //  - associate the ShoppingCart with ShoppingCartItem using "set" magic method (e.g. ShoppingCartItem.setShoppingCart(ShoppingCart object))
 //  - associate with Product model using "set" magic method (e.g. ShoppingCartItem.setProduct(Product object))
