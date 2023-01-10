@@ -32,6 +32,7 @@ router.get('/me', async (req, res, next) => {
     if (userObj === null) res.send({name: "GUEST"})
     else res.send(userObj)
   } catch (ex) {
+
     next(ex);
   }
 });
