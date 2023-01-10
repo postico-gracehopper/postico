@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 /*
@@ -12,7 +12,7 @@ const TOKEN = 'token';
 export const me = createAsyncThunk('auth/me', async () => {
   const token = window.localStorage.getItem(TOKEN);
   try {
-    if (token) {
+    if (!token) {
       const res = await axios.get('/auth/me', {
         headers: {
           authorization: token,
@@ -24,7 +24,8 @@ export const me = createAsyncThunk('auth/me', async () => {
     }
   } catch (err) {
     if (err.response.data) {
-      return thunkAPI.rejectWithValue(err.response.data);
+      // return thunkAPI.rejectWithValue(err.response.data);
+      return err.response.data
     } else {
       return 'There was an issue with your request.';
     }
