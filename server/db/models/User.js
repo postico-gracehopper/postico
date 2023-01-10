@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { BOOLEAN } = require('sequelize');
 
 const SALT_ROUNDS = 5;
 
@@ -21,7 +20,6 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isEmail: true,
       notNull: {
         msg: 'User first name cannot be empty.',
       },
@@ -32,7 +30,6 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isEmail: true,
       notNull: {
         msg: 'User last name cannot be empty.',
       },
