@@ -6,6 +6,11 @@ const genExpDate = () => {
   return String(month) + "/" + String(year % 100);
 };
 
+const categoryGen = () => {
+  const categories = ["Skis", "Boots", "Apparel"];
+  return categories[Math.floor(Math.random() * categories.length)];
+};
+
 const {
   db,
   models: { User },
@@ -32,17 +37,14 @@ async function seed() {
       // kill this later
       password: faker.internet.password(),
       // email: faker.internet.email(name).toLowerCase(),
-      // addressLine1:  faker.address.buildingNumber() + faker.address.streetName() // required, string
-      // addressLine2: empty intentionally for dummy data // not required, string
+      // addressLine1:  faker.address.buildingNumber() + faker.address.streetName()
+      // addressLine2: empty intentionally for dummy data
       // city: faker.address.cityName(),
       // zipCode: faker.address.zipCode(),
-      // // CREDIT CARDS -- NOT REQUIRED
+      // CREDIT CARDS -- NOT REQUIRED
       // creditCardNumber: faker.finance.creditCardNumber(),
-      // ^ integer
       // creditCardName: faker.finance.creditCardIssuer(),
-      // ^ string
       // creditCardExpiration: genExpDate(),
-      // ^ string -- MM/YY format
       // creditCardCVV: faker.finance.creditCardCVV(),
       // ADMIN
       // adminRights false by default, don't code
@@ -55,7 +57,11 @@ async function seed() {
   // MAKE 100 FAKE PRODUCTS
   // for (let i = 0; i < 100; i++) {
   //   let newProduct = {
-  //     // what attributes?
+  //     name: faker.commerce.productAdjective() + "Skis",
+  //     description: faker.lorem.sentence(12),
+  //     price: faker.commerce.price(),
+  //     image: faker.image.abstract(),
+  //     category: categoryGen(),
   //   };
 
   //   products.push(newProduct);
@@ -65,6 +71,14 @@ async function seed() {
   users.forEach(async (user) => {
     await User.create(user);
   });
+
+  // Hardcode a single admin user in the seed.
+  // User.create({
+  //   firstName: "Admin1",
+  //   lastname: "Postico",
+  //   username: "Admin1",
+  //   email: "admin1@posticogroup.com",
+  // });
 
   console.log(`seeded ${users.length} users`);
   // console.log(`seeded ${products.length} products`);
