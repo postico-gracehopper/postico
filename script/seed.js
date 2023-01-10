@@ -6,16 +6,14 @@ const genExpDate = () => {
   return String(month) + "/" + String(year % 100);
 };
 
-const categoryGen = () => {
+const genCategory = () => {
   const categories = ["Skis", "Boots", "Apparel"];
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
 const {
   db,
-  models: { User },
-  // ASK JP: WHAT IS THE SKI MODEL CALLED? PRODUCT OR SOMETHING ELSE?
-  // WHAT OTHER MODELS SHALL WE SEED?
+  models: { User, Product },
 } = require("../server/db");
 const { faker } = require("@faker-js/faker");
 
@@ -31,65 +29,63 @@ async function seed() {
     const name = faker.name.firstName();
 
     let newUser = {
-      // firstName: name,
-      // lastName: faker.name.lastName(),
+      firstName: name,
+      lastName: faker.name.lastName(),
       username: faker.internet.userName(),
-      // kill this later
       password: faker.internet.password(),
-      // email: faker.internet.email(name).toLowerCase(),
-      // addressLine1:  faker.address.buildingNumber() + faker.address.streetName()
-      // addressLine2: empty intentionally for dummy data
-      // city: faker.address.cityName(),
-      // zipCode: faker.address.zipCode(),
-      // CREDIT CARDS -- NOT REQUIRED
-      // creditCardNumber: faker.finance.creditCardNumber(),
-      // creditCardName: faker.finance.creditCardIssuer(),
-      // creditCardExpiration: genExpDate(),
-      // creditCardCVV: faker.finance.creditCardCVV(),
+      email: faker.internet.email(name).toLowerCase(),
+      addressLine1: faker.address.buildingNumber() + faker.address.streetName(),
+      // addressLine2: left blank intentionally for dummy data
+      city: faker.address.cityName(),
+      zipCode: faker.address.zipCode(),
+      // CREDIT CARDS -- Not required info for a real user, but we're going to seed it.
+      creditCardNumber: faker.finance.creditCardNumber(),
+      creditCardName: faker.finance.creditCardIssuer(),
+      creditCardExpiration: genExpDate(),
+      creditCardCVV: faker.finance.creditCardCVV(),
       // ADMIN
-      // adminRights false by default, don't code
-      // ^ boolean (hardcode one admin elsewhere)
+      // AdminRights are "false" by default; no seeded attribute here. We've hardcoded one admin user below.
     };
 
     users.push(newUser);
   }
 
-  // MAKE 100 FAKE PRODUCTS
-  // for (let i = 0; i < 100; i++) {
-  //   let newProduct = {
-  //     name: faker.commerce.productAdjective() + "Skis",
-  //     description: faker.lorem.sentence(12),
-  //     price: faker.commerce.price(),
-  //     image: faker.image.abstract(),
-  //     category: categoryGen(),
-  //   };
+  // MAKE 100 FAKE PRODUCTS: Can change number of products below as well.
+  for (let i = 0; i < 100; i++) {
+    let newProduct = {
+      name: faker.commerce.productAdjective() + "Skis",
+      description: faker.lorem.sentence(12),
+      price: faker.commerce.price(),
+      image: faker.image.abstract(),
+      category: genCategory(),
+    };
 
-  //   products.push(newProduct);
-  // }
+    products.push(newProduct);
+  }
 
-  // For each user in the array, create a new user instance in the database
+  // For each item in the arrays we've made, create a new instance in the database.
   users.forEach(async (user) => {
     await User.create(user);
   });
 
+  products.forEach(async (product) => {
+    await Product.create(product);
+  });
+
   // Hardcode a single admin user in the seed.
-  // User.create({
-  //   firstName: "Admin1",
-  //   lastname: "Postico",
-  //   username: "Admin1",
-  //   email: "admin1@posticogroup.com",
-  // });
+  User.create({
+    firstName: "Admin1",
+    lastname: "Postico",
+    username: "Admin1",
+    email: "admin1@posticogroup.com",
+    addressLine1: "123 Admin Road",
+    city: "New York",
+    zipCode: "10002",
+  });
 
   console.log(`seeded ${users.length} users`);
-  // console.log(`seeded ${products.length} products`);
+  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
-  // The below seems unhelpful for large datasets.
-  // return {
-  //   users: {
-  //     cody: users[0],
-  //     murphy: users[1]
-  //   }
-  // }
 }
 
 /*
