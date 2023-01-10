@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 /*
@@ -9,22 +9,32 @@ const TOKEN = 'token';
 /*
   THUNKS
 */
-export const me = createAsyncThunk('auth/me', async () => {
-  const token = window.localStorage.getItem(TOKEN);
+export const me = createAsyncThunk('auth/me', async (meState) => {
+  const token = window.localStorage.getItem(TOKEN)
   try {
-    if (token) {
-      const res = await axios.get('/auth/me', {
-        headers: {
-          authorization: token,
-        },
-      });
-      return res.data;
-    } else {
-      return {};
-    }
+    const res = await axios.get("/auth/me", {
+      headers: {
+        authorization: token
+      }
+    })
+    return res.data
+    // Change by blake: I believe we want the customer data in state, 
+    // even if we have the token (no user data in localstorage.token)
+    // if (!token) {
+    //   const res = await axios.get('/auth/me', {
+    //     headers: {
+    //       authorization: token,
+    //     },
+    //   });
+    //   return res.data;
+    // } else {
+    //   return {};
+    // }
   } catch (err) {
     if (err.response.data) {
-      return thunkAPI.rejectWithValue(err.response.data);
+      // change: was showing error under thunkAPI
+      // return thunkAPI.rejectWithValue(err.response.data);
+      return err.response.data
     } else {
       return 'There was an issue with your request.';
     }
