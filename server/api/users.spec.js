@@ -7,10 +7,11 @@ const seed = require('../../script/seed');
 const app = require('../app')
 
 
-const users_ = await User.findAll()
-const nUsers = users_.length
 
-describe('User routes', () => {
+describe('User routes', async () => {
+  // const users_ = await User.findAll()
+  // const nUsers = users_.length
+
   beforeEach(async() => {
     // await seed();
     // const allUsrs = await User.findAll()
