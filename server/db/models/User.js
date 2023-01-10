@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { BOOLEAN } = require('sequelize');
 
 const SALT_ROUNDS = 5;
 
@@ -76,7 +77,7 @@ const User = db.define('user', {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      notEmpty: true,
+      notEmpty: true, //TODO validate that it is 5-digits
       notNull: {
         msg: 'User zip code cannot be empty.',
       },
@@ -93,7 +94,7 @@ const User = db.define('user', {
     //TODO hash the credit card name?
   },
   creditCardExpiration: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING, //TODO determine if correct?
     //TODO hash the credit card expiry?
     //TODO validation for format MM/YY?
   },
@@ -101,6 +102,10 @@ const User = db.define('user', {
     type: Sequelize.INTEGER,
     //TODO hash the credit card CVV?
     //TODO validation for length 3?
+  },
+  adminRights: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false, //TODO check if this is right or if should be string
   },
 });
 
