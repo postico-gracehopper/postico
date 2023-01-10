@@ -29,7 +29,7 @@ router.get('/me', async (req, res, next) => {
   try {
     const userObj = await User.findByToken(req.headers.authorization)
     // BELOW: add a guest or session token to allow persistent cart
-    if (userObj === null) res.send({name: "GUEST"})
+    if (userObj === null) res.send({username: "GUEST"})
     else res.send(userObj)
   } catch (ex) {
 

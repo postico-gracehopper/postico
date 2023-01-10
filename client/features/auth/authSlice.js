@@ -92,6 +92,9 @@ export const authSlice = createSlice({
 */
 export const { logout } = authSlice.actions;
 
+export const isLoggedIn = (state) => {
+  return (state.auth.me.username && state.auth.me.id)
+}
 /*
   REDUCER
 */
