@@ -1,5 +1,11 @@
 "use strict";
 
+const genExpDate = () => {
+  const month = Math.ceil(Math.random() * 12);
+  const year = Math.floor(Math.random() * 6) + new Date().getFullYear();
+  return String(month) + "/" + String(year % 100);
+};
+
 const {
   db,
   models: { User },
@@ -26,17 +32,21 @@ async function seed() {
       // kill this later
       password: faker.internet.password(),
       // email: faker.internet.email(name).toLowerCase(),
-      // addressLine1 // required, string
-      // addressLine2 // not required, string
-      // city // string
-      // zipCode // integer
-      // // CREDIT CARDS NOT REQUIRED
-      // creditCardNumber // integer
-      // creditCardName // string
-      // creditCardExpiration // string -- MM/YY format
-      // creditCardCVV //
-      // // Admin
-      // adminRights // boolean (seed one admin, everyoen else no, hardcode one admin, defaultValue false
+      // addressLine1:  faker.address.buildingNumber() + faker.address.streetName() // required, string
+      // addressLine2: empty intentionally for dummy data // not required, string
+      // city: faker.address.cityName(),
+      // zipCode: faker.address.zipCode(),
+      // // CREDIT CARDS -- NOT REQUIRED
+      // creditCardNumber: faker.finance.creditCardNumber(),
+      // ^ integer
+      // creditCardName: faker.finance.creditCardIssuer(),
+      // ^ string
+      // creditCardExpiration: genExpDate(),
+      // ^ string -- MM/YY format
+      // creditCardCVV: faker.finance.creditCardCVV(),
+      // ADMIN
+      // adminRights false by default, don't code
+      // ^ boolean (hardcode one admin elsewhere)
     };
 
     users.push(newUser);
