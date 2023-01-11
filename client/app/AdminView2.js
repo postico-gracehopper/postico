@@ -5,6 +5,7 @@ const AdminView = () => {
     let [products, setProducts] = useState([])
     let [users, setUsers] = useState([])
 
+    console.log(users[0])
     useEffect(() =>{
         axios.get('http://localhost:8080/api/products').then(response =>
             setProducts(response.data)
@@ -29,7 +30,7 @@ const AdminView = () => {
                 {products && products.length ? products.map((p, i)=> {
                     return <tr key={i}>
                         <td>{p.name}</td>
-                        <td>{p.description.slice(0,100)}</td>
+                        <td>{p.description.slice(0,40)}</td>
                         <td>{p.price}</td>
                         <td>{p.category}</td>
                         <td><a href={p.image}>{p.image.slice(0,30)}</a></td>
