@@ -1,12 +1,19 @@
 const router = require('express').Router()
 const { models: { Order }} = require('../db')
+const { verifyInteger, 
+        verifyIsAdmin, 
+        verifyIsSpecificUserOrAdmin } = require("./apiHelpers")
 
-const ORDER_FIELDS = ['total', 'email', 'addressLine1', 'addressLine2', 'city', 'zipCode']
 
+
+const PUBLIC_ORDER_FIELDS = ['total', 'email', 'addressLine1', 'addressLine2', 'city', 'zipCode']
+
+
+// ADMIN only
 router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
-      attributes: ORDER_FIELDS
+      attributes: PUBLIC_ORDER_FIELDS
     })
     res.json(orders)
   } catch (err) {
@@ -14,22 +21,23 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-
+// Specific user only
 router.post('/', async (req, res, next) => {
   try {
     const order = req.body
-    const orderObj = await Order.create(order)
+    await Order.create(order)
     res.status(201).send()
   } catch (err) {
     next(err)
   }
 })
 
+// ADMIN or Specific User
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const order = await Order.findByPk(id, {
-      attributes: ORDER_FIELDS
+      attributes: PUBLIC_ORDER_FIELDS
     })
     res.json(order)
   } catch (err) {
@@ -37,6 +45,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// Admin only
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
@@ -48,6 +57,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+// Admin only
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params

@@ -1,12 +1,18 @@
 const router = require('express').Router()
 const { models: { Product }} = require('../db')
+const { verifyInteger, 
+        verifyIsAdmin, 
+        verifyIsSpecificUserOrAdmin } = require("./apiHelpers")
 
-const PRODUCT_FIELDS = ['id', 'name', 'description', 'price', 'image', 'category'] 
+
+const PUBLIC_PRODUCT_FIELDS = ['id', 'name', 'description', 'price', 'image', 'category'] 
+
+
 
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      attributes: PRODUCT_FIELDS  //! revisit 
+      attributes: PUBLIC_PRODUCT_FIELDS  //! revisit 
     })
     res.json(products)
   } catch (err) {
@@ -14,11 +20,11 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-
+// restricted to ADMIN 
 router.post('/', async (req, res, next) => {
   try {
     const product = req.body
-    const productObj = await Product.create(product)
+    await Product.create(product)
     res.status(201).send()
   } catch (err) {
     next(err)
@@ -29,7 +35,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const product = await Product.findByPk(id, {
-      attributes: PRODUCT_FIELDS
+      attributes: PUBLIC_PRODUCT_FIELDS
     })
     res.json(product)
   } catch (err) {
@@ -37,6 +43,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// Restricted to ADMIN 
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
@@ -48,6 +55,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+// Restricted to ADMIN 
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params

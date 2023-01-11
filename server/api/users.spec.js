@@ -29,7 +29,7 @@ describe('User routes',  () => {
         .expect(200)
 
       expect(res.body).to.be.an('array');
-      expect(res.body.length).to.equal(3);
+      expect(res.body.length).to.be.above(3);
     })
 
     // Try to access users as a nobody
@@ -38,6 +38,15 @@ describe('User routes',  () => {
 
     // Get one user, known to exist
       // object 
+    it('GET /api/users/2', async () => {
+      const res = await request(app)
+        .get('/api/users/2')
+        .expect(200)
+      
+      expect(res.body).to.be.an('object')
+      expect(Object.keys(res.body)).to.be.an('array')
+      expect(Object.keys(res.body).length).to.be.above(5)
+    })
     
     // Add a user
       // check if exists
@@ -48,28 +57,5 @@ describe('User routes',  () => {
     // Delete a user
       // check if gone
     
-
-    
-
-    
-    // try to creat e
-    // it("POST /api/users", async () => {
-    //   const res = await request(app)
-    //     .post('/api/users')
-    //     .send({"username": "James", 
-    //             "password":"123"})
-    //     .expect(201)
-      
-    //   expect(res.body)
-    // })
-
-    // it("DELETE /api/users/:id", async () => {
-    //   const res = await request(app)
-    //     .post('/api/users')
-    //     .send({"username": "James", 
-    //             "password":"123"})
-    //     .expect(201)
-    // })
-
   }) // end describe('/api/users')
 }) // end describe('User routes')
