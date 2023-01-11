@@ -28,7 +28,9 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
-    "sequelize": "^6.25.3"
+    "react-stripe-checkout": "^2.6.3",
+    "sequelize": "^6.25.3",
+    "stripe": "^11.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

@@ -80,6 +80,7 @@ async function seed() {
     firstName: 'Admin1',
     lastName: 'Postico',
     username: 'Admin1',
+    password: 'blackdiamond',
     email: 'admin1@posticogroup.com',
     addressLine1: '123 Admin Road',
     city: 'New York',
