@@ -2,44 +2,10 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Order = db.define('order', {
+  //TODO define a hook/method that calculates total order price based on all order total prices
   total: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.DECIMAL,
     defaultValue: 0,
-  },
-  // add customer name.
-  email: {
-    type: Sequelize.STRING,
-  },
-  addressLine1: {
-    type: Sequelize.STRING,
-  },
-  addressLine2: {
-    type: Sequelize.STRING,
-  },
-  city: {
-    type: Sequelize.STRING,
-  },
-  zipCode: {
-    type: Sequelize.INTEGER,
-  },
-  creditCardNumber: {
-    type: Sequelize.INTEGER,
-    //TODO set validation to length 16
-    //TODO hash the credit card number?
-  },
-  creditCardName: {
-    type: Sequelize.STRING,
-    //TODO hash the credit card name?
-  },
-  creditCardExpiration: {
-    type: Sequelize.STRING, //TODO determine if correct?
-    //TODO hash the credit card expiry?
-    //TODO validation for format MM/YY?
-  },
-  creditCardCVV: {
-    type: Sequelize.INTEGER,
-    //TODO hash the credit card CVV?
-    //TODO validation for length 3?
   },
   orderPaid: {
     type: Sequelize.BOOLEAN,
