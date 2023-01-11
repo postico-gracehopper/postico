@@ -5,6 +5,7 @@ import AuthForm from '../features/auth/AuthForm';
 import Home from '../features/home/Home';
 import { me } from './store';
 import Products from '../features/products/productComponent';
+import AdminView from './AdminView';
 
 /**
  * COMPONENT
@@ -39,6 +40,10 @@ const AppRoutes = () => {
           <Route
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
+          />
+          <Route
+            path="/adminView"
+            element={<AdminView />}
           />
         </Routes>
       )}
