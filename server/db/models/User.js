@@ -3,7 +3,7 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-require('dotenv').config()
+require('dotenv').config();
 
 const SALT_ROUNDS = 5;
 
@@ -11,100 +11,56 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
   },
   password: {
-    //TODO can we have null passwords?
     type: Sequelize.STRING,
   },
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User first name cannot be empty.',
-      },
-    },
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User last name cannot be empty.',
-      },
-    },
   },
   email: {
     type: Sequelize.STRING,
     // TODO require unique?
-    allowNull: false,
     validate: {
-      notEmpty: true,
       isEmail: true,
-      notNull: {
-        msg: 'User email cannot be empty.',
-      },
     },
   },
   addressLine1: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User email cannot be empty.',
-      },
-    },
   },
   addressLine2: {
     type: Sequelize.STRING,
   },
   city: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User city cannot be empty.',
-      },
-    },
   },
   zipCode: {
     type: Sequelize.INTEGER,
-    allowNull: false,
-    validate: {
-      notEmpty: true, //TODO validate that it is 5-digits
-      notNull: {
-        msg: 'User zip code cannot be empty.',
-      },
-    },
   },
-  //TODO require payment info?
+  //TODO validate that it is 5-digits?
+  //TODO likely remove all payments because using stripe
   creditCardNumber: {
     type: Sequelize.INTEGER,
-    //TODO set validation to length 16
-    //TODO hash the credit card number?
   },
   creditCardName: {
     type: Sequelize.STRING,
-    //TODO hash the credit card name?
   },
   creditCardExpiration: {
-    type: Sequelize.STRING, //TODO determine if correct?
-    //TODO hash the credit card expiry?
-    //TODO validation for format MM/YY?
+    type: Sequelize.STRING,
   },
   creditCardCVV: {
     type: Sequelize.INTEGER,
-    //TODO hash the credit card CVV?
-    //TODO validation for length 3?
   },
   adminRights: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false, //TODO check if this is right or if should be string
+    defaultValue: false,
+  },
+  isGuest: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
   },
 });
 
@@ -117,7 +73,6 @@ User.prototype.correctPassword = function (candidatePwd) {
   //we need to compare the plain version to an encrypted version of the password
   return bcrypt.compare(candidatePwd, this.password);
 };
-
 
 User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT_SECRET);
@@ -143,7 +98,6 @@ User.findByToken = async function (token) {
     const user = await User.findByPk(id);
     if (!user) {
       throw 'No user found with id';
-
     }
     return user;
   } catch (ex) {

@@ -16,7 +16,7 @@ const Product = db.define('product', {
     type: Sequelize.TEXT,
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.DECIMAL,
     allowNull: false,
   },
   image: {
@@ -25,7 +25,7 @@ const Product = db.define('product', {
       'https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png', //Generic product photo
   },
   category: {
-    type: Sequelize.TEXT, //TODO we should have the seed default to 'Ski'
+    type: Sequelize.TEXT,
   },
 });
 

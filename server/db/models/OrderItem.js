@@ -6,6 +6,11 @@ const OrderItem = db.define('orderItem', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
+  totalItemPrice: {
+    //TODO define a hook/method that calculates total item price based on quantity x product price
+    type: Sequelize.DECIMAL,
+    defaultValue: 0,
+  },
 });
 //  associate with Order model and Products model through magic method
 //  - create a new ShoppingCartItem instance (it will create a shopping cart item id)
