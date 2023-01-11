@@ -40,6 +40,7 @@ async function seed() {
       // addressLine2: left blank intentionally for dummy data
       city: faker.address.cityName(),
       zipCode: faker.address.zipCode('#####'),
+      isGuest: false,
       // CREDIT CARDS -- Not required info for a real user, but we're going to seed it.
       creditCardNumber: faker.finance.creditCardNumber('visa'),
       creditCardName: faker.finance.creditCardIssuer(),
@@ -78,6 +79,7 @@ async function seed() {
   // Hardcode a single admin user in the seed.
   User.create({
     firstName: 'Admin1',
+    password: 'blackdiamond',
     lastName: 'Postico',
     username: 'Admin1',
     email: 'admin1@posticogroup.com',
@@ -85,6 +87,7 @@ async function seed() {
     city: 'New York',
     zipCode: '10002',
     adminRights: true,
+    isGuest: false, 
   });
 
   // Hardcode a single demo user to test cart functionality.
@@ -97,6 +100,7 @@ async function seed() {
     addressLine1: '1001 Demo Road',
     city: 'Houston',
     zipCode: '77056',
+    isGuest: false,
   });
 
   // Hardcode a single demo product to test cart functionality.
@@ -112,16 +116,16 @@ async function seed() {
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).
-  const demoCart = ShoppingCart.create();
-  console.log(
-    "ShoppingCart's methods are " + Object.keys(ShoppingCart.__proto__)
-  );
-  demoCart.setUser(demoUser);
+  // const demoCart = ShoppingCart.create();
+  // console.log(
+  //   "ShoppingCart's methods are " + Object.keys(ShoppingCart.__proto__)
+  // );
+  // demoCart.setUser(demoUser);
 
-  // Hardcode a single shopping cart item and associate it with demo cart we just made.
-  const demoItem = ShoppingCartItem.create();
-  demoItem.setShoppingCart(demoCart);
-  demoItem.setProduct(demoProduct);
+  // // Hardcode a single shopping cart item and associate it with demo cart we just made.
+  // const demoItem = ShoppingCartItem.create();
+  // demoItem.setShoppingCart(demoCart);
+  // demoItem.setProduct(demoProduct);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
