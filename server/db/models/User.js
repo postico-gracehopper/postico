@@ -11,100 +11,56 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
   },
   password: {
-    //TODO can we have null passwords?
     type: Sequelize.STRING,
   },
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User first name cannot be empty.',
-      },
-    },
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User last name cannot be empty.',
-      },
-    },
   },
   email: {
     type: Sequelize.STRING,
     // TODO require unique?
-    allowNull: false,
     validate: {
-      notEmpty: true,
       isEmail: true,
-      notNull: {
-        msg: 'User email cannot be empty.',
-      },
     },
   },
   addressLine1: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User email cannot be empty.',
-      },
-    },
   },
   addressLine2: {
     type: Sequelize.STRING,
   },
   city: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      notNull: {
-        msg: 'User city cannot be empty.',
-      },
-    },
   },
   zipCode: {
     type: Sequelize.INTEGER,
-    allowNull: false,
-    validate: {
-      notEmpty: true, //TODO validate that it is 5-digits
-      notNull: {
-        msg: 'User zip code cannot be empty.',
-      },
-    },
   },
-  //TODO require payment info?
+  //TODO validate that it is 5-digits?
+  //TODO likely remove all payments because using stripe
   creditCardNumber: {
     type: Sequelize.STRING,
-    //TODO set validation to length 16
-    //TODO hash the credit card number?
   },
   creditCardName: {
     type: Sequelize.STRING,
-    //TODO hash the credit card name?
   },
   creditCardExpiration: {
-    type: Sequelize.STRING, //TODO determine if correct?
-    //TODO hash the credit card expiry?
-    //TODO validation for format MM/YY?
+    type: Sequelize.STRING,
   },
   creditCardCVV: {
     type: Sequelize.INTEGER,
-    //TODO hash the credit card CVV?
-    //TODO validation for length 3?
   },
   adminRights: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false, //TODO check if this is right or if should be string
+    defaultValue: false,
+  },
+  isGuest: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
   },
 });
 
