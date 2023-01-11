@@ -1,29 +1,131 @@
-'use strict'
+'use strict';
 
-const {db, models: {User} } = require('../server/db')
+const genExpDate = () => {
+  const month = Math.ceil(Math.random() * 12);
+  const year = Math.floor(Math.random() * 6) + new Date().getFullYear();
+  return String(month) + '/' + String(year % 100);
+};
 
-/**
- * seed - this function clears the database, updates tables to
- *      match the models, and populates the database.
- */
+const genCategory = () => {
+  const categories = ['Skis', 'Boots', 'Apparel'];
+  return categories[Math.floor(Math.random() * categories.length)];
+};
+
+const {
+  db,
+  models: { User, Product, ShoppingCart, ShoppingCartItem },
+} = require('../server/db');
+const { faker } = require('@faker-js/faker');
+
 async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('db synced!')
+  await db.sync({ force: true }); // clears db and matches models to tables
+  console.log('db synced!');
 
-  // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
-  ])
+  let users = [];
+  let products = [];
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
+  // MAKE 100 FAKE USERS: We can change number of fake seeded users below, from 100.
+  for (let i = 0; i < 100; i++) {
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+
+    let newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      username: faker.internet.userName(firstName, lastName),
+      password: faker.internet.password(),
+      email: faker.internet.email(firstName, lastName).toLowerCase(),
+      addressLine1:
+        faker.address.buildingNumber() + ' ' + faker.address.street(),
+      // addressLine2: left blank intentionally for dummy data
+      city: faker.address.cityName(),
+      zipCode: faker.address.zipCode('#####'),
+      // CREDIT CARDS -- Not required info for a real user, but we're going to seed it.
+      creditCardNumber: faker.finance.creditCardNumber('visa'),
+      creditCardName: faker.finance.creditCardIssuer(),
+      creditCardExpiration: genExpDate(),
+      creditCardCVV: faker.finance.creditCardCVV(),
+      // ADMIN
+      // AdminRights are "false" by default; no seeded attribute here. We've hardcoded one admin user below.
+    };
+
+    users.push(newUser);
   }
+
+  // MAKE 100 FAKE PRODUCTS: Can change number of products below as well.
+  for (let i = 0; i < 100; i++) {
+    let type = genCategory();
+    let newProduct = {
+      name: faker.commerce.productAdjective() + ' ' + type,
+      description: faker.lorem.sentence(12),
+      price: faker.commerce.price(),
+      image: faker.image.abstract(),
+      category: type,
+    };
+
+    products.push(newProduct);
+  }
+
+  // For each item in the arrays we've made, create a new instance in the database.
+  users.forEach(async (user) => {
+    await User.create(user);
+  });
+
+  products.forEach(async (product) => {
+    await Product.create(product);
+  });
+
+  // Hardcode a single admin user in the seed.
+  User.create({
+    firstName: 'Admin1',
+    lastName: 'Postico',
+    username: 'Admin1',
+    email: 'admin1@posticogroup.com',
+    addressLine1: '123 Admin Road',
+    city: 'New York',
+    zipCode: '10002',
+    adminRights: true,
+  });
+
+  // Hardcode a single demo user to test cart functionality.
+  const demoUser = User.create({
+    firstName: 'David',
+    lastName: 'Demoson',
+    username: 'demo_user',
+    password: 'blackdiamond',
+    email: 'demo_user@posticogroup.com',
+    addressLine1: '1001 Demo Road',
+    city: 'Houston',
+    zipCode: '77056',
+  });
+
+  // Hardcode a single demo product to test cart functionality.
+  const demoProduct = Product.create({
+    name: 'Demo skis',
+    description:
+      'This is an actual type of ski rental but in this case just a dummy product :(',
+    price: 499.99,
+    image:
+      'https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg',
+    category: 'Skis',
+  });
+
+  // Hardcode a single shopping cart and associate it with demo user.
+  // TODO: Troubleshoot use of magic methods for associated models (see console log below).
+  const demoCart = ShoppingCart.create();
+  console.log(
+    "ShoppingCart's methods are " + Object.keys(ShoppingCart.__proto__)
+  );
+  demoCart.setUser(demoUser);
+
+  // Hardcode a single shopping cart item and associate it with demo cart we just made.
+  const demoItem = ShoppingCartItem.create();
+  demoItem.setShoppingCart(demoCart);
+  demoItem.setProduct(demoProduct);
+
+  console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${products.length} products`);
+  console.log(`seeded successfully`);
 }
 
 /*
@@ -32,16 +134,18 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...')
+  console.log('seeding...');
   try {
-    await seed()
+    await seed();
   } catch (err) {
-    console.error(err)
-    process.exitCode = 1
-  } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
+    console.error(err);
+    process.exitCode = 1;
+    // MV: Troubleshooting "finally" below. Seed won't run with it,
+    // likely due to async.
+    // } finally {
+    //   console.log("closing db connection");
+    //   await db.close();
+    //   console.log("db connection closed");
   }
 }
 
@@ -51,8 +155,8 @@ async function runSeed() {
   any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
-  runSeed()
+  runSeed();
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = seed;

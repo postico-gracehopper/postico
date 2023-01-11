@@ -43,7 +43,7 @@ const User = db.define('user', {
   //TODO validate that it is 5-digits?
   //TODO likely remove all payments because using stripe
   creditCardNumber: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   creditCardName: {
     type: Sequelize.STRING,
