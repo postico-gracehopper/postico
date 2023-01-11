@@ -64,7 +64,6 @@ router.get('/:id/cart', verifyInteger, async (req, res, next) => {
     const { id } = req.params
     const user = await User.findByPk(id, {
       attributes: PUBLIC_USER_FIELDS,
-      include: ShoppingCart
     })
     res.json(user)
   } catch (err) {
