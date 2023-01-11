@@ -13,7 +13,7 @@ const genCategory = () => {
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, ShoppingCart, ShoppingCartItem },
 } = require("../server/db");
 const { faker } = require("@faker-js/faker");
 
@@ -82,6 +82,38 @@ async function seed() {
     city: "New York",
     zipCode: "10002",
   });
+
+  // Hardcode a single demo user to test cart functionality.
+  const demoUser = User.create({
+    firstName: "David",
+    lastname: "Demoson",
+    username: "demo_user",
+    password: "blackdiamond",
+    email: "demo_user@posticogroup.com",
+    addressLine1: "1001 Demo Road",
+    city: "Houston",
+    zipCode: "77056",
+  });
+
+  // Hardcode a single demo product to test cart functionality.
+  const demoProduct = Product.create({
+    name: "Demo skis",
+    description:
+      "This is an actual type of ski rental but in this case just a dummy product :(",
+    price: 499.99,
+    image:
+      "https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg",
+    category: "Skis",
+  });
+
+  // Hardcode a single shopping cart and associate it with demo user.
+  const demoCart = ShoppingCart.create();
+  demoCart.setUser(demoUser);
+
+  // Hardcode a single shopping cart item and associate it with demo cart we just made.
+  const demoItem = ShoppingCartItem.create();
+  demoItem.setShoppingCart(demoCart);
+  demoItem.setProduct(demoProduct);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
