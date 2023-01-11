@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const { models: { User }} = require('../db')
-const ShoppingCart = require('../db/models/ShoppingCart')
 const { verifyInteger, 
         verifyIsAdmin, 
         verifyIsSpecificUserOrAdmin } = require("./apiHelpers")
