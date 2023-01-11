@@ -24,9 +24,7 @@ if (process.env.DATABASE_URL) {
 
 const db = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: { ssl: { rejectUnauthorized: false } },
-  logging: false,
-  // Meridith turned off logging for seed debugging to declutter console.
-  // TODO: Turn back on if we prefer.
+  logging: false
 });
 // process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
 

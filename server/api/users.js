@@ -1,14 +1,22 @@
 const router = require('express').Router()
 const { models: { User }} = require('../db')
+const ShoppingCart = require('../db/models/ShoppingCart')
+const { verifyInteger, 
+        verifyIsAdmin, 
+        verifyIsSpecificUserOrAdmin } = require("./apiHelpers")
 
+const PUBLIC_USER_FIELDS = ['id', 'username', 'firstName', 'lastname', 'email', 
+  'addressLine1', 'addressLine2', 'city', 'zipCode', 'adminRights']
 
+// Restrict to only Admin
 router.get('/', async (req, res, next) => {
   try {
+    console.log(req.user)
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username']
+      //attributes: PUBLIC_USER_FIELDS
     })
     res.json(users)
   } catch (err) {
@@ -20,18 +28,30 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const user = req.body
-    const userObj = await User.create(user)
+    await User.create(user)
     res.status(201).send()
   } catch (err) {
     next(err)
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+
+// Placeholder until API is restricted for production
+router.use('/:id', verifyInteger, async (req, res, next) => {
+  // Verifies Integer first 
+  // token = req.headers.authorization
+  // find the user associated with said token; 
+  const token = "tokenholder(placeholder)"
+  console.log(`${token} accessing ${req.params.id}'s data`)
+  next()
+})
+
+// Restrict only Specific User or Admin
+router.get('/:id', verifyInteger, async (req, res, next) => {
   try {
     const { id } = req.params
     const user = await User.findByPk(id, {
-      attributes: ['id', 'username']
+      //attributes: PUBLIC_USER_FIELDS
     })
     res.json(user)
   } catch (err) {
@@ -39,6 +59,21 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// Restrict only Specific User or Admin
+router.get('/:id/cart', verifyInteger, async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const user = await User.findByPk(id, {
+      attributes: PUBLIC_USER_FIELDS,
+      include: ShoppingCart
+    })
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Restrict only Specific User or Admin
 router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
@@ -50,6 +85,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+// Restrict only Specific User or Admin
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params

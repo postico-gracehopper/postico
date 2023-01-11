@@ -17,23 +17,12 @@ export const me = createAsyncThunk('auth/me', async (meState) => {
         authorization: token
       }
     })
+    if (!token && res.data.token) {
+      window.localStorage.setItem(TOKEN, res.data.token)
+    }
     return res.data
-    // Change by blake: I believe we want the customer data in state, 
-    // even if we have the token (no user data in localstorage.token)
-    // if (!token) {
-    //   const res = await axios.get('/auth/me', {
-    //     headers: {
-    //       authorization: token,
-    //     },
-    //   });
-    //   return res.data;
-    // } else {
-    //   return {};
-    // }
   } catch (err) {
     if (err.response.data) {
-      // change: was showing error under thunkAPI
-      // return thunkAPI.rejectWithValue(err.response.data);
       return err.response.data
     } else {
       return 'There was an issue with your request.';
@@ -92,6 +81,9 @@ export const authSlice = createSlice({
 */
 export const { logout } = authSlice.actions;
 
+export const isLoggedIn = (state) => {
+  return (state.auth.me.username && state.auth.me.id)
+}
 /*
   REDUCER
 */
