@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 /*
@@ -61,11 +61,17 @@ export const authSlice = createSlice({
       window.localStorage.removeItem(TOKEN);
       state.me = {};
       state.error = null;
+      // add functionality to request a new token (call auth/me) immediately
     },
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, action) => {
-      state.me = action.payload;
+      if (Object.keys(action.payload).includes('token') && Object.keys(action.payload).length === 1){
+        ""
+      } else {
+        state.me = action.payload;
+      }
+      
     });
     builder.addCase(me.rejected, (state, action) => {
       state.error = action.error;
