@@ -30,7 +30,8 @@
     "pg": "^8.8.0",
     "react-stripe-checkout": "^2.6.3",
     "sequelize": "^6.25.3",
-    "stripe": "^11.6.0"
+    "stripe": "^11.6.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",
