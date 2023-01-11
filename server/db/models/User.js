@@ -3,6 +3,8 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+require('dotenv').config()
+
 const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
@@ -116,6 +118,7 @@ User.prototype.correctPassword = function (candidatePwd) {
   return bcrypt.compare(candidatePwd, this.password);
 };
 
+
 User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT_SECRET);
 };
@@ -140,6 +143,7 @@ User.findByToken = async function (token) {
     const user = await User.findByPk(id);
     if (!user) {
       throw 'No user found with id';
+
     }
     return user;
   } catch (ex) {
