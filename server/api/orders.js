@@ -1,11 +1,12 @@
 const router = require('express').Router()
 const { models: { Order }} = require('../db')
 
+const ORDER_FIELDS = ['total', 'email', 'addressLine1', 'addressLine2', 'city', 'zipCode']
 
 router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
-      attributes: ['id', 'name', 'description', 'price', 'image']   //! revisit 
+      attributes: ORDER_FIELDS
     })
     res.json(orders)
   } catch (err) {
@@ -28,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const order = await Order.findByPk(id, {
-      attributes: ['id', 'name', 'description', 'price', 'image']
+      attributes: ORDER_FIELDS
     })
     res.json(order)
   } catch (err) {

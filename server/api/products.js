@@ -1,10 +1,12 @@
 const router = require('express').Router()
 const { models: { Product }} = require('../db')
 
+const PRODUCT_FIELDS = ['id', 'name', 'description', 'price', 'image', 'category'] 
+
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      attributes: ['id', 'name', 'description', 'price', 'image']   //! revisit 
+      attributes: PRODUCT_FIELDS  //! revisit 
     })
     res.json(products)
   } catch (err) {
@@ -27,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const product = await Product.findByPk(id, {
-      attributes: ['id', 'name', 'description', 'price', 'image']
+      attributes: PRODUCT_FIELDS
     })
     res.json(product)
   } catch (err) {
