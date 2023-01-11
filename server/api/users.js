@@ -11,11 +11,12 @@ const PUBLIC_USER_FIELDS = ['id', 'username', 'firstName', 'lastname', 'email',
 // Restrict to only Admin
 router.get('/', async (req, res, next) => {
   try {
+    console.log(req.user)
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: PUBLIC_USER_FIELDS
+      //attributes: PUBLIC_USER_FIELDS
     })
     res.json(users)
   } catch (err) {
@@ -46,11 +47,11 @@ router.use('/:id', verifyInteger, async (req, res, next) => {
 })
 
 // Restrict only Specific User or Admin
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', verifyInteger, async (req, res, next) => {
   try {
     const { id } = req.params
     const user = await User.findByPk(id, {
-      attributes: PUBLIC_USER_FIELDS
+      //attributes: PUBLIC_USER_FIELDS
     })
     res.json(user)
   } catch (err) {
@@ -59,7 +60,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Restrict only Specific User or Admin
-router.get('/:id/cart', async (req, res, next) => {
+router.get('/:id/cart', verifyInteger, async (req, res, next) => {
   try {
     const { id } = req.params
     const user = await User.findByPk(id, {

@@ -4,9 +4,9 @@ function verifyInteger(req, res, next){
     try {
       const num = Number(req.params.id)
       if (num < 0 || num > 5000000000){
-        throw new Error("Integer is out of bounds")
+        throw new Error(`${num}: integer is out of bounds`)
       } else if (!Number.isInteger(num)){
-        throw new Error("Is not an integer")
+        throw new Error(`"${req.params.id}" is not an integer`)
       } else {
         next()
       }
@@ -57,12 +57,13 @@ const requireToken = async (req, res, next) => {
 
 const attachUserDataToReq = async (req, res, next) => {
     try{ 
-        token = req.headers.authorization
-        const user = await User.byToken(token)
-        req.user = user;
+        const token = req.headers.authorization
+        const user = await User.findByToken(token)
+        req.user = "jackie" // user
         next();
     } catch(err){
-        next(err)
+        req.user = "cindy"
+        next()
     }
 }
 
