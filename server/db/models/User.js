@@ -3,7 +3,7 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-require('dotenv').config()
+require('dotenv').config();
 
 const SALT_ROUNDS = 5;
 
@@ -84,7 +84,7 @@ const User = db.define('user', {
   },
   //TODO require payment info?
   creditCardNumber: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     //TODO set validation to length 16
     //TODO hash the credit card number?
   },
@@ -118,7 +118,6 @@ User.prototype.correctPassword = function (candidatePwd) {
   return bcrypt.compare(candidatePwd, this.password);
 };
 
-
 User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT_SECRET);
 };
@@ -143,7 +142,6 @@ User.findByToken = async function (token) {
     const user = await User.findByPk(id);
     if (!user) {
       throw 'No user found with id';
-
     }
     return user;
   } catch (ex) {

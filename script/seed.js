@@ -1,45 +1,47 @@
-"use strict";
+'use strict';
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
   const year = Math.floor(Math.random() * 6) + new Date().getFullYear();
-  return String(month) + "/" + String(year % 100);
+  return String(month) + '/' + String(year % 100);
 };
 
 const genCategory = () => {
-  const categories = ["Skis", "Boots", "Apparel"];
+  const categories = ['Skis', 'Boots', 'Apparel'];
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
 const {
   db,
   models: { User, Product, ShoppingCart, ShoppingCartItem },
-} = require("../server/db");
-const { faker } = require("@faker-js/faker");
+} = require('../server/db');
+const { faker } = require('@faker-js/faker');
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
-  console.log("db synced!");
+  console.log('db synced!');
 
   let users = [];
   let products = [];
 
   // MAKE 100 FAKE USERS: We can change number of fake seeded users below, from 100.
   for (let i = 0; i < 100; i++) {
-    const name = faker.name.firstName();
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
 
     let newUser = {
-      firstName: name,
-      lastName: faker.name.lastName(),
-      username: faker.internet.userName(),
+      firstName: firstName,
+      lastName: lastName,
+      username: faker.internet.userName(firstName, lastName),
       password: faker.internet.password(),
-      email: faker.internet.email(name).toLowerCase(),
-      addressLine1: faker.address.buildingNumber() + faker.address.streetName(),
+      email: faker.internet.email(firstName, lastName).toLowerCase(),
+      addressLine1:
+        faker.address.buildingNumber() + ' ' + faker.address.street(),
       // addressLine2: left blank intentionally for dummy data
       city: faker.address.cityName(),
-      zipCode: faker.address.zipCode(),
+      zipCode: faker.address.zipCode('#####'),
       // CREDIT CARDS -- Not required info for a real user, but we're going to seed it.
-      creditCardNumber: faker.finance.creditCardNumber(),
+      creditCardNumber: faker.finance.creditCardNumber('visa'),
       creditCardName: faker.finance.creditCardIssuer(),
       creditCardExpiration: genExpDate(),
       creditCardCVV: faker.finance.creditCardCVV(),
@@ -52,12 +54,13 @@ async function seed() {
 
   // MAKE 100 FAKE PRODUCTS: Can change number of products below as well.
   for (let i = 0; i < 100; i++) {
+    let type = genCategory();
     let newProduct = {
-      name: faker.commerce.productAdjective() + "Skis",
+      name: faker.commerce.productAdjective() + ' ' + type,
       description: faker.lorem.sentence(12),
       price: faker.commerce.price(),
       image: faker.image.abstract(),
-      category: genCategory(),
+      category: type,
     };
 
     products.push(newProduct);
@@ -74,40 +77,45 @@ async function seed() {
 
   // Hardcode a single admin user in the seed.
   User.create({
-    firstName: "Admin1",
-    lastname: "Postico",
-    username: "Admin1",
-    email: "admin1@posticogroup.com",
-    addressLine1: "123 Admin Road",
-    city: "New York",
-    zipCode: "10002",
+    firstName: 'Admin1',
+    lastName: 'Postico',
+    username: 'Admin1',
+    email: 'admin1@posticogroup.com',
+    addressLine1: '123 Admin Road',
+    city: 'New York',
+    zipCode: '10002',
+    adminRights: true,
   });
 
   // Hardcode a single demo user to test cart functionality.
   const demoUser = User.create({
-    firstName: "David",
-    lastname: "Demoson",
-    username: "demo_user",
-    password: "blackdiamond",
-    email: "demo_user@posticogroup.com",
-    addressLine1: "1001 Demo Road",
-    city: "Houston",
-    zipCode: "77056",
+    firstName: 'David',
+    lastName: 'Demoson',
+    username: 'demo_user',
+    password: 'blackdiamond',
+    email: 'demo_user@posticogroup.com',
+    addressLine1: '1001 Demo Road',
+    city: 'Houston',
+    zipCode: '77056',
   });
 
   // Hardcode a single demo product to test cart functionality.
   const demoProduct = Product.create({
-    name: "Demo skis",
+    name: 'Demo skis',
     description:
-      "This is an actual type of ski rental but in this case just a dummy product :(",
+      'This is an actual type of ski rental but in this case just a dummy product :(',
     price: 499.99,
     image:
-      "https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg",
-    category: "Skis",
+      'https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg',
+    category: 'Skis',
   });
 
   // Hardcode a single shopping cart and associate it with demo user.
+  // TODO: Troubleshoot use of magic methods for associated models (see console log below).
   const demoCart = ShoppingCart.create();
+  console.log(
+    "ShoppingCart's methods are " + Object.keys(ShoppingCart.__proto__)
+  );
   demoCart.setUser(demoUser);
 
   // Hardcode a single shopping cart item and associate it with demo cart we just made.
@@ -126,7 +134,7 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log("seeding...");
+  console.log('seeding...');
   try {
     await seed();
   } catch (err) {
