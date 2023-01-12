@@ -87,7 +87,7 @@ async function seed() {
     city: 'New York',
     zipCode: '10002',
     adminRights: true,
-    isGuest: false, 
+    isGuest: false,
   });
 
   // Hardcode a single demo user to test cart functionality.
