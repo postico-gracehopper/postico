@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProductsAsync, selectProducts } from './productSlice';
 import { Link } from 'react-router-dom';
+import AddToCartButton from '../addToCartButton/AddToCartButton';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -24,10 +25,8 @@ const Products = () => {
                   <h2>${product.price}</h2>
                 </span>
                 <p>{product.description}</p>
-                <p>
-                  <button> Add to Cart</button>
-                </p>
               </Link>
+              <AddToCartButton product={product} quantity={1} />
             </li>
           );
         })}
