@@ -8,9 +8,9 @@ const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
 
-//   useEffect(() => {
-//     dispatch(fetchProductsAsync());
-//   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchProductsAsync());
+  }, [dispatch]);
 
   return (
     <div>

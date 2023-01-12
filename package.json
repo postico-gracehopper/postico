@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "build:tailwind": "tailwindcss -i public/input.css -o public/output.css",
     "build:dev": "npm run build -- --watch --mode=development",
     "seed": "node script/seed.js",
     "start": "node server",
@@ -31,7 +32,8 @@
     "react-stripe-checkout": "^2.6.3",
     "react-table": "^7.8.0",
     "sequelize": "^6.25.3",
-    "stripe": "^11.6.0"
+    "stripe": "^11.6.0",
+    "tailwindcss": "^3.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

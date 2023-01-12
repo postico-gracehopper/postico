@@ -14,8 +14,12 @@ const Navbar = () => {
 
   return (
     <div>
-      <h1>FS-App-Template</h1>
-      <nav>
+      <h1>Ski store</h1>
+      <nav className="relative container mx-auto px-8 bg-[#F3E8D0]">
+        {/* Logo */}
+        <div class="pt-1">
+          <img src={image1} width="200px" />
+        </div>
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
