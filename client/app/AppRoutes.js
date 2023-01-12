@@ -42,6 +42,7 @@ const AppRoutes = () => {
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
+          <Route path="/checkout" element={<ShoppingCart />} />
         </Routes>
       )}
     </div>
