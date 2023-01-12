@@ -6,18 +6,20 @@ import {
 } from '../products/singleProductSlice';
 import { useParams } from 'react-router-dom';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
+import AddProduct from './addProduct';
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
   const product = useSelector(selectSingleProduct);
-  const { productId } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchSingleProductAsync(productId));
-  }, [productId]);
-
+    dispatch(fetchSingleProductAsync(id));
+  }, [id]);
+  console.log(product);
   return (
     <div>
+      <AddProduct />
       <img src={product.image} />
       <h2>{product.name}</h2>
       <p>${product.price}</p>
