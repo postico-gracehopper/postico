@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-const OrderItem = require('../index');
+const {
+  models: { OrderItem },
+} = require('../index');
 
 const Order = db.define('order', {
   //TODO define a hook/method that calculates total order price based on all order total prices
@@ -18,9 +20,25 @@ const Order = db.define('order', {
 
 // method to update total price... not sure if we can do this using the orderId in OrderItem that's yet to be associated...
 Order.prototype.updatePrice = async function () {
+  const previousPrice = this.total;
   const orderItems = await OrderItem.findAll({ where: { orderId: this.id } });
-  const total = orderItems.reduce((acc, item) => acc + item.totalItemPrice, 0);
-  return (this.total = total);
+  const newPrice = orderItems.reduce(
+    (acc, item) => acc + item.totalItemPrice,
+    0
+  );
+  this.total = newPrice;
+  console.log(
+    `Total order price updated from '${previousPrice}' to '${this.total}'`
+  );
 };
+
+/**
+ * hooks
+ */
+
+Order.afterCreate(updatePrice());
+Order.afterUpdate(updatePrice());
+Order.afterSave(updatePrice());
+Order.afterUpsert(updatePrice());
 
 module.exports = Order;

@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-const Product = require('../index');
+const {
+  models: { Product },
+} = require('../index');
 
 const OrderItem = db.define('orderItem', {
   quantity: {
@@ -17,8 +19,21 @@ const OrderItem = db.define('orderItem', {
 
 // method to update totalItemPrice... not sure if we can do this using the productId that's yet to be associated...
 OrderItem.prototype.updateTotalPrice = async function () {
+  const previousPrice = this.totalItemPrice;
   const product = await Product.findOne({ where: { id: this.productId } });
-  return (this.totalItemPrice = this.quantity * product.price);
+  this.totalItemPrice = this.quantity * product.price;
+  console.log(
+    `Total order item price updated from '${previousPrice}' to '${this.totalItemPrice}'`
+  );
 };
+
+/**
+ * hooks
+ */
+
+OrderItem.afterCreate(updateTotalPrice());
+OrderItem.afterUpdate(updateTotalPrice());
+OrderItem.afterSave(updateTotalPrice());
+OrderItem.afterUpsert(updateTotalPrice());
 
 module.exports = OrderItem;
