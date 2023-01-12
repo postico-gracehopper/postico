@@ -84,6 +84,7 @@ router.get('/:id', verifyInteger, async (req, res, next) => {
 // })
 //
 
+// TODO: talk to blake about the above code and PUBLIC_USER_FIELDS
 //  fetch the order for a given user, including its associated orderItems
 router.get('/:id/cart', verifyInteger, async (req, res, next) => {
   try {
