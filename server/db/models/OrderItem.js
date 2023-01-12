@@ -18,6 +18,7 @@ const OrderItem = db.define('orderItem', {
 // instanceMethods
 
 // method to update totalItemPrice... not sure if we can do this using the productId that's yet to be associated...
+// TODO check calculations on cents
 OrderItem.prototype.updateTotalPrice = async function () {
   const previousPrice = this.totalItemPrice;
   const product = await Product.findOne({ where: { id: this.productId } });
