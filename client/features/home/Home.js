@@ -10,9 +10,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <p className="text-5xl font-bungee pt-8 hover:text-marigold">
-        Welcome, {username}
-      </p>
+      <p>Welcome, {username}</p>
       <img src="https://www.ischgl.com/media/ischgl/WINTER/SKIGEBIET/image-thumb__53475433__og-image/SKI_ALPIN_2022%20%287%29.webp" />
       <Link to="/products">
         <button type="button">Shop</button>
