@@ -87,12 +87,8 @@ router.get('/:id', verifyInteger, async (req, res, next) => {
 //  fetch the order for a given user, including its associated orderItems
 router.get('/:id/cart', verifyInteger, async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
-      where: {
-        userId: req.user.id,
-      },
-      include: OrderItem,
-    });
+    const user = await User.findByPk(req.user.id);
+    const orders = await user.getCart();
     res.json(orders);
   } catch (err) {
     next(err);
