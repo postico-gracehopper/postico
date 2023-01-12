@@ -42,8 +42,44 @@ const defaultColumn = {
   Cell: EditableCell,
 }
 
+function AddForm({columns, handleCreate}){
+  let [tentativeRecord, setTentativeRecord] = React.useState({})
+
+  function updateWorkingRecord(header){
+    return (index, id, value) => setTentativeRecord({...tentativeRecord, [header]: value})
+  }
+  
+  return <div className="add-form-container"><table>
+    <thead>
+      <tr>
+      {columns && columns.length ? columns.map((category, i) => {
+        return <th key={i}>{category.Header}</th>
+      }) : <th>Loading..</th>}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      {columns && columns.length ? columns.map((cell, i) => {
+        return <td key={i}> 
+          {i === 0 ? <p>{i}</p> : 
+          <EditableCell value={""} 
+                row={1} 
+                onBlur={console.log} 
+                onChange={console.log} 
+                column={i}
+                updateMyData={updateWorkingRecord(cell.accessor)}/>
+      }
+          </td>
+      }): <td>Loading...</td>}
+      </tr>
+    </tbody>
+  </table>
+  <button className="submit-record" onClick={() => handleCreate(tentativeRecord)}>Submit</button>
+  
+  </div>
+}
 // Be sure to pass our updateMyData and the skipPageReset option
-function Table({ columns, data, updateMyData, skipPageReset }) {
+function Table({ columns, data, updateMyData, skipPageReset, handleDelete }) {
   // For this example, we're using pagination to illustrate how to stop
   // the current page from resetting when our data changes
   // Otherwise, nothing is different here.
@@ -75,7 +111,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
       // That way we can call this function from our
       // cell renderer!
       updateMyData,
-      initialState: {pageSize: 25}
+      initialState: {pageSize: 50}
     },
     usePagination
   )
@@ -90,6 +126,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
               {headerGroup.headers.map(column => (
                 <th {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
+              <th>Delete</th>
             </tr>
           ))}
         </thead>
@@ -101,6 +138,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
+                <td className="del-entry" onClick={() => handleDelete(data[i])}>❌</td>
               </tr>
             )
           })}
@@ -154,16 +192,20 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   )
 }
 
-function TableInteractive({data: ogData, handleSave: handleSaveAction, title: titleText}) {
+function TableInteractive({data: ogData, 
+          handleSave: handleSaveAction, 
+          handleDelete: handleDeleteAction,
+          handletitle: titleText,
+          handleCreate: handleCreateAction}) {
   const columns = React.useMemo(() => Object.keys(ogData[0]).map(k => {
     return {Header: k[0].toUpperCase() + k.slice(1,), accessor: k}
   }))
 
   const [data, setData] = React.useState(ogData)
-  const [originalData] = React.useState(data)
+  const [originalData, setOriginalData] = React.useState(data)
   const [skipPageReset, setSkipPageReset] = React.useState(true)
-
   const changedData = data.filter((entry, i) => JSON.stringify(entry) !== JSON.stringify(originalData[i]))
+  const [addMode, setAddMode] = React.useState(false)
   // We need to keep the table from resetting the pageIndex when we
   // Update data. So we can keep track of that flag with a ref.
 
@@ -186,13 +228,22 @@ function TableInteractive({data: ogData, handleSave: handleSaveAction, title: ti
     )
   }
 
+  // function tableActionsOnSave(ev){
+  //     handleSaveAction(changedData)
+  //     setOriginalData(data)
+  // }
+
+  // function tableActionsOnAddNew(ev){
+  //   return ""
+
+  // }
   // After data chagnes, we turn the flag back off
   // so that if data actually changes when we're not
   // editing it, the page is reset
   React.useEffect(() => {
     setSkipPageReset(true)
     setData(ogData)
-  }, [ogData])
+  }, [ogData, originalData])
 
   // Let's add a data resetter/randomizer to help
   // illustrate that flow...
@@ -202,14 +253,25 @@ function TableInteractive({data: ogData, handleSave: handleSaveAction, title: ti
     <div className='interactive-table-container'>
       <h2>{titleText}</h2>
       <button onClick={resetData}>Reset Data</button>
+      { addMode ?
+      <AddForm columns={columns} handleCreate={handleCreateAction}/>
+      :
       <Table
         columns={columns}
         data={data}
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
-        setPageSize={25}
+        setPageSize={50}
+        handleDelete={handleDeleteAction}
       />
-      <button className="save" onClick={() => handleSaveAction(changedData)}>Save changes</button>
+          }
+      
+      {!addMode ? <button className="save" 
+              onClick={() => handleSaveAction(changedData, data)}>
+      Save
+      </button> : <></>}
+
+      <button className="addNew" onClick={() => setAddMode(!addMode)}>{!addMode ? "Add New" : "Edit Existing"} {titleText}</button>
     </div>
   )
 }
