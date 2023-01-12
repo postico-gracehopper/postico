@@ -10,20 +10,20 @@ const TOKEN = 'token';
   THUNKS
 */
 export const me = createAsyncThunk('auth/me', async (meState) => {
-  const token = window.localStorage.getItem(TOKEN)
+  const token = window.localStorage.getItem(TOKEN);
   try {
-    const res = await axios.get("/auth/me", {
+    const res = await axios.get('/auth/me', {
       headers: {
-        authorization: token
-      }
-    })
+        authorization: token,
+      },
+    });
     if (!token && res.data.token) {
-      window.localStorage.setItem(TOKEN, res.data.token)
+      window.localStorage.setItem(TOKEN, res.data.token);
     }
-    return res.data
+    return res.data;
   } catch (err) {
     if (err.response.data) {
-      return err.response.data
+      return err.response.data;
     } else {
       return 'There was an issue with your request.';
     }
@@ -66,12 +66,14 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, action) => {
-      if (Object.keys(action.payload).includes('token') && Object.keys(action.payload).length === 1){
-        ""
+      if (
+        Object.keys(action.payload).includes('token') &&
+        Object.keys(action.payload).length === 1
+      ) {
+        ('');
       } else {
         state.me = action.payload;
       }
-      
     });
     builder.addCase(me.rejected, (state, action) => {
       state.error = action.error;
@@ -88,9 +90,15 @@ export const authSlice = createSlice({
 export const { logout } = authSlice.actions;
 
 export const isLoggedIn = (state) => {
-  return (state.auth.me.username && state.auth.me.id)
-}
+  return state.auth.me.username && state.auth.me.id;
+};
 /*
   REDUCER
 */
 export default authSlice.reducer;
+/*
+  SELECTOR
+*/
+export const selectMe = (state) => {
+  return state.auth.me;
+};
