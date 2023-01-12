@@ -87,11 +87,7 @@ router.post('/', async (req, res, next) => {
         // if the order item wasn't created, update it's quantity
         orderItem.quantity += quantity;
       }
-      // Update the orderItem's total price using the model's instance method
-      orderItem.updateTotalPrice();
     }
-    // Update the order's price using the model's instance method
-    order.updatePrice();
     res.status(201).send();
   } catch (err) {
     next(err);
