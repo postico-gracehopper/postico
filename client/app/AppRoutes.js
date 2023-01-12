@@ -16,6 +16,7 @@ import SingleProduct from '../features/products/singleProductComponent';
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const dispatch = useDispatch();
+  console.log("is logged in:", isLoggedIn)
 
   useEffect(() => {
     dispatch(me());
