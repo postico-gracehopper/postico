@@ -29,17 +29,14 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// USER fetch the order for a given user, including its associated orderItems
+// ADMIN or Specific User
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const orders = await Order.findAll({
-      where: {
-        userId: id,
-      },
-      include: OrderItem,
+    const order = await Order.findByPk(id, {
+      attributes: PUBLIC_ORDER_FIELDS,
     });
-    res.json(orders);
+    res.json(order);
   } catch (err) {
     next(err);
   }
@@ -57,6 +54,7 @@ router.post('/', async (req, res, next) => {
     const [order, createdOrder] = await Order.findOrCreate({
       where: {
         userId: userId,
+        orderPaid: false,
       },
     });
     if (createdOrder) {
