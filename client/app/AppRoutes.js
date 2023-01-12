@@ -5,6 +5,7 @@ import AuthForm from '../features/auth/AuthForm';
 import Home from '../features/home/Home';
 import { me } from './store';
 import Products from '../features/products/productComponent';
+import SingleProduct from '../features/products/singleProductComponent';
 
 /**
  * COMPONENT
@@ -25,6 +26,7 @@ const AppRoutes = () => {
           <Route path="/*" element={<Home />} />
           <Route to="/home" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<SingleProduct />} />
         </Routes>
       ) : (
         <Routes>
