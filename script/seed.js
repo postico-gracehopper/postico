@@ -1,4 +1,10 @@
 'use strict';
+const {
+  db,
+  models: { User, Product, Order, OrderItem  },
+} = require('../server/db');
+const { faker } = require('@faker-js/faker');
+
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -11,11 +17,6 @@ const genCategory = () => {
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
-const {
-  db,
-  models: { User, Product, ShoppingCart, ShoppingCartItem },
-} = require('../server/db');
-const { faker } = require('@faker-js/faker');
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
@@ -66,6 +67,36 @@ async function seed() {
 
     products.push(newProduct);
   }
+
+  // for (let i=0; i<NUM_USERS_AND_PRODUCTS*2; i++){
+  //   const u = Math.floor(Math.random()*NUM_USERS_AND_PRODUCTS)
+  //   const p = Math.floor(Math.random()*NUM_USERS_AND_PRODUCTS)
+  //   const [order, created] = await Order.findOrCreate({
+  //     where: {
+  //       userId: u,
+  //       orderPaid: false,
+  //     }
+  //   })
+  //   if (created) {
+  //     const orderItem = await OrderItem.create({
+  //       quantity: 1,
+  //       productId: p,
+  //       orderId: order.id
+  //     });
+  //   } else {
+  //     const [orderItem, createdOrderItem] = await OrderItem.findOrCreate({
+  //       where: {
+  //         orderId: order.id,
+  //         productId: p,
+  //       },
+  //       defaults: {
+  //         // if it is created...
+  //         orderId: order.id, // associate the order
+  //         productId: p, // associate the product
+  //         quantity: 1, // set it's quantity
+  //       },
+  //   })
+  // }}
 
   // For each item in the arrays we've made, create a new instance in the database.
   users.forEach(async (user) => {
