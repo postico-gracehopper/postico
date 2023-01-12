@@ -20,6 +20,69 @@ form div {
   display: inline-block;
 }
 
+table {
+  margin: 10px auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+td, tr {
+  border: 1px solid black;
+}
+
+table.interactive-table {
+  background-color: white;
+}
+
+.interactive-table-container{
+  background-color: lightblue;
+  margin: 100px auto;
+}
+
+.interactive-table-container > h2 {
+  text-align: center;
+}
+
+.interactive-table-container > button.save {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 85%;
+  bottom: 5%;
+
+}
+
+.interactive-table-container > button.addNew {
+  background-color: lightgreen;
+  color: black;
+  position: relative;
+  left: 65%;
+  bottom: 5%;
+
+}
+
+.td-input-changed {
+  background-color: yellow;
+}
+
+td.del-entry:hover{
+  filter: brightness(0.05);
+  cursor: pointer;
+}
+
+tr:hover{
+  filter: brightness(0.8);
+}
+
+div.add-form-container > button.submit-record {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 85%;
+  top: 20px;
+}
+
 .cartContent {
   display: flex;
   flex-direction: row;

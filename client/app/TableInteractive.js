@@ -1,47 +1,6 @@
 import React from 'react'
 import { useTable, usePagination } from 'react-table'
 
-import makeData from './makeData'
-
-const Styles = styled.div`
-  padding: 1rem;
-
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-
-      input {
-        font-size: 1rem;
-        padding: 0;
-        margin: 0;
-        border: 0;
-      }
-    }
-  }
-
-  .pagination {
-    padding: 0.5rem;
-  }
-`
 
 // Create an editable cell renderer
 const EditableCell = ({
@@ -52,9 +11,10 @@ const EditableCell = ({
 }) => {
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue)
-
+  const [beenChanged, setBeenChanged] = React.useState(false)
   const onChange = e => {
     setValue(e.target.value)
+    setBeenChanged(!(e.target.value === String(initialValue)))
   }
 
   // We'll only update the external data when the input is blurred
@@ -66,8 +26,15 @@ const EditableCell = ({
   React.useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
+  
+  if (typeof value === 'boolean'){
+    if (!value) {
+      setValue("false")
+    }
+  }
 
-  return <input value={value} onChange={onChange} onBlur={onBlur} />
+  return id === "id" ? <p style={{fontSize: "0.75rem", margin: "0px", padding: "0px"}}>{value}</p> : 
+      <input className={beenChanged ? "td-input-changed" : ""} value={value || ""} onChange={onChange} onBlur={onBlur} />
 }
 
 // Set our editable cell renderer as the default Cell renderer
@@ -75,8 +42,44 @@ const defaultColumn = {
   Cell: EditableCell,
 }
 
+function AddForm({columns, handleCreate}){
+  let [tentativeRecord, setTentativeRecord] = React.useState({})
+
+  function updateWorkingRecord(header){
+    return (index, id, value) => setTentativeRecord({...tentativeRecord, [header]: value})
+  }
+  
+  return <div className="add-form-container"><table>
+    <thead>
+      <tr>
+      {columns && columns.length ? columns.map((category, i) => {
+        return <th key={i}>{category.Header}</th>
+      }) : <th>Loading..</th>}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      {columns && columns.length ? columns.map((cell, i) => {
+        return <td key={i}> 
+          {i === 0 ? <p>{i}</p> : 
+          <EditableCell value={""} 
+                row={1} 
+                onBlur={console.log} 
+                onChange={console.log} 
+                column={i}
+                updateMyData={updateWorkingRecord(cell.accessor)}/>
+      }
+          </td>
+      }): <td>Loading...</td>}
+      </tr>
+    </tbody>
+  </table>
+  <button className="submit-record" onClick={() => handleCreate(tentativeRecord)}>Submit</button>
+  
+  </div>
+}
 // Be sure to pass our updateMyData and the skipPageReset option
-function Table({ columns, data, updateMyData, skipPageReset }) {
+function Table({ columns, data, updateMyData, skipPageReset, handleDelete }) {
   // For this example, we're using pagination to illustrate how to stop
   // the current page from resetting when our data changes
   // Otherwise, nothing is different here.
@@ -108,6 +111,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
       // That way we can call this function from our
       // cell renderer!
       updateMyData,
+      initialState: {pageSize: 50}
     },
     usePagination
   )
@@ -115,13 +119,14 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   // Render the UI for your table
   return (
     <>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="interactive-table">
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
                 <th {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
+              <th>Delete</th>
             </tr>
           ))}
         </thead>
@@ -133,6 +138,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
+                <td className="del-entry" onClick={() => handleDelete(data[i])}>❌</td>
               </tr>
             )
           })}
@@ -186,51 +192,20 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   )
 }
 
-function App() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: 'firstName',
-          },
-          {
-            Header: 'Last Name',
-            accessor: 'lastName',
-          },
-        ],
-      },
-      {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: 'age',
-          },
-          {
-            Header: 'Visits',
-            accessor: 'visits',
-          },
-          {
-            Header: 'Status',
-            accessor: 'status',
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress',
-          },
-        ],
-      },
-    ],
-    []
-  )
+function TableInteractive({data: ogData, 
+          handleSave: handleSaveAction, 
+          handleDelete: handleDeleteAction,
+          handletitle: titleText,
+          handleCreate: handleCreateAction}) {
+  const columns = React.useMemo(() => Object.keys(ogData[0]).map(k => {
+    return {Header: k[0].toUpperCase() + k.slice(1,), accessor: k}
+  }))
 
-  const [data, setData] = React.useState(() => makeData(20))
-  const [originalData] = React.useState(data)
-  const [skipPageReset, setSkipPageReset] = React.useState(false)
-
+  const [data, setData] = React.useState(ogData)
+  const [originalData, setOriginalData] = React.useState(data)
+  const [skipPageReset, setSkipPageReset] = React.useState(true)
+  const changedData = data.filter((entry, i) => JSON.stringify(entry) !== JSON.stringify(originalData[i]))
+  const [addMode, setAddMode] = React.useState(false)
   // We need to keep the table from resetting the pageIndex when we
   // Update data. So we can keep track of that flag with a ref.
 
@@ -253,28 +228,52 @@ function App() {
     )
   }
 
+  // function tableActionsOnSave(ev){
+  //     handleSaveAction(changedData)
+  //     setOriginalData(data)
+  // }
+
+  // function tableActionsOnAddNew(ev){
+  //   return ""
+
+  // }
   // After data chagnes, we turn the flag back off
   // so that if data actually changes when we're not
   // editing it, the page is reset
   React.useEffect(() => {
-    setSkipPageReset(false)
-  }, [data])
+    setSkipPageReset(true)
+    setData(ogData)
+  }, [ogData, originalData])
 
   // Let's add a data resetter/randomizer to help
   // illustrate that flow...
   const resetData = () => setData(originalData)
 
   return (
-    <Styles>
+    <div className='interactive-table-container'>
+      <h2>{titleText}</h2>
       <button onClick={resetData}>Reset Data</button>
+      { addMode ?
+      <AddForm columns={columns} handleCreate={handleCreateAction}/>
+      :
       <Table
         columns={columns}
         data={data}
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
+        setPageSize={50}
+        handleDelete={handleDeleteAction}
       />
-    </Styles>
+          }
+      
+      {!addMode ? <button className="save" 
+              onClick={() => handleSaveAction(changedData, data)}>
+      Save
+      </button> : <></>}
+
+      <button className="addNew" onClick={() => setAddMode(!addMode)}>{!addMode ? "Add New" : "Edit Existing"} {titleText}</button>
+    </div>
   )
 }
 
-export default App
+export default TableInteractive
