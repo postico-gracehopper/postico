@@ -104,15 +104,3 @@ div.add-form-container > button.submit-record {
   border: solid 1px black;
   margin: 1rem;
   padding: 1rem;
-}
-
-table {
-  margin: 10px auto;
-  border: 1px solid black;
-  border-collapse: collapse;
-  text-align: center;
-}
-
-td, tr {
-  border: 1px solid black;
-}
