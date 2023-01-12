@@ -10,6 +10,7 @@ const AddToCartButton = (product, quantity) => {
   const productId = product.id;
 
   const handleAddToCart = async (evt) => {
+    evt.preventDefault();
     try {
       await axios.post('/api/orders', { userId, productId, quantity });
     } catch (err) {
