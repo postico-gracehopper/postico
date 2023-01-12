@@ -20,12 +20,12 @@ const { faker } = require('@faker-js/faker');
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
-
+  const NUM_USERS_AND_PRODUCTS = 100
   let users = [];
   let products = [];
 
   // MAKE 100 FAKE USERS: We can change number of fake seeded users below, from 100.
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < NUM_USERS_AND_PRODUCTS; i++) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
@@ -54,7 +54,7 @@ async function seed() {
   }
 
   // MAKE 100 FAKE PRODUCTS: Can change number of products below as well.
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < NUM_USERS_AND_PRODUCTS; i++) {
     let type = genCategory();
     let newProduct = {
       name: faker.commerce.productAdjective() + ' ' + type,
@@ -113,6 +113,7 @@ async function seed() {
       'https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg',
     category: 'Skis',
   });
+
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).
