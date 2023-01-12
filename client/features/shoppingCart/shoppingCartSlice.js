@@ -21,7 +21,7 @@ const shoppingCartSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(addNewOrder.fulfilled, (state, action) => {
+    builder.addCase(fetchAllUserItemsAsync.fulfilled, (state, action) => {
       state.shoppingCart = action.payload;
     });
   },

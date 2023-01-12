@@ -82,3 +82,27 @@ div.add-form-container > button.submit-record {
   left: 85%;
   top: 20px;
 }
+
+.cartContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.itemsColumn {
+  flex: 2;
+}
+
+.summaryColumn {
+  flex: 1;
+}
+
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: solid 1px black;
+  margin: 1rem;
+  padding: 1rem;
+}
+

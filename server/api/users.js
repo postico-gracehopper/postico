@@ -102,17 +102,11 @@ router.get('/:id', verifyInteger, async (req, res, next) => {
 // })
 //
 
-// TODO: talk to blake about the above code and PUBLIC_USER_FIELDS
 //  fetch the order for a given user, including its associated orderItems
 router.get('/:id/cart', verifyInteger, async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const orders = await Order.findAll({
-      where: {
-        userId: id,
-      },
-      include: OrderItem,
-    });
+    const user = await User.findByPk(req.user.id);
+    const orders = await user.getCart();
     res.json(orders);
   } catch (err) {
     next(err);
