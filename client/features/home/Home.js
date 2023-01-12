@@ -10,11 +10,24 @@ const Home = (props) => {
 
   return (
     <div>
-      <p>Welcome, {username}</p>
-      <img src="https://www.ischgl.com/media/ischgl/WINTER/SKIGEBIET/image-thumb__53475433__og-image/SKI_ALPIN_2022%20%287%29.webp" />
-      <Link to="/products">
-        <button type="button">Shop</button>
-      </Link>
+      <div class="relative overflow-hidden">
+        <img
+          src="https://www.ischgl.com/media/ischgl/WINTER/SKIGEBIET/image-thumb__53475433__og-image/SKI_ALPIN_2022%20%287%29.webp"
+          className="object-cover w-full h-full"
+        />
+        <p className="absolute bottom-0 right-0 text-4xl font-plex text-ecru">
+          <b>
+            Welcome, <i>{username}</i>
+          </b>
+          <div>
+            <Link to="/products">
+              <button type="button" className="hover:text-tahiti">
+                Shop
+              </button>
+            </Link>
+          </div>
+        </p>
+      </div>
     </div>
   );
 };

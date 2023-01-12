@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../app/store';
-import logo from '../../../public/images/placeholder-logo.png';
+// import logo from '../../../public/images/placeholder-logo.png';
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -15,13 +15,12 @@ const Navbar = () => {
 
   return (
     <div>
-      <h1>Ski store</h1>
-      <nav className="relative container mx-auto px-8 bg-[#F3E8D0]">
+      <nav className="relative container mx-auto px-8 bg-[#f5f4f0]">
         {/* Flex container */}
         <div className="flex items-center justify-evenly">
-          {/* Logo */}
-          <div className="pt-1">
-            <img src={logo} width="200px" />
+          {/* Logo - was previously image, using text for simplicity for now */}
+          <div className="text-3xl font-bungee pl-1 pr-3 text-tahiti">
+            Placeholder
           </div>
           {isLoggedIn ? (
             <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">

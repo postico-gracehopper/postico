@@ -655,8 +655,20 @@ body {
   }
 }
 
+.absolute {
+  position: absolute;
+}
+
 .relative {
   position: relative;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.right-0 {
+  right: 0px;
 }
 
 .col-span-2 {
@@ -688,8 +700,24 @@ body {
   display: none;
 }
 
+.h-full {
+  height: 100%;
+}
+
+.h-48 {
+  height: 12rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-48 {
+  width: 12rem;
 }
 
 .max-w-7xl {
@@ -714,17 +742,26 @@ body {
   margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .overscroll-none {
   overscroll-behavior: none;
 }
 
-.bg-\[\#F3E8D0\] {
+.bg-\[\#f5f4f0\] {
   --tw-bg-opacity: 1;
-  background-color: rgb(243 232 208 / var(--tw-bg-opacity));
+  background-color: rgb(245 244 240 / var(--tw-bg-opacity));
 }
 
 .bg-fixed {
   background-attachment: fixed;
+}
+
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .p-2 {
@@ -748,12 +785,30 @@ body {
   padding-left: 2.5rem;
 }
 
-.pt-1 {
-  padding-top: 0.25rem;
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pr-3 {
+  padding-right: 0.75rem;
 }
 
 .font-plex {
   font-family: IBM Plex Sans, sans-serif;
+}
+
+.font-bungee {
+  font-family: Bungee, sans-serif;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-sm {
@@ -772,6 +827,16 @@ body {
 
 .tracking-widest {
   letter-spacing: 0.1em;
+}
+
+.text-ecru {
+  --tw-text-opacity: 1;
+  color: rgb(245 244 240 / var(--tw-text-opacity));
+}
+
+.text-tahiti {
+  --tw-text-opacity: 1;
+  color: rgb(64 181 195 / var(--tw-text-opacity));
 }
 
 .filter {
