@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTable, usePagination } from 'react-table'
-import userData from "./Users"
+
 
 // Create an editable cell renderer
 const EditableCell = ({

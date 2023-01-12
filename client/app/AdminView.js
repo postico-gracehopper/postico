@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTable } from 'react-table'; 
-import userData from "./Users"
 import TableIneractive from "./TableInteractive"
 
 
