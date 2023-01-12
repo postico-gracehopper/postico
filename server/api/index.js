@@ -2,10 +2,11 @@ const router = require('express').Router()
 const { attachUserDataToReq } = require("./apiHelpers")
 
 // attachUserDataTo Req
-router.use(attachUserDataToReq)
-router.use('/products', require("./products")) // should be wide open, besides put, delete, and post
-router.use('/users', require('./users')) // restrict to user
-router.use('/orders', require("./orders")) // restrict to user
+router.use(attachUserDataToReq);
+router.use('/products', require('./products')); // should be wide open, besides put, delete, and post
+router.use('/users', require('./users')); // restrict to user
+router.use('/orders', require('./orders')); // restrict to user
+router.use('/stripe', require('./stripe'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
@@ -19,3 +20,4 @@ router.use((req, res, next) => {
 module.exports = router
 
 
+module.exports = router;

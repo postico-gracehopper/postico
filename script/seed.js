@@ -79,9 +79,9 @@ async function seed() {
   // Hardcode a single admin user in the seed.
   User.create({
     firstName: 'Admin1',
-    password: 'blackdiamond',
     lastName: 'Postico',
     username: 'Admin1',
+    password: 'blackdiamond',
     email: 'admin1@posticogroup.com',
     addressLine1: '123 Admin Road',
     city: 'New York',
