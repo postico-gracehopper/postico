@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTable } from 'react-table'; 
-import TableIneractive from "./TableInteractive"
+import TableInteractive from "./TableInteractive"
 
 
 const AdminView = () => {
@@ -68,13 +68,13 @@ const AdminView = () => {
 
     return <div>
         {users && users.length ? 
-        <TableIneractive title="Users" 
+        <TableInteractive title="Users" 
                         data={users} 
                         handleSave={updateUsers}
                         handleDelete={deleteUser}
                         handleCreate={createUser}  /> : ""}
         {products && products.length ? 
-        <TableIneractive title="Products" 
+        <TableInteractive title="Products" 
                             data={products} 
                             handleSave={updateProduct} 
                             handleDelete={deleteProduct}
