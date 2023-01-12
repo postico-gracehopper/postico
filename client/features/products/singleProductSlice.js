@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const fetchSingleProductAsync = createAsyncThunk(
-  '/campus/fetchSingleProduct',
+  '/products/fetchSingleProduct',
   async (id) => {
     try {
       const { data } = await axios.get(`/api/products/${id}`);
@@ -16,7 +16,7 @@ export const fetchSingleProductAsync = createAsyncThunk(
 const singleProductSlice = createSlice({
   name: 'singleProduct',
   initialState: {},
-  reucers: {},
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchSingleProductAsync.fulfilled, (state, action) => {
       return action.payload;
