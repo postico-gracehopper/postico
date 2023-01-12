@@ -1,47 +1,6 @@
 import React from 'react'
 import { useTable, usePagination } from 'react-table'
-
-import makeData from './makeData'
-
-const Styles = styled.div`
-  padding: 1rem;
-
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-
-      input {
-        font-size: 1rem;
-        padding: 0;
-        margin: 0;
-        border: 0;
-      }
-    }
-  }
-
-  .pagination {
-    padding: 0.5rem;
-  }
-`
+import userData from "./Users"
 
 // Create an editable cell renderer
 const EditableCell = ({
@@ -52,9 +11,10 @@ const EditableCell = ({
 }) => {
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue)
-
+  const [beenChanged, setBeenChanged] = React.useState(false)
   const onChange = e => {
     setValue(e.target.value)
+    setBeenChanged(!(e.target.value === String(initialValue)))
   }
 
   // We'll only update the external data when the input is blurred
@@ -66,8 +26,15 @@ const EditableCell = ({
   React.useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
+  
+  if (typeof value === 'boolean'){
+    if (!value) {
+      setValue("false")
+    }
+  }
 
-  return <input value={value} onChange={onChange} onBlur={onBlur} />
+  return id === "id" ? <p style={{fontSize: "0.75rem", margin: "0px", padding: "0px"}}>{value}</p> : 
+      <input className={beenChanged ? "td-input-changed" : ""} value={value || ""} onChange={onChange} onBlur={onBlur} />
 }
 
 // Set our editable cell renderer as the default Cell renderer
@@ -108,6 +75,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
       // That way we can call this function from our
       // cell renderer!
       updateMyData,
+      initialState: {pageSize: 25}
     },
     usePagination
   )
@@ -115,7 +83,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   // Render the UI for your table
   return (
     <>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="interactive-table">
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -186,51 +154,16 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
   )
 }
 
-function App() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: 'firstName',
-          },
-          {
-            Header: 'Last Name',
-            accessor: 'lastName',
-          },
-        ],
-      },
-      {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: 'age',
-          },
-          {
-            Header: 'Visits',
-            accessor: 'visits',
-          },
-          {
-            Header: 'Status',
-            accessor: 'status',
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress',
-          },
-        ],
-      },
-    ],
-    []
-  )
+function TableInteractive({data: ogData, handleSave: handleSaveAction, title: titleText}) {
+  const columns = React.useMemo(() => Object.keys(ogData[0]).map(k => {
+    return {Header: k[0].toUpperCase() + k.slice(1,), accessor: k}
+  }))
 
-  const [data, setData] = React.useState(() => makeData(20))
+  const [data, setData] = React.useState(ogData)
   const [originalData] = React.useState(data)
-  const [skipPageReset, setSkipPageReset] = React.useState(false)
+  const [skipPageReset, setSkipPageReset] = React.useState(true)
 
+  const changedData = data.filter((entry, i) => JSON.stringify(entry) !== JSON.stringify(originalData[i]))
   // We need to keep the table from resetting the pageIndex when we
   // Update data. So we can keep track of that flag with a ref.
 
@@ -257,24 +190,28 @@ function App() {
   // so that if data actually changes when we're not
   // editing it, the page is reset
   React.useEffect(() => {
-    setSkipPageReset(false)
-  }, [data])
+    setSkipPageReset(true)
+    setData(ogData)
+  }, [ogData])
 
   // Let's add a data resetter/randomizer to help
   // illustrate that flow...
   const resetData = () => setData(originalData)
 
   return (
-    <Styles>
+    <div className='interactive-table-container'>
+      <h2>{titleText}</h2>
       <button onClick={resetData}>Reset Data</button>
       <Table
         columns={columns}
         data={data}
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
+        setPageSize={25}
       />
-    </Styles>
+      <button className="save" onClick={() => handleSaveAction(changedData)}>Save changes</button>
+    </div>
   )
 }
 
-export default App
+export default TableInteractive

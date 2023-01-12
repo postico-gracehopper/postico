@@ -30,3 +30,29 @@ table {
 td, tr {
   border: 1px solid black;
 }
+
+table.interactive-table {
+  background-color: white;
+}
+
+.interactive-table-container{
+  background-color: lightblue;
+  margin: 100px auto;
+}
+
+.interactive-table-container > h2 {
+  text-align: center;
+}
+
+.interactive-table-container > button.save {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 90%;
+  bottom: 25px;
+
+}
+
+.td-input-changed {
+  background-color: yellow;
+}

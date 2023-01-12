@@ -6,7 +6,6 @@ import Home from '../features/home/Home';
 import { me } from './store';
 import Products from '../features/products/productComponent';
 import AdminView from './AdminView';
-import AdminView2 from "./AdminView2"
 
 /**
  * COMPONENT
@@ -44,7 +43,7 @@ const AppRoutes = () => {
           />
           <Route
             path="/adminView"
-            element={<AdminView2 />}
+            element={<AdminView />}
           />
         </Routes>
       )}
