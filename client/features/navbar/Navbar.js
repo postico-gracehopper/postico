@@ -40,7 +40,7 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <div className="hidden md:flex space-x-6 text-xs uppercase font-plex tracking-widest">
+            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
               {/* The navbar will show these links before you log in */}
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
