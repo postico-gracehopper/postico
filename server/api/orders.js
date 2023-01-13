@@ -63,7 +63,7 @@ router.post('/', async (req, res, next) => {
       const orderItem = await OrderItem.create({
         quantity: quantity,
         productId: productId,
-        orderId: orderId,
+        orderId: order.id,
       });
       // Update the orderItem's total price using the model's instance method
       orderItem.updateTotalPrice();
