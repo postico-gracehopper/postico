@@ -7,6 +7,8 @@ import { me } from './store';
 import Products from '../features/products/productComponent';
 import ShoppingCart from '../features/shoppingCart/ShoppingCart';
 import SingleProduct from '../features/products/singleProductComponent';
+import Users from '../features/users/userComponent';
+import SingleUser from '../features/users/singleUserComponent';
 import AdminRouter from '../features/adminView/AdminRouter';
 import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
 
@@ -40,6 +42,8 @@ const AppRoutes = () => {
           <Route path="/adminView/*" element={<AdminRouter />} />
           <Route path="/checkout" element={<ShoppingCart />} />
           <Route path="/products/:id" element={<SingleProduct />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<SingleUser />} />
         </Routes>
       ) : (
         <Routes>
