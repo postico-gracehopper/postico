@@ -5,3 +5,4 @@ public/bundle.js
 public/bundle.js.map
 bundle.js.LICENSE.txt
 package-lock.json
+.DS_Store
