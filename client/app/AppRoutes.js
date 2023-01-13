@@ -8,7 +8,7 @@ import Products from '../features/products/productComponent';
 import AdminView from './AdminView';
 import ShoppingCart from '../features/shoppingCart/ShoppingCart';
 import SingleProduct from '../features/products/singleProductComponent';
-
+import Users from '../features/users/userComponent';
 /**
  * COMPONENT
  */
@@ -31,6 +31,7 @@ const AppRoutes = () => {
           <Route path="/adminView" element={<AdminView />} />
           <Route path="/checkout" element={<ShoppingCart />} />
           <Route path="/products/:id" element={<SingleProduct />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       ) : (
         <Routes>
@@ -46,10 +47,7 @@ const AppRoutes = () => {
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
-          <Route
-            path="/adminView"
-            element={<AdminView />}
-          />
+          <Route path="/adminView" element={<AdminView />} />
           <Route path="/checkout" element={<ShoppingCart />} />
         </Routes>
       )}
