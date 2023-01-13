@@ -7,6 +7,7 @@ import { me } from './store';
 import Products from '../features/products/productComponent';
 import ShoppingCart from '../features/shoppingCart/ShoppingCart';
 import SingleProduct from '../features/products/singleProductComponent';
+import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
 import AdminRouter from '../features/adminView/AdminRouter';
 /**
  * COMPONENT
@@ -14,11 +15,19 @@ import AdminRouter from '../features/adminView/AdminRouter';
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const userId = useSelector((state) => state.auth.me.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(me());
-  }, []);
+    console.log('ENTER APPROUTES USE EFFECT');
+    if (userId) {
+      console.log('APPROUTE USERID: ', userId);
+      dispatch(fetchAllUserItemsAsync(userId));
+    } else {
+      //clear cart action reducer
+      dispatch(me());
+    }
+  }, [userId]);
 
   return (
     <div>
