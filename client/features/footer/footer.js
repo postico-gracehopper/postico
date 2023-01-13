@@ -24,9 +24,12 @@ const Footer = () => {
 
           <div className="flex items-center justify-center">
             {isAdmin ? (
-              <p className="font-xl mb-2 uppercase font-plex tracking-widest">
+              <a
+                className="font-xl mb-2 uppercase font-plex tracking-widest"
+                href="/adminview"
+              >
                 Admin dashboard
-              </p>
+              </a>
             ) : (
               <p className="font-xl mb-2 uppercase font-plex tracking-widest">
                 Weather la la
