@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
 import {
   selectShoppingCart,
+  selectSubTotal,
   fetchAllUserItemsAsync,
 } from './shoppingCartSlice';
 
@@ -13,12 +14,13 @@ const ShoppingCart = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchAllUserItemsAsync(userId));
-  }, [dispatch]);
+  const items = useSelector((state) => state.shoppingCart.orderItems);
 
-  const shoppingCart = useSelector(selectShoppingCart);
-  const items = shoppingCart.orderItems;
+  const subTotal = useSelector((state) => state.shoppingCart.subTotal);
+
+  // useEffect(() => {
+  //   dispatch(fetchAllUserItemsAsync(userId));
+  // }, []);
 
   return (
     <>
@@ -43,9 +45,19 @@ const ShoppingCart = () => {
         <div className="summaryColumn">
           <h3>Summary</h3>
           <ul>
-            <li>Subtotal: ${shoppingCart.total}</li>
-            <li>Shipping: Free</li>
-            <li>Total: ${shoppingCart.total}</li>
+            {items && items.length ? (
+              <>
+                <li>Subtotal: ${subTotal}</li>
+                <li>Shipping: Free</li>
+                <li>Total: ${subTotal}</li>
+              </>
+            ) : (
+              <>
+                <li>Subtotal: -</li>
+                <li>Shipping: -</li>
+                <li>Total: -</li>
+              </>
+            )}
           </ul>
         </div>
       </div>
