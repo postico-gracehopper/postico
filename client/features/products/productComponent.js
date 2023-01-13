@@ -14,10 +14,10 @@ const Products = () => {
 
   return (
     <div>
-      <ul>
+      <div>
         {products.map((product) => {
           return (
-            <li key={product.id}>
+            <div key={product.id}>
               <Link to={`/products/${product.id}`}>
                 <img src={product.image} className="w-48 h-48" />
                 <span>
@@ -29,10 +29,10 @@ const Products = () => {
                 <p>{product.description}</p>
               </Link>
               <AddToCartButton product={product} quantity={1} />
-            </li>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };

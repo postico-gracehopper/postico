@@ -13,6 +13,24 @@ export const fetchProductsAsync = createAsyncThunk(
   }
 );
 
+export const createProductAsync = createAsyncThunk(
+  '/products/createProduct',
+  async ({ name, description, price, image, category }) => {
+    try {
+      const { data } = await axios.post('/api/products', {
+        name,
+        description,
+        price,
+        image,
+        category,
+      });
+      return data;
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 const productsSlice = createSlice({
   name: 'products',
   initialState: [],
@@ -20,6 +38,9 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(createProductAsync.fulfilled, (state, action) => {
+      return state.push(action.payload);
     });
   },
 });

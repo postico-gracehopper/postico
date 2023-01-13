@@ -10,11 +10,11 @@ import AddToCartButton from '../addToCartButton/AddToCartButton';
 const SingleProduct = () => {
   const dispatch = useDispatch();
   const product = useSelector(selectSingleProduct);
-  const { productId } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchSingleProductAsync(productId));
-  }, [productId]);
+    dispatch(fetchSingleProductAsync(id));
+  }, [id]);
 
   return (
     <div>
