@@ -1,3 +1,6 @@
+// When we ge to the point of allowing users to view/edit their personal info I think we can use this component
+// and then maybe include a payment info section below as well as a form to change their info.
+
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUsers, fetchUsersAsync } from './usersSlice';
@@ -18,9 +21,9 @@ const Users = () => {
           return (
             <Link to={`/users/${user.id}`}>
               <div className="bg-white mb-6 rounded-lg shadow-lg" key={user.id}>
-                <h2>
+                <p>
                   {user.firstName} {user.lastName}
-                </h2>
+                </p>
                 <p>User Id: {user.id}</p>
                 <p>username: {user.username}</p>
                 <p>Email: {user.email}</p>

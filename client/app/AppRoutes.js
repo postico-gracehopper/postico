@@ -9,6 +9,7 @@ import AdminView from './AdminView';
 import ShoppingCart from '../features/shoppingCart/ShoppingCart';
 import SingleProduct from '../features/products/singleProductComponent';
 import Users from '../features/users/userComponent';
+import SingleUser from '../features/users/singleUserComponent';
 /**
  * COMPONENT
  */
@@ -32,6 +33,7 @@ const AppRoutes = () => {
           <Route path="/checkout" element={<ShoppingCart />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<SingleUser />} />
         </Routes>
       ) : (
         <Routes>
