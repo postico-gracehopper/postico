@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
-  const dispatch = useDispatch();
+  const isAdmin = useSelector((state) => !!state.auth.me.adminRights);
 
   return (
     <footer className="bg-stone text-center lg:text-left mt-auto">
@@ -24,9 +23,15 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center justify-center">
-            <p className="font-xl mb-2 uppercase font-plex tracking-widest">
-              Admin dashboard
-            </p>
+            {isAdmin ? (
+              <p className="font-xl mb-2 uppercase font-plex tracking-widest">
+                Admin dashboard
+              </p>
+            ) : (
+              <p className="font-xl mb-2 uppercase font-plex tracking-widest">
+                Weather la la
+              </p>
+            )}
           </div>
         </div>
         <div className="text-center text-[10px] font-plex uppercase tracking-widest">
