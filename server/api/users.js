@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { User, Order, OrderItem },
+  models: { User, Order, OrderItem, Product },
 } = require('../db');
 const {
   verifyInteger,
@@ -87,8 +87,16 @@ router.get('/:id', verifyInteger, async (req, res, next) => {
 //  fetch the order for a given user, including its associated orderItems
 router.get('/:id/cart', verifyInteger, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.user.id);
-    const orders = await user.getCart();
+    const user = await User.findByPk(req.params.id);
+    const orders = await Order.findOne({
+      where: { userId: user.id, orderPaid: false },
+      include: {
+        model: OrderItem,
+        include: {
+          model: Product,
+        },
+      },
+    });
     res.json(orders);
   } catch (err) {
     next(err);
