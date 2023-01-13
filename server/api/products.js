@@ -31,6 +31,24 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/', async (req, res, next) => {
+  try {
+    // $ add server-side verification
+    const changedProducts = req.body
+    if (Array.isArray(changedProducts)){
+        changedProducts.forEach(async user => {
+          await Product.update(user, {where: {id: user.id}})
+        })
+    } else {
+      await Product.update(changedProducts, {where: {id: changedProducts.id}})
+    }
+    res.status(201).send();
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
