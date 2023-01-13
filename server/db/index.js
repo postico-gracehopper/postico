@@ -33,13 +33,16 @@ User.prototype.addToCart = async function(productId, qty){
       }})
     await oItem.update({
       quantity: (oItemWasCreated ? qty : oItem.quantity + qty),
-      totalItemPrice: (oItemWasCreated ? product.price 
-        : oItem.totalItemPrice + product.price*qty)
+      totalItemPrice: (oItemWasCreated ? product.price*qty 
+        : Number(oItem.totalItemPrice) + product.price*qty)
+    })
+    await cart.update({
+      total: Number(cart.total) + product.price*qty
     })
 }
 
 User.prototype.getCart = async function(){
-  const [cart, wasCreated] = await Order.findOne({
+  const [cart, wasCreated] = await Order.findOrCreate({
     where: {
       userId: this.id,
       orderPaid: false
