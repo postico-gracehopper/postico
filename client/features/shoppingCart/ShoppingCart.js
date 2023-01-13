@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
+import Checkout from '../checkout/Checkout';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -29,7 +30,7 @@ const ShoppingCart = () => {
               <li>Cart empty!</li>
             )}
           </ul>
-          <button>Checkout</button> {/* placeholder */}
+          <Checkout amount={subTotal} />
           {/* TODO disable checkout button if cart empty */}
           <button>Keep shopping</button>
         </div>
