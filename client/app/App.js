@@ -13,6 +13,5 @@ const App = () => {
     </div>
   );
 };
-n;
 
 export default App;

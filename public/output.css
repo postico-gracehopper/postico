@@ -710,6 +710,14 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.mt-auto {
+  margin-top: auto;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .block {
   display: block;
 }
@@ -728,6 +736,10 @@ body {
 
 .hidden {
   display: none;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .h-full {
@@ -754,8 +766,16 @@ body {
   max-width: 80rem;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .content-center {
@@ -772,6 +792,10 @@ body {
 
 .justify-evenly {
   justify-content: space-evenly;
+}
+
+.gap-11 {
+  gap: 2.75rem;
 }
 
 .space-x-6 > :not([hidden]) ~ :not([hidden]) {
@@ -820,6 +844,11 @@ body {
   background-color: rgb(126 200 193 / var(--tw-bg-opacity));
 }
 
+.bg-stone {
+  --tw-bg-opacity: 1;
+  background-color: rgb(66 65 64 / var(--tw-bg-opacity));
+}
+
 .bg-anguilla {
   --tw-bg-opacity: 1;
   background-color: rgb(26 135 161 / var(--tw-bg-opacity));
@@ -845,6 +874,10 @@ body {
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .px-0 {
@@ -902,6 +935,15 @@ body {
 
 .font-bungee {
   font-family: Bungee, sans-serif;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-\[10px\] {
+  font-size: 10px;
 }
 
 .text-4xl {
@@ -1130,7 +1172,21 @@ div.add-form-container > button.submit-record {
 }
 
 @media (min-width: 868px) {
+  .md\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .md\:flex {
     display: flex;
+  }
+}
+
+@media (min-width: 976px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:text-left {
+    text-align: left;
   }
 }
