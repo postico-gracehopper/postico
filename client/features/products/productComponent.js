@@ -8,9 +8,9 @@ const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
 
-//   useEffect(() => {
-//     dispatch(fetchProductsAsync());
-//   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchProductsAsync());
+  }, [dispatch]);
 
   return (
     <div>
@@ -19,9 +19,11 @@ const Products = () => {
           return (
             <li key={product.id}>
               <Link to={`/products/${product.id}`}>
-                <img src={product.imageUrl} />
+                <img src={product.image} className="w-48 h-48" />
                 <span>
-                  <h2>{product.name}</h2>
+                  <h2 className="text-sm uppercase font-plex tracking-widest">
+                    {product.name}
+                  </h2>
                   <h2>${product.price}</h2>
                 </span>
                 <p>{product.description}</p>
