@@ -7,6 +7,7 @@
     "build": "webpack",
     "build:tailwind": "tailwindcss -i public/input.css -o public/output.css",
     "build:dev": "npm run build -- --watch --mode=development",
+    "build:devtail": "npm run build:dev && npm run build:tailwind",
     "seed": "node script/seed.js",
     "start": "node server",
     "start:dev": "npm run build:dev & npm run start-server",
