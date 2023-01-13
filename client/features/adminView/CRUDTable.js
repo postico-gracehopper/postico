@@ -64,8 +64,8 @@ function AddForm({columns, handleCreate}){
           {i === 0 ? <p>{i}</p> : 
           <EditableCell value={""} 
                 row={1} 
-                onBlur={console.log} 
-                onChange={console.log} 
+                onBlur={() => ""} 
+                onChange={() => ""} 
                 column={i}
                 updateMyData={updateWorkingRecord(cell.accessor)}/>
       }

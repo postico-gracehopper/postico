@@ -15,7 +15,6 @@ import AdminRouter from '../features/adminView/AdminRouter';
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const dispatch = useDispatch();
-  console.log("is logged in:", isLoggedIn)
 
   useEffect(() => {
     dispatch(me());
@@ -38,10 +37,11 @@ const AppRoutes = () => {
             path="/*"
             element={<AuthForm name="login" displayName="Login" />}
           />
+          <Route path="/products" element={<Products />} />
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
-          />
+          /> 
           <Route
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}

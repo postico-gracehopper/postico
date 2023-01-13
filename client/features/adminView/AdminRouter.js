@@ -1,12 +1,10 @@
 import { Routes, Route, Link, useLocation } from "react-router-dom"
 import React, { useEffect, useState } from "react";
-import AdminView from "./AdminView";
 import AdminProductsView from "./AdminProductsView";
 import AdminUsersView from "./AdminUsersView";
 import AdminOrdersView from "./AdminOrdersView"
 const AdminRouter = () => {
     const current = useLocation().pathname.split('/').slice(2,)[0]
-    console.log(current)
     const navBarLocs = ["products", "users", "orders"]
     
     return <div id="admin-router-container">
