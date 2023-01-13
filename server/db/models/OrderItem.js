@@ -1,8 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-// const {
-//   models: { Product },
-// } = require('../index');
+const Product = require('./Product');
+const Order = require('./Order');
 
 const OrderItem = db.define('orderItem', {
   quantity: {
@@ -15,26 +14,57 @@ const OrderItem = db.define('orderItem', {
   },
 });
 
+module.exports = OrderItem;
+
 // instanceMethods
 
-// method to update totalItemPrice... not sure if we can do this using the productId that's yet to be associated...
 // TODO check calculations on cents
-// OrderItem.prototype.updateTotalPrice = async function () {
-//   const previousPrice = this.totalItemPrice;
-//   const product = await Product.findOne({ where: { id: this.productId } });
-//   this.totalItemPrice = this.quantity * product.price;
-//   console.log(
-//     `Total order item price updated from '${previousPrice}' to '${this.totalItemPrice}'`
-//   );
-// };
+const updateItemPrices = async (orderItem) => {
+  console.log('TESTING ITEM PRICE UPDATE METHOD');
+  const previousPrice = orderItem.totalItemPrice;
+  const product = await Product.findByPk(orderItem.productId);
+  orderItem.totalItemPrice = orderItem.quantity * product.price;
+  console.log(
+    `OrderItem.id: ${orderItem.id} -- Order item price changed by ${
+      orderItem.totalItemPrice - previousPrice
+    } from ${previousPrice} to ${orderItem.totalItemPrice}`
+  );
+  await orderItem.save();
+};
+
+const updateTotalOrderPrice = async (orderItem) => {
+  console.log('TESTING ORDER SUBTOTAL METHOD');
+  const orderItems = await OrderItem.findAll({
+    where: { orderId: orderItem.orderId },
+  });
+  const newPrice = orderItems.reduce((acc, item) => {
+    const num = +item.totalItemPrice;
+    return acc + num;
+  }, 0);
+  const order = await Order.findByPk(orderItem.orderId);
+  const previousSubTotal = order.total;
+  order.total = newPrice;
+  console.log(
+    `Order.id: ${order.id} -- Order subtotal changed by ${
+      order.total - previousSubTotal
+    } from ${previousSubTotal} to ${order.total}`
+  );
+  await order.save();
+};
 
 /**
  * hooks
  */
 
-// OrderItem.afterCreate(updateTotalPrice());
-// OrderItem.afterUpdate(updateTotalPrice());
-// OrderItem.afterSave(updateTotalPrice());
-// OrderItem.afterUpsert(updateTotalPrice());
-
-module.exports = OrderItem;
+OrderItem.afterCreate(async (orderItem) => {
+  updateItemPrices(orderItem);
+  updateTotalOrderPrice(orderItem);
+});
+// OrderItem.afterSave(async (orderItem) => {
+//   updateItemPrices(orderItem);
+//   updateTotalOrderPrice(orderItem);
+// });
+OrderItem.afterUpdate(async (orderItem) => {
+  updateItemPrices(orderItem);
+  updateTotalOrderPrice(orderItem);
+});

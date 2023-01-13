@@ -1,18 +1,22 @@
 import axios from 'axios';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectMe } from '../auth/authSlice';
+import { fetchAllUserItemsAsync } from '../shoppingCart/shoppingCartSlice';
 
-// Bryan, from your product's components you should be sending a product object and a quantity number (can be 1 for now)
-const AddToCartButton = (product, quantity) => {
+const AddToCartButton = ({ product, quantity }) => {
   const data = useSelector(selectMe);
   const userId = data.id;
+
   const productId = product.id;
+
+  const dispatch = useDispatch();
 
   const handleAddToCart = async (evt) => {
     evt.preventDefault();
     try {
       await axios.post('/api/orders', { userId, productId, quantity });
+      dispatch(fetchAllUserItemsAsync(userId));
     } catch (err) {
       console.error('Failed to add-to-cart (POST /api/orders)', err);
       error.innerText = err.response

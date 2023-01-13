@@ -1,4 +1,10 @@
 'use strict';
+const {
+  db,
+  models: { User, Product, Order, OrderItem  },
+} = require('../server/db');
+const { faker } = require('@faker-js/faker');
+
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -11,21 +17,16 @@ const genCategory = () => {
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
-const {
-  db,
-  models: { User, Product, ShoppingCart, ShoppingCartItem },
-} = require('../server/db');
-const { faker } = require('@faker-js/faker');
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
-
+  const NUM_USERS_AND_PRODUCTS = 100
   let users = [];
   let products = [];
 
   // MAKE 100 FAKE USERS: We can change number of fake seeded users below, from 100.
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < NUM_USERS_AND_PRODUCTS; i++) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
@@ -54,7 +55,7 @@ async function seed() {
   }
 
   // MAKE 100 FAKE PRODUCTS: Can change number of products below as well.
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < NUM_USERS_AND_PRODUCTS; i++) {
     let type = genCategory();
     let newProduct = {
       name: faker.commerce.productAdjective() + ' ' + type,
@@ -66,6 +67,36 @@ async function seed() {
 
     products.push(newProduct);
   }
+
+  // for (let i=0; i<NUM_USERS_AND_PRODUCTS*2; i++){
+  //   const u = Math.floor(Math.random()*NUM_USERS_AND_PRODUCTS)
+  //   const p = Math.floor(Math.random()*NUM_USERS_AND_PRODUCTS)
+  //   const [order, created] = await Order.findOrCreate({
+  //     where: {
+  //       userId: u,
+  //       orderPaid: false,
+  //     }
+  //   })
+  //   if (created) {
+  //     const orderItem = await OrderItem.create({
+  //       quantity: 1,
+  //       productId: p,
+  //       orderId: order.id
+  //     });
+  //   } else {
+  //     const [orderItem, createdOrderItem] = await OrderItem.findOrCreate({
+  //       where: {
+  //         orderId: order.id,
+  //         productId: p,
+  //       },
+  //       defaults: {
+  //         // if it is created...
+  //         orderId: order.id, // associate the order
+  //         productId: p, // associate the product
+  //         quantity: 1, // set it's quantity
+  //       },
+  //   })
+  // }}
 
   // For each item in the arrays we've made, create a new instance in the database.
   users.forEach(async (user) => {
@@ -113,6 +144,7 @@ async function seed() {
       'https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg',
     category: 'Skis',
   });
+
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).
