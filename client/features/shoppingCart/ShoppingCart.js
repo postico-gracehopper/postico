@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
 import Checkout from '../checkout/Checkout';
+import { Link } from 'react-router-dom';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -32,7 +33,9 @@ const ShoppingCart = () => {
           </ul>
           <Checkout amount={subTotal} />
           {/* TODO disable checkout button if cart empty */}
-          <button>Keep shopping</button>
+          <Link to="/products">
+            <button>Keep shopping</button>
+          </Link>
         </div>
         <div className="summaryColumn">
           <h3>Summary</h3>
