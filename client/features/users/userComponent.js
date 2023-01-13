@@ -16,19 +16,21 @@ const Users = () => {
       <div>
         {users.map((user) => {
           return (
-            <div className="bg-white mb-6 rounded-lg shadow-lg" key={user.id}>
-              <h2>
-                {user.firstName} {user.lastName}
-              </h2>
-              <p>User Id: {user.id}</p>
-              <p>username: {user.username}</p>
-              <p>Email: {user.email}</p>
-              <p>Address Line 1: {user.addressLine1}</p>
-              <p>Adress Line 2: {user.addressLine2}</p>
-              <p>City: {user.city}</p>
-              <p>Zip Code: {user.zipCode}</p>
-              <p>Admin: {user.adminRights ? 'Yes' : 'No'}</p>
-            </div>
+            <Link to={`/users/${user.id}`}>
+              <div className="bg-white mb-6 rounded-lg shadow-lg" key={user.id}>
+                <h2>
+                  {user.firstName} {user.lastName}
+                </h2>
+                <p>User Id: {user.id}</p>
+                <p>username: {user.username}</p>
+                <p>Email: {user.email}</p>
+                <p>Address Line 1: {user.addressLine1}</p>
+                <p>Adress Line 2: {user.addressLine2}</p>
+                <p>City: {user.city}</p>
+                <p>Zip Code: {user.zipCode}</p>
+                <p>Admin: {user.adminRights ? 'Yes' : 'No'}</p>
+              </div>
+            </Link>
           );
         })}
       </div>
