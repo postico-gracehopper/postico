@@ -48,15 +48,15 @@ router.post('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     // $ add server-side verification
-    const changedUsers = req.body
-    if (Array.isArray(changedUsers)){
-        changedUsers.forEach(async user => {
-          await User.update(user, {where: {id: user.id}})
-        })
+    const changedUsers = req.body;
+    if (Array.isArray(changedUsers)) {
+      changedUsers.forEach(async (user) => {
+        await User.update(user, { where: { id: user.id } });
+      });
     } else {
-      await User.update(changedUsers, {where: {id: changedUsers.id}})
+      await User.update(changedUsers, { where: { id: changedUsers.id } });
     }
     res.status(201).send();
   } catch (err) {
@@ -134,7 +134,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // Restrict only Specific User or Admin
-router.delete('/:id', verifyInteger,  async (req, res, next) => {
+router.delete('/:id', verifyInteger, async (req, res, next) => {
   try {
     const { id } = req.params;
     await User.destroy({ where: { id: id } });
