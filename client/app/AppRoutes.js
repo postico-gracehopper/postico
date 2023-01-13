@@ -7,8 +7,8 @@ import { me } from './store';
 import Products from '../features/products/productComponent';
 import ShoppingCart from '../features/shoppingCart/ShoppingCart';
 import SingleProduct from '../features/products/singleProductComponent';
-import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
 import AdminRouter from '../features/adminView/AdminRouter';
+import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
 /**
  * COMPONENT
  */

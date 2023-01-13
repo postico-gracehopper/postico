@@ -311,7 +311,9 @@ nav.secondary-nav > .sec-nav-chosen {
   padding: 1rem;
 }
 
+
 /* Cart styling */
+
 .cartContent {
   display: flex;
   flex-direction: row;
