@@ -7,16 +7,18 @@ const AddProduct = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+  const [category, setCategory] = useState('');
 
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(createProductAsync({ name, description, price, image }));
+    dispatch(createProductAsync({ name, description, price, image, category }));
     setDescription('');
     setName('');
     setPrice('');
     setImage('');
+    setCategory('');
   };
 
   return (
@@ -50,6 +52,13 @@ const AddProduct = () => {
           name="image"
           value={image}
           onChange={(event) => setImage(event.target.value)}
+        />
+
+        <label htmlFor="category">Category:</label>
+        <input
+          name="category"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
         />
 
         <button

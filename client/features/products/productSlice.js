@@ -15,13 +15,14 @@ export const fetchProductsAsync = createAsyncThunk(
 
 export const createProductAsync = createAsyncThunk(
   '/products/createProduct',
-  async ({ name, description, price, image }) => {
+  async ({ name, description, price, image, category }) => {
     try {
       const { data } = await axios.post('/api/products', {
         name,
         description,
         price,
         image,
+        category,
       });
       return data;
     } catch (error) {
