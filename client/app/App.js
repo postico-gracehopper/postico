@@ -2,14 +2,17 @@ import React from 'react';
 
 import Navbar from '../features/navbar/Navbar';
 import AppRoutes from './AppRoutes';
+import Footer from '../features/footer/footer';
 
 const App = () => {
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <Navbar />
-      <AppRoutes />
+      <AppRoutes className="grow" />
+      <Footer />
     </div>
   );
 };
+n;
 
 export default App;
