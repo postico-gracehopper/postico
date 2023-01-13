@@ -2,11 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
-import {
-  selectShoppingCart,
-  selectSubTotal,
-  fetchAllUserItemsAsync,
-} from './shoppingCartSlice';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -17,10 +12,6 @@ const ShoppingCart = () => {
   const items = useSelector((state) => state.shoppingCart.orderItems);
 
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
-
-  // useEffect(() => {
-  //   dispatch(fetchAllUserItemsAsync(userId));
-  // }, []);
 
   return (
     <>
