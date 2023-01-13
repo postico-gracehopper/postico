@@ -9,7 +9,7 @@ const TOKEN = 'token';
 /*
   THUNKS
 */
-export const me = createAsyncThunk('auth/me', async (meState) => {
+export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
   const token = window.localStorage.getItem(TOKEN);
   try {
     const res = await axios.get('/auth/me', {
@@ -22,10 +22,9 @@ export const me = createAsyncThunk('auth/me', async (meState) => {
     }
     return res.data;
   } catch (err) {
-    if (err.response.data) {
-      return err.response.data;
-    } else {
-      return 'There was an issue with your request.';
+    if (err.response.data === "bad token") {
+      window.localStorage.removeItem(TOKEN)
+      thunkAPI.dispatch(me())
     }
   }
 });

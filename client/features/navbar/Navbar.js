@@ -29,6 +29,9 @@ const Navbar = () => {
               <Link to="/products" className="hover:text-tahiti">
                 Shop
               </Link>
+              <Link to="/checkout" className="hover:text-tahiti">
+                Checkout
+              </Link>
               <button
                 type="button"
                 onClick={logoutAndRedirectHome}
@@ -45,6 +48,9 @@ const Navbar = () => {
               </Link>
               <Link to="/products" className="hover:text-tahiti">
                 Shop
+              </Link>
+              <Link to="/checkout" className="hover:text-tahiti">
+                Checkout
               </Link>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>

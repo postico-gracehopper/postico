@@ -5,6 +5,9 @@ const db = require('../db');
 // } = require('../index');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Order = require('./Order');
+const OrderItem = require('./OrderItem');
+const Product = require('./Product');
 
 require('dotenv').config();
 
@@ -95,15 +98,28 @@ User.prototype.generateToken = function () {
 //   return orderId;
 // };
 
-// // Finds and returns a user's active order instance, including it's associated OrderItems and those OrderItem's associated products
+// Finds and returns a user's active order instance, including it's associated OrderItems and those OrderItem's associated products
 // User.prototype.getCart = async function () {
-//   const order = await Order.findOne({
-//     where: { userId: this.id, orderPaid: false },
+//   // const order = await Order.findOne({
+//   //   where: { userId: this.id, orderPaid: false },
+//   //   include: {
+//   //     model: OrderItem,
+//   //     include: Product,
+//   //   },
+//   // });
+//   const order = await this.get({
 //     include: {
-//       model: OrderItem,
-//       include: Product,
+//       model: 'Order',
+//       where: {
+//         orderPaid: false,
+//       },
+//       include: {
+//         model: 'OrderItem',
+//         include: 'Product',
+//       },
 //     },
 //   });
+
 //   if (order === null) {
 //     console.log('No active cart found for this user!');
 //   } else {
