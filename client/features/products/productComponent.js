@@ -19,9 +19,11 @@ const Products = () => {
           return (
             <div key={product.id}>
               <Link to={`/products/${product.id}`}>
-                <img src={product.image} />
+                <img src={product.image} className="w-48 h-48" />
                 <span>
-                  <h2>{product.name}</h2>
+                  <h2 className="text-sm uppercase font-plex tracking-widest">
+                    {product.name}
+                  </h2>
                   <h2>${product.price}</h2>
                 </span>
                 <p>{product.description}</p>
