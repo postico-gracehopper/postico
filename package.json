@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "build:tailwind": "tailwindcss -i public/input.css -o public/output.css",
     "build:dev": "npm run build -- --watch --mode=development",
+    "build:devtail": "npm run build:dev && npm run build:tailwind",
     "seed": "node script/seed.js",
     "start": "node server",
     "start:dev": "npm run build:dev & npm run start-server",
@@ -25,13 +27,16 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "faker": "^6.6.6",
+    "file-loader": "^6.2.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
     "react-stripe-checkout": "^2.6.3",
     "react-table": "^7.8.0",
     "sequelize": "^6.25.3",
-    "stripe": "^11.6.0"
+    "stripe": "^11.6.0",
+    "tailwindcss": "^3.2.4",
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

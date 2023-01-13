@@ -14,24 +14,43 @@ const Navbar = () => {
 
   return (
     <div>
-      <h1>FS-App-Template</h1>
-      <nav>
-        {isLoggedIn ? (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <Link to="/products">Shop</Link>
-            <button type="button" onClick={logoutAndRedirectHome}>
-              Logout
-            </button>
+      <nav className="relative container mx-auto px-8 bg-[#f5f4f0]">
+        {/* Flex container */}
+        <div className="flex items-center justify-evenly">
+          <div className="text-3xl font-bungee pl-1 pr-3 text-tahiti">
+            Placeholder
           </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        )}
+          {isLoggedIn ? (
+            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
+              {/* The navbar will show these links after you log in */}
+              <Link to="/home" className="hover:text-tahiti">
+                Home
+              </Link>
+              <Link to="/products" className="hover:text-tahiti">
+                Shop
+              </Link>
+              <button
+                type="button"
+                onClick={logoutAndRedirectHome}
+                className="hover:text-tahiti"
+              >
+                LOGOUT
+              </button>
+            </div>
+          ) : (
+            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
+              {/* The navbar will show these links before you log in */}
+              <Link to="/home" className="hover:text-tahiti">
+                Home
+              </Link>
+              <Link to="/products" className="hover:text-tahiti">
+                Shop
+              </Link>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
+          )}
+        </div>
       </nav>
       <hr />
     </div>

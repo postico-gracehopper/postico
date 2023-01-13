@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Yeseva One';
+    src: url('./fonts/YesevaOne-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Bitter';
+    src: url('./fonts/Bitter-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Bitter';
+    src: url('./fonts/Bitter-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Libre Baskerville';
+    src: url('./fonts/LibreBaskerville-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Libre Baskerville';
+    src: url('./fonts/LibreBaskerville-Italic.ttf');
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Libre Baskerville';
+    src: url('./fonts/LibreBaskerville-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Bungee';
+    src: url('./fonts/Bungee-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('./fonts/IBMPlexSans-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('./fonts/IBMPlexSans-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Patrick Hand SC';
+    src: url('./fonts/PatrickHandSC-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('./fonts/IBMPlexSans-BoldItalic.ttf');
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  body {
+    font-family: libre;
+  }
+}
+
+.snow-bg {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(36, 45, 36, 0.52),
+      rgba(0, 0, 0, 0.73)
+    ),
+    url('./images/mountain-bg.jpeg');
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  color: #242d24;
+}
+
+/* 
+a {
+  text-decoration: none;
+}
+
+label {
+  display: block;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
+table {
+  margin: 10px auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+td,
+tr {
+  border: 1px solid black;
+}
+
+table.interactive-table {
+  background-color: white;
+}
+
+.interactive-table-container {
+  background-color: lightblue;
+  margin: 100px auto;
+}
+
+.interactive-table-container > h2 {
+  text-align: center;
+}
+
+.interactive-table-container > button.save {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 85%;
+  bottom: 5%;
+}
+
+.interactive-table-container > button.addNew {
+  background-color: lightgreen;
+  color: black;
+  position: relative;
+  left: 65%;
+  bottom: 5%;
+}
+
+.td-input-changed {
+  background-color: yellow;
+}
+
+td.del-entry:hover {
+  filter: brightness(0.05);
+  cursor: pointer;
+}
+
+tr:hover {
+  filter: brightness(0.8);
+}
+
+div.add-form-container > button.submit-record {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 85%;
+  top: 20px;
+} */
+
+.cartContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.itemsColumn {
+  flex: 2;
+}
+
+.summaryColumn {
+  flex: 1;
+}
+
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: solid 1px black;
+  margin: 1rem;
+  padding: 1rem;
+}

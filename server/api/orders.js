@@ -42,12 +42,17 @@ router.get('/:id', async (req, res, next) => {
 
 // Specific user only
 router.post('/', async (req, res, next) => {
+  // console.log('ENTERED API');
   // Determine whether user has an order already and add appropriately to Order and OrderItem models
   // First time
   // Second time, new product
   // Second time, previous product
   try {
     const { userId, productId, quantity } = req.body;
+    console.log('🚀 ~ file: orders.js:54 ~ router.post ~ quantity', quantity);
+    console.log('🚀 ~ file: orders.js:54 ~ router.post ~ productId', productId);
+    console.log('🚀 ~ file: orders.js:54 ~ router.post ~ userId', userId);
+
     // Check to see if an Order exists or create it and associate with a user
     const [order, createdOrder] = await Order.findOrCreate({
       where: {
@@ -64,7 +69,6 @@ router.post('/', async (req, res, next) => {
         orderId: order.id,
       });
       // Update the orderItem's total price using the model's instance method
-      orderItem.updateTotalPrice();
     } else {
       // If an order wasn't created...
       // Check to see if an OrderItem exists for this product already exists or create it
@@ -84,6 +88,7 @@ router.post('/', async (req, res, next) => {
       if (!createdOrderItem) {
         // if the order item wasn't created, update it's quantity
         orderItem.quantity += quantity;
+        await orderItem.save();
       }
     }
     res.status(201).send();
