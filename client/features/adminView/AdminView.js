@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTable } from 'react-table'; 
-import TableInteractive from "./TableInteractive"
+import CRUDTable from "./CRUDTable";
 
 
 const AdminView = () => {
@@ -11,11 +11,11 @@ const AdminView = () => {
     useEffect(() => {
         if (users && !users.length) {
             // wrap in thunk, send with token
-            axios.get('api/users').then(response => {
+            axios.get('/api/users').then(response => {
                 setUsers(narrowFieldsUsers(response.data))
             })
             // wrap in thunk, send with token
-            axios.get('api/products').then(response => {
+            axios.get('/api/products').then(response => {
                 setProducts(narrowFieldsProducts(response.data))
             })
         }
@@ -68,13 +68,13 @@ const AdminView = () => {
 
     return <div>
         {users && users.length ? 
-        <TableInteractive title="Users" 
+        <CRUDTable title="Users" 
                         data={users} 
                         handleSave={updateUsers}
                         handleDelete={deleteUser}
                         handleCreate={createUser}  /> : ""}
         {products && products.length ? 
-        <TableInteractive title="Products" 
+        <CRUDTable title="Products" 
                             data={products} 
                             handleSave={updateProduct} 
                             handleDelete={deleteProduct}

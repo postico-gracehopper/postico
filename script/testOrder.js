@@ -15,7 +15,6 @@ async function action() {
         // const p = await Product.findOne({where: {id: Math.floor(Math.random() * 99)}})
         await u.addToCart(p, n)
         console.log("added to cart")
-
     }
 
 

@@ -19,7 +19,7 @@ OrderItem.belongsTo(Order);
 //
 
 
-User.prototype.addToCart = async function(productId, qty){
+User.prototype.addToCart = async function(productId, qty, op=(a, b) => a + b){
     const cart = await this.getCart()
     const product = await Product.findOne({where: {id: productId}})
     const [oItem, oItemWasCreated]= await OrderItem.findOrCreate({
@@ -32,14 +32,19 @@ User.prototype.addToCart = async function(productId, qty){
         orderId: cart.id,
       }})
     await oItem.update({
-      quantity: (oItemWasCreated ? qty : oItem.quantity + qty),
+      quantity: (oItemWasCreated ? qty : op(oItem.quantity, qty)),
       totalItemPrice: (oItemWasCreated ? product.price*qty 
-        : Number(oItem.totalItemPrice) + product.price*qty)
+        : op(Number(oItem.totalItemPrice),  product.price*qty))
     })
     await cart.update({
-      total: Number(cart.total) + product.price*qty
+      total: op(Number(cart.total), product.price*qty)
     })
 }
+
+User.prototype.removeFromCart = async function(productId, qty){
+  this.addToCart(productId, qty, (a, b) => a - b)
+}
+  
 
 User.prototype.getCart = async function(){
   const [cart, wasCreated] = await Order.findOrCreate({
@@ -63,7 +68,6 @@ User.getUnwrappedCartFor = async function(usrId){
     include: {
       model: OrderItem,
       required: false,
-      
       include: {
         model: Product
       },

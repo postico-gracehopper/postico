@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  margin: 0px; 
 }
 
 a {
@@ -81,6 +82,29 @@ div.add-form-container > button.submit-record {
   position: relative;
   left: 85%;
   top: 20px;
+}
+
+nav.secondary-nav {
+  display: flex;
+  flex-direction: row;
+}
+
+nav.secondary-nav > * {
+  flex: 1;
+  background-color: lightskyblue;
+  padding: 10px;
+}
+nav.secondary-nav > .secondary-nav-link {
+  margin: 0px;
+  text-align: center;
+}
+
+nav.secondary-nav > .secondary-nav-link:hover {
+  filter: brightness(1.1);
+}
+
+nav.secondary-nav > .sec-nav-chosen {
+  filter: brightness(0.75);
 }
 
 .cartContent {
