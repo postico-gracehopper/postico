@@ -5,7 +5,6 @@ import CRUDTable from "./CRUDTable";
 const AdminTablePage = ({apiEndpoint, fields, title}) => {
     let [entries, setEntries] = useState([])
     const authHeader = {headers: {authorization: window.localStorage.token || 0}}
-
     function createEntry(userData){
         axios.post(apiEndpoint, userData, authHeader)
     }

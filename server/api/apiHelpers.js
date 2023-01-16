@@ -15,15 +15,27 @@ function verifyInteger(req, res, next){
     }
 }
 
+const attachUserDataToReq = async (req, res, next) => {
+  try{ 
+      const {authorization: token} = req.headers
+      const user = await User.findByToken(token)
+      if (user === null) throw new Error("Must have token to access api")
+      req.user = user
+      next();
+  } catch(err){
+      next(err)
+  }
+}
+
+
 async function verifyIsSpecificUserOrAdmin(req, res, next){
     try{
-        const { id } = req.params
-        const token = req.headers.authorization
-        const user = await User.findByToken(token)
-        if (user.adminRights || id === user.id){
-            next()
+        const { id: requestId } = req.params
+        const { id: userId } = req.user 
+        if (requestId === userId || req.user.adminRights){
+          next()
         } else{
-            throw new Error("Do not have permission to access this user.")
+          throw new Error ("Permission denied - must be admin or specific user")
         }
     } catch(err){
         next(err)
@@ -32,38 +44,13 @@ async function verifyIsSpecificUserOrAdmin(req, res, next){
 
 async function verifyIsAdmin(req, res, next){
     try{
-        const token = req.headers.authorization
-        const user = await User.findByToken(token)
-        if (user.adminRights){
+        if (req.user.adminRights){
             next()
         } else{
             throw new Error("Only allowed for admin users.")
         }
     } catch(err){
         next(err)
-    }
-}
-
-const requireToken = async (req, res, next) => {
-    try {
-      const token = req.headers.authorization;
-      const user = await User.byToken(token);
-      req.user = user;
-      next();
-    } catch(error) {
-      next(error);
-    }
-  };
-
-const attachUserDataToReq = async (req, res, next) => {
-    try{ 
-        const token = req.headers.authorization
-        const user = await User.findByToken(token)
-        req.user = "jackie" // user
-        next();
-    } catch(err){
-        req.user = "cindy"
-        next()
     }
 }
 
