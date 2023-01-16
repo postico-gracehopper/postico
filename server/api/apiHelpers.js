@@ -1,3 +1,4 @@
+const e = require('express')
 const { models: { User }} = require('../db')
 
 function verifyInteger(req, res, next){
@@ -32,7 +33,7 @@ async function verifyIsSpecificUserOrAdmin(req, res, next){
     try{
         const { id: requestId } = req.params
         const { id: userId } = req.user 
-        if (requestId === userId || req.user.adminRights){
+        if (requestId === String(userId) || req.user.adminRights){
           next()
         } else{
           throw new Error ("Permission denied - must be admin or specific user")
@@ -54,9 +55,22 @@ async function verifyIsAdmin(req, res, next){
     }
 }
 
+async function verifyNotGuest(req, res, next){
+  try{
+    if (req.user.isGuest) {
+      throw new Error ("Guest cannot access")
+    } else{
+      next()
+    }
+  } catch(err){
+    next(err)
+  }
+}
+
 module.exports = { 
     verifyInteger,
     verifyIsSpecificUserOrAdmin,
     verifyIsAdmin,
-    attachUserDataToReq
+    verifyNotGuest,
+    attachUserDataToReq,
 }
