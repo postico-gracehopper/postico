@@ -5,37 +5,35 @@ const {
 const {
   verifyInteger,
   verifyIsAdmin,
-  verifyIsSpecificUserOrAdmin,
+  verifyOwnsOrderOrIsAdmin,
 } = require('./apiHelpers');
 
-const PUBLIC_ORDER_FIELDS = ['id', 'total', 'orderPaid', 'userId'];
-
 // ADMIN only
-router.get('/', async (req, res, next) => {
+router.get('/', verifyIsAdmin, async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
-      // attributes: PUBLIC_ORDER_FIELDS,
-    });
+    const orders = await Order.findAllWithProducts();
     res.json(orders);
   } catch (err) {
     next(err);
   }
 });
 
-// ADMIN or Specific User
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const order = await Order.findByPk(id, {
-      attributes: PUBLIC_ORDER_FIELDS,
-    });
-    res.json(order);
-  } catch (err) {
-    next(err);
+// ADMIN or Specific User - need to add middleware
+router.get(
+  '/:id',
+  verifyInteger,
+  verifyOwnsOrderOrIsAdmin,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const order = await Order.findOneWithProducts(id);
+      res.json(order);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
-// Specific user only
 router.post('/', async (req, res, next) => {
   console.log('ENTERED ADD-TO-CART API');
   // Determine whether user has an order already and add appropriately to Order and OrderItem models
@@ -107,19 +105,6 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// ADMIN or Specific User
-router.get('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const order = await Order.findByPk(id, {
-      attributes: PUBLIC_ORDER_FIELDS,
-    });
-    res.json(order);
-  } catch (err) {
-    next(err);
-  }
-});
-
 // change quantity
 router.put('/', async (req, res, next) => {
   try {
@@ -138,8 +123,7 @@ router.put('/', async (req, res, next) => {
   }
 });
 
-// Admin only
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', verifyInteger, verifyIsAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedOrder = req.body;
@@ -150,8 +134,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-// Admin only
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', verifyInteger, verifyIsAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     await Order.destroy({ where: { id: id } });

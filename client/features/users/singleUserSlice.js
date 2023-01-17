@@ -5,7 +5,8 @@ export const fetchSingleUserAsync = createAsyncThunk(
   '/users/fetchSingleUser',
   async (id) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}`);
+      const { data } = await axios.get(`/api/users/${id}`, 
+        {headers: {authorization: window.localStorage.getItem("token")}});
       return data;
     } catch (err) {
       next(err);

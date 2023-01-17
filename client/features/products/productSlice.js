@@ -5,7 +5,8 @@ export const fetchProductsAsync = createAsyncThunk(
   '/products/fetchProductsAsync',
   async () => {
     try {
-      const { data } = await axios.get('/api/products');
+      const { data } = await axios.get('/api/products', 
+        {headers: {authorization: window.localStorage.getItem("token")}});
       return data;
     } catch (error) {
       console.log(error)
@@ -23,7 +24,7 @@ export const createProductAsync = createAsyncThunk(
         price,
         image,
         category,
-      });
+      }, {headers: {authorization: window.localStorage.getItem("token")}});
       return data;
     } catch (error) {
       next(error);

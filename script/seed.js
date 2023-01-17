@@ -4,6 +4,7 @@ const {
   models: { User, Product, Order, OrderItem },
 } = require('../server/db');
 const { faker } = require('@faker-js/faker');
+require('dotenv').config();
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -106,11 +107,11 @@ async function seed() {
   });
 
   // Hardcode a single admin user in the seed.
-  User.create({
+  const adminUser = User.create({
     firstName: 'Admin1',
     lastName: 'Postico',
     username: 'Admin1',
-    password: 'blackdiamond',
+    password: process.env.DEFAULT_PASSWORD,
     email: 'admin1@posticogroup.com',
     addressLine1: '123 Admin Road',
     city: 'New York',
@@ -124,7 +125,7 @@ async function seed() {
     firstName: 'David',
     lastName: 'Demoson',
     username: 'demo_user',
-    password: 'blackdiamond',
+    password: process.env.DEFAULT_PASSWORD,
     email: 'demo_user@posticogroup.com',
     addressLine1: '1001 Demo Road',
     city: 'Houston',
@@ -141,6 +142,10 @@ async function seed() {
     image:
       'https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg',
     category: 'Skis',
+  });
+
+  const guest1 = User.create({
+    username: 'guest1',
   });
 
   // Hardcode a single shopping cart and associate it with demo user.
