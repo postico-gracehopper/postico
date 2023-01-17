@@ -35,6 +35,8 @@ const Checkout = ({ name, description, amount, handleCheckoutSuccess }) => {
         amount={amount}
         token={onToken(amount, description, handleCheckoutSuccess)}
         currency={CURRENCY}
+        billingAddress
+        shippingAddress
         stripeKey="pk_test_Tm68jOcpaletOdKFzp80ochj00YAnOJpLE"
         label="Pay with 💳"
       />
