@@ -1,7 +1,6 @@
+require("dotenv").config()
 const configureStripe = require('stripe');
-const stripe = configureStripe(
-  'sk_test_51MP7w1FWXTILHlSVOugGSWodZoa2JvDhQ1kfJpNa5P1tNn30JDTjZUxVQ7x3uklUyF47K7Nf8vZgzsVt7FHH3osg00E9oLWXeW' // MV secret key
-);
+const stripe = configureStripe(process.env.STRIPE_SECRET_KEY)
 const router = require('express').Router();
 
 const postStripeCharge = (res) => (stripeErr, stripeRes) => {

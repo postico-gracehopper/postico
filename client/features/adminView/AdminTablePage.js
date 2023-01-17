@@ -5,7 +5,6 @@ import CRUDTable from "./CRUDTable";
 const AdminTablePage = ({apiEndpoint, fields, title}) => {
     let [entries, setEntries] = useState([])
     const authHeader = {headers: {authorization: window.localStorage.token || 0}}
-
     function createEntry(userData){
         axios.post(apiEndpoint, userData, authHeader)
     }
@@ -27,6 +26,7 @@ const AdminTablePage = ({apiEndpoint, fields, title}) => {
         if (entries && !entries.length){
             axios.get(apiEndpoint, authHeader).then(response => {
                 setEntries(narrowFieldsEntries(response.data))
+                console.log(response.data)
             })
         }
     }, [entries])
@@ -39,6 +39,7 @@ const AdminTablePage = ({apiEndpoint, fields, title}) => {
                     handleSave={updateEntry} 
                     handleDelete={deleteEntry}
                     handleCreate={createEntry}
+                    singlePageEndpoint={apiEndpoint}
         /> : "Loading..."}
     </div>
     

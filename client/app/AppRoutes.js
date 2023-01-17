@@ -11,7 +11,6 @@ import Users from '../features/users/userComponent';
 import SingleUser from '../features/users/singleUserComponent';
 import AdminRouter from '../features/adminView/AdminRouter';
 import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
-
 /**
  * COMPONENT
  */

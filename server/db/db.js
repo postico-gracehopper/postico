@@ -27,6 +27,7 @@ const db = new Sequelize(process.env.DATABASE_URL, {
   logging: false,
 });
 // process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
+// const db = new Sequelize(`postgres://localhost:5432/postico`, {logging: false})
 
 console.log('connected!');
 module.exports = db;
