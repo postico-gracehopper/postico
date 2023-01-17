@@ -3,40 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProductsAsync, selectProducts } from './productSlice';
 import { Link } from 'react-router-dom';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
+import sortedAndFilteredProducts from './productSlice';
+import { changeFilter, changeSortBy } from './productSlice';
 
 const Products = () => {
   const dispatch = useDispatch();
-  const products = useSelector(selectProducts);
-  console.log(products);
-  const productsCopy = [...products];
-
-  const [productFilter, setProductFilter] = useState(productsCopy);
+  const products = useSelector(sortedAndFilteredProducts);
 
   const handleFilter = (evt) => {
-    evt.target.value !== 'All'
-      ? setProductFilter(
-          productsCopy.filter((product) => {
-            console.log(evt);
-            return product.category === evt.target.value;
-          })
-        )
-      : setProductFilter(productsCopy);
+    dispatch(changeFilter(evt.target.value));
   };
 
   const handleSort = (evt) => {
-    if (evt.target.value === '-') {
-      setProductFilter(productsCopy);
-    }
-    if (evt.target.value === 'Price: Low to High') {
-      setProductFilter(
-        productsCopy.sort((a, b) => (a.price < b.price ? -1 : 0))
-      );
-    }
-    if (evt.target.value === 'Price: High to Low') {
-      setProductFilter(
-        productsCopy.sort((a, b) => (a.price > b.price ? -1 : 0))
-      );
-    }
+    dispatch(changeSortBy(evt.target.value));
   };
 
   useEffect(() => {
@@ -64,41 +43,23 @@ const Products = () => {
           <option value="Price: High to Low">Price: High to Low</option>
         </select>
       </span>
-      {productFilter.length > 0
-        ? productFilter.map((product) => {
-            return (
-              <div key={product.id}>
-                <Link to={`/products/${product.id}`}>
-                  <img src={product.image} className="w-48 h-48" />
-                  <span>
-                    <h2 className="text-sm uppercase font-plex tracking-widest">
-                      {product.name}
-                    </h2>
-                    <h2>${product.price}</h2>
-                  </span>
-                  <p>{product.description}</p>
-                </Link>
-                <AddToCartButton product={product} quantity={1} />
-              </div>
-            );
-          })
-        : products.map((product) => {
-            return (
-              <div key={product.id}>
-                <Link to={`/products/${product.id}`}>
-                  <img src={product.image} className="w-48 h-48" />
-                  <span>
-                    <h2 className="text-sm uppercase font-plex tracking-widest">
-                      {product.name}
-                    </h2>
-                    <h2>${product.price}</h2>
-                  </span>
-                  <p>{product.description}</p>
-                </Link>
-                <AddToCartButton product={product} quantity={1} />
-              </div>
-            );
-          })}
+      {products.map((product) => {
+        return (
+          <div key={product.id}>
+            <Link to={`/products/${product.id}`}>
+              <img src={product.image} className="w-48 h-48" />
+              <span>
+                <h2 className="text-sm uppercase font-plex tracking-widest">
+                  {product.name}
+                </h2>
+                <h2>${product.price}</h2>
+              </span>
+              <p>{product.description}</p>
+            </Link>
+            <AddToCartButton product={product} quantity={1} />
+          </div>
+        );
+      })}
     </div>
   );
 };

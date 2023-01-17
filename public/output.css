@@ -1136,8 +1136,6 @@ div.add-form-container > button.submit-record {
   top: 20px;
 } */
 
-
-/* Cart styling */
 body {
   font-family: sans-serif;
   margin: 0px;
@@ -1246,7 +1244,6 @@ nav.secondary-nav > .sec-nav-chosen {
   filter: brightness(0.75);
 }
 
-
 .cartContent {
   display: flex;
   flex-direction: row;
@@ -1254,11 +1251,11 @@ nav.secondary-nav > .sec-nav-chosen {
 }
 
 .itemsColumn {
-  flex: 3;
+  flex: 2;
 }
 
 .summaryColumn {
-  flex: 2;
+  flex: 1;
 }
 
 .cartItem {
