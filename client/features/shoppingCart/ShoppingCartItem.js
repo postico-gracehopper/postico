@@ -37,12 +37,19 @@ const ShoppingCartItem = ({ item }) => {
         </div>
         <div className="cartQuantityCol">
           <p>Quantity: {quantity}</p>
-          <button type="submit" onClick={handleIncrement}>
-            +
-          </button>
-          <button type="submit" onClick={handleDecrement}>
-            -
-          </button>
+          <nobr>
+            <button type="submit" onClick={handleIncrement}>
+              +
+            </button>
+            <span> / </span>
+            <button
+              type="submit"
+              onClick={handleDecrement}
+              disabled={quantity >= 0 ? false : true}
+            >
+              -
+            </button>
+          </nobr>
         </div>
       </div>
     </>

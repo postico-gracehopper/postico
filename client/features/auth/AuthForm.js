@@ -22,17 +22,17 @@ const AuthForm = ({ name, displayName }) => {
 
   return (
     <div className="container mx-auto my-8 h-full flex justify-center items-center font-plex">
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <div>
-            <h1 className="font-plex mb-6 font-xl text-center uppercase tracking-widest">
+      <form onSubmit={handleSubmit} name={name} className="block">
+        <div className="block">
+          <div className="block">
+            <h1 className="font-plex mb-6 font-xl text-center uppercase tracking-widest block">
               Login to buy skis
             </h1>
-            <div className="border-tahiti p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
-              <div className="mb-4">
+            <div className="border-tahiti p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg block">
+              <div className="mb-4 block">
                 <label
                   htmlFor="username"
-                  className="font-bold uppercase text-grey-darker block mb-2"
+                  className="font-bold uppercase text-grey-darker mb-2 block"
                 >
                   Username
                 </label>
@@ -40,35 +40,37 @@ const AuthForm = ({ name, displayName }) => {
                   name="username"
                   type="text"
                   placeholder="Your username"
+                  className="bg-gray-50 border border-stone text-stone text-sm rounded-lg focus:ring-tahiti focus:border-tahiti w-full p-2.5 block"
                 />
               </div>
-              <div>
+              <div className="block">
                 <label
                   htmlFor="password"
-                  className="font-bold uppercase text-grey-darker block mb-2"
+                  className="font-bold uppercase text-grey-darker mb-2 block"
                 >
-                  <small>Password</small>
+                  Password
                 </label>
                 <input
                   name="password"
                   type="password"
                   placeholder="Your password"
+                  className="bg-gray-50 border border-stone text-stone text-sm rounded-lg focus:ring-tahiti focus:border-tahiti w-full p-2.5 block"
                 />
               </div>
-              <div className="content-center my-4">
+              <div className="text-center my-4 block">
                 <button
                   type="submit"
-                  className="bg-pool hover:bg-tahiti text-white font-bold py-2 px-16 rounded text-center uppercase tracking-widest"
+                  className="bg-pool hover:bg-tahiti text-white font-bold py-2 px-8 rounded text-center uppercase tracking-widest"
                 >
                   {displayName}
                 </button>
               </div>
-              <div>
+              <div className="block">
                 {displayName === 'Login' && (
                   <p className="italic font-xs">
                     Don't have an account?{' '}
                     <a href="/signup" className="text-pool hover:text-tahiti">
-                      Create an account
+                      Create one here.
                     </a>
                   </p>
                 )}
