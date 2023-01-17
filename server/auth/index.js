@@ -48,6 +48,7 @@ function filterGuestPublic(usr){
 }
 
 router.get('/me', async (req, res, next) => {
+  console.log("reached router.get /me/", "authoization:", req.headers)
   try {
     if (req.headers.authorization) { // if the requestor has a token
       let userObj = await User.findByToken(req.headers.authorization)
