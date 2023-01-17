@@ -1156,6 +1156,7 @@ div.add-form-container > button.submit-record {
   top: 20px;
 } */
 
+/* Cart styling */
 body {
   font-family: sans-serif;
   margin: 0px;
@@ -1287,8 +1288,6 @@ nav.secondary-nav > .sec-nav-chosen {
   margin: 1rem;
   padding: 1rem;
 }
-
-/* Cart styling */
 
 .cartContent {
   display: flex;
