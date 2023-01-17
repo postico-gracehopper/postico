@@ -9,7 +9,9 @@ export const fetchProductsAsync = createAsyncThunk(
   '/products/fetchProductsAsync',
   async () => {
     try {
-      const { data } = await axios.get('/api/products');
+      const { data } = await axios.get('/api/products', {
+        headers: { authorization: window.localStorage.getItem('token') },
+      });
       return data;
     } catch (error) {
       console.log(error);
@@ -21,13 +23,17 @@ export const createProductAsync = createAsyncThunk(
   '/products/createProduct',
   async ({ name, description, price, image, category }) => {
     try {
-      const { data } = await axios.post('/api/products', {
-        name,
-        description,
-        price,
-        image,
-        category,
-      });
+      const { data } = await axios.post(
+        '/api/products',
+        {
+          name,
+          description,
+          price,
+          image,
+          category,
+        },
+        { headers: { authorization: window.localStorage.getItem('token') } }
+      );
       return data;
     } catch (error) {
       next(error);

@@ -4,6 +4,7 @@ const {
   models: { User, Product, Order, OrderItem  },
 } = require('../server/db');
 const { faker } = require('@faker-js/faker');
+require("dotenv").config()
 
 
 const genExpDate = () => {
@@ -108,31 +109,33 @@ async function seed() {
   });
 
   // Hardcode a single admin user in the seed.
-  User.create({
+  const adminUser = User.create({
     firstName: 'Admin1',
     lastName: 'Postico',
     username: 'Admin1',
-    password: 'blackdiamond',
+    password: process.env.DEFAULT_PASSWORD,
     email: 'admin1@posticogroup.com',
     addressLine1: '123 Admin Road',
     city: 'New York',
     zipCode: '10002',
     adminRights: true,
     isGuest: false,
-  });
+  })
 
   // Hardcode a single demo user to test cart functionality.
   const demoUser = User.create({
     firstName: 'David',
     lastName: 'Demoson',
     username: 'demo_user',
-    password: 'blackdiamond',
+    password: process.env.DEFAULT_PASSWORD,
     email: 'demo_user@posticogroup.com',
     addressLine1: '1001 Demo Road',
     city: 'Houston',
     zipCode: '77056',
     isGuest: false,
-  });
+  })
+
+  
 
   // Hardcode a single demo product to test cart functionality.
   const demoProduct = Product.create({
@@ -145,6 +148,9 @@ async function seed() {
     category: 'Skis',
   });
 
+  const guest1 = User.create({
+    username: "guest1"
+  })
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).
