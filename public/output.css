@@ -1136,7 +1136,140 @@ div.add-form-container > button.submit-record {
   top: 20px;
 } */
 
+
 /* Cart styling */
+body {
+  font-family: sans-serif;
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+label {
+  display: block;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
+table {
+  margin: 10px auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+td, tr {
+  border: 1px solid black;
+}
+
+table.interactive-table {
+  background-color: white;
+}
+
+.interactive-table-container{
+  background-color: lightblue;
+  margin: 100px auto;
+}
+
+.interactive-table-container > h2 {
+  text-align: center;
+}
+
+.interactive-table-container > button.save {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 85%;
+  bottom: 5%;
+}
+
+.interactive-table-container > button.addNew {
+  background-color: lightgreen;
+  color: black;
+  position: relative;
+  left: 65%;
+  bottom: 5%;
+}
+
+.td-input-changed {
+  background-color: yellow;
+}
+
+td.del-entry:hover{
+  filter: brightness(0.05);
+  cursor: pointer;
+}
+
+tr:hover{
+  filter: brightness(0.8);
+}
+
+div.add-form-container > button.submit-record {
+  background-color: green;
+  color: white;
+  position: relative;
+  left: 85%;
+  top: 20px;
+}
+
+nav.secondary-nav {
+  display: flex;
+  flex-direction: row;
+}
+
+nav.secondary-nav > * {
+  flex: 1;
+  background-color: lightskyblue;
+  padding: 10px;
+}
+
+nav.secondary-nav > .secondary-nav-link {
+  margin: 0px;
+  text-align: center;
+}
+
+nav.secondary-nav > .secondary-nav-link:hover {
+  filter: brightness(1.1);
+}
+
+nav.secondary-nav > .sec-nav-chosen {
+  filter: brightness(0.75);
+}
+
+
+.cartContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.itemsColumn {
+  flex: 3;
+}
+
+.summaryColumn {
+  flex: 2;
+}
+
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: solid 1px black;
+  margin: 1rem;
+  padding: 1rem;
+}
+
 
 .cartContent {
   display: flex;

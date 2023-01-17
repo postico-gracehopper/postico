@@ -9,19 +9,17 @@ const {
 } = require('./apiHelpers');
 
 const PUBLIC_ORDER_FIELDS = [
+  'id',
   'total',
-  'email',
-  'addressLine1',
-  'addressLine2',
-  'city',
-  'zipCode',
+  'orderPaid',
+  'userId',
 ];
 
 // ADMIN only
 router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
-      attributes: PUBLIC_ORDER_FIELDS,
+      // attributes: PUBLIC_ORDER_FIELDS,
     });
     res.json(orders);
   } catch (err) {

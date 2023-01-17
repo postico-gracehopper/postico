@@ -18,6 +18,7 @@ Order.hasMany(OrderItem);
 OrderItem.belongsTo(Order);
 //
 
+
 // Define global instance methods here.
 
 // Finds and returns a user's active order Id
@@ -50,6 +51,7 @@ OrderItem.belongsTo(Order);
 //   }
 //   return order;
 // };
+
 
 module.exports = {
   db,

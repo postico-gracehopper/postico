@@ -64,8 +64,8 @@ function AddForm({columns, handleCreate}){
           {i === 0 ? <p>{i}</p> : 
           <EditableCell value={""} 
                 row={1} 
-                onBlur={console.log} 
-                onChange={console.log} 
+                onBlur={() => ""} 
+                onChange={() => ""} 
                 column={i}
                 updateMyData={updateWorkingRecord(cell.accessor)}/>
       }
@@ -192,11 +192,12 @@ function Table({ columns, data, updateMyData, skipPageReset, handleDelete }) {
   )
 }
 
-function TableInteractive({data: ogData, 
+function CRUDTable({data: ogData, 
           handleSave: handleSaveAction, 
           handleDelete: handleDeleteAction,
           handletitle: titleText,
-          handleCreate: handleCreateAction}) {
+          handleCreate: handleCreateAction,
+        }) {
   const columns = React.useMemo(() => Object.keys(ogData[0]).map(k => {
     return {Header: k[0].toUpperCase() + k.slice(1,), accessor: k}
   }))
@@ -227,6 +228,7 @@ function TableInteractive({data: ogData,
       })
     )
   }
+
 
   // function tableActionsOnSave(ev){
   //     handleSaveAction(changedData)
@@ -276,4 +278,4 @@ function TableInteractive({data: ogData,
   )
 }
 
-export default TableInteractive
+export default CRUDTable
