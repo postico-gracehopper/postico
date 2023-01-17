@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid lg:grid-cols-3 gap-11">
           <div className="mb-6 md:mb-0 col-span-2">
             <h5 className="font-xl mb-2 uppercase font-plex tracking-widest">
-              Ski nonsense
+              Tagline
             </h5>
 
             <p className="mb-8 text-xs">
@@ -32,7 +32,7 @@ const Footer = () => {
               </a>
             ) : (
               <p className="font-xl mb-2 uppercase font-plex tracking-widest">
-                Weather la la
+                Weather/widget
               </p>
             )}
           </div>
