@@ -10,6 +10,7 @@ const TOKEN = 'token';
   THUNKS
 */
 export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
+  
   const token = window.localStorage.getItem(TOKEN);
   try {
     const res = await axios.get('/auth/me', {

@@ -8,6 +8,7 @@
     "build:tailwind": "tailwindcss -i public/input.css -o public/output.css",
     "build:dev": "npm run build -- --watch --mode=development",
     "build:devtail": "npm run build:dev & npm run build:tailwind",
+    "build:production": "npm init -y & npm install & npm run build:tailwind & npm run build",
     "seed": "node script/seed.js",
     "start": "node server",
     "start:dev": "npm run build:tailwind & npm run build:dev & npm run start-server",
@@ -17,6 +18,7 @@
     "test": "NODE_ENV=test JWT=a_secret mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" --require @babel/register --require esm ",
     "test:dev": "npm run test -- --watch",
     "test:dev:models": "npm run test:dev -- --grep=model",
+    "test:routes:auth": "mocha \"./tests/routes/routes.auth.spec.js\"",
     "test:routes": "mocha \"./tests/routes/*.spec.js\"",
     "log:tokens": "node ./script/getTokens.js"
   },
