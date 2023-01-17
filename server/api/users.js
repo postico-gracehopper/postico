@@ -97,8 +97,7 @@ router.get('/:id/cart', verifyInteger, async (req, res, next) => {
 });
 
 // Restrict only Specific User or Admin
-router.put('/:id', verifyInteger, verifyNotGuest, 
-    verifyIsSpecificUserOrAdmin, async (req, res, next) => {
+router.put('/:id', verifyInteger, verifyNotGuest, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedUser = req.body;

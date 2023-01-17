@@ -1,5 +1,18 @@
-const e = require('express')
 const { models: { User }} = require('../db')
+
+const attachUserDataToReq = async (req, res, next) => {
+  try{ 
+      const {authorization: token} = req.headers
+      const user = await User.findByToken(token)
+      if (user === null) throw new Error("Must have token to access api")
+      req.user = user
+      next();
+  } catch(err){
+    err.status = 404
+    err.message = "user with token not found"
+    next(err)
+  }
+}
 
 function verifyInteger(req, res, next){
     try {
@@ -14,20 +27,6 @@ function verifyInteger(req, res, next){
     } catch(err){
       next(err)
     }
-}
-
-const attachUserDataToReq = async (req, res, next) => {
-  try{ 
-      const {authorization: token} = req.headers
-      const user = await User.findByToken(token)
-      if (user === null) throw new Error("Must have token to access api")
-      req.user = user
-      next();
-  } catch(err){
-    err.status = 404
-    err.message = "token user not found"
-    next(err)
-  }
 }
 
 

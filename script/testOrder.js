@@ -4,26 +4,26 @@ const {
   } = require('../server/db');
 
 
-  User.prototype.addToCart = async function(productId, qty, op=(a, b) => a + b){
-    const cart = await this.getCart()
-    const product = await Product.findOne({where: {id: productId}})
-    const [oItem, oItemWasCreated]= await OrderItem.findOrCreate({
-      where: {
-        orderId: cart.id,
-        productId: product.id
-      },
-      defaults: {
-        productId: product.id,
-        orderId: cart.id,
-      }})
-    await oItem.update({
-      quantity: (oItemWasCreated ? qty : op(oItem.quantity, qty)),
-      totalItemPrice: (oItemWasCreated ? product.price*qty 
-        : op(Number(oItem.totalItemPrice),  product.price*qty))
-    })
-    await cart.update({
-      total: op(Number(cart.total), product.price*qty)
-    })
+User.prototype.addToCart = async function(productId, qty, op=(a, b) => a + b){
+  const cart = await this.getCart()
+  const product = await Product.findOne({where: {id: productId}})
+  const [oItem, oItemWasCreated]= await OrderItem.findOrCreate({
+    where: {
+      orderId: cart.id,
+      productId: product.id
+    },
+    defaults: {
+      productId: product.id,
+      orderId: cart.id,
+    }})
+  await oItem.update({
+    quantity: (oItemWasCreated ? qty : op(oItem.quantity, qty)),
+    totalItemPrice: (oItemWasCreated ? product.price*qty 
+      : op(Number(oItem.totalItemPrice),  product.price*qty))
+  })
+  await cart.update({
+    total: op(Number(cart.total), product.price*qty)
+  })
 }
 
 User.prototype.removeFromCart = async function(productId, qty){

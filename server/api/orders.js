@@ -19,7 +19,13 @@ const PUBLIC_ORDER_FIELDS = [
 router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
-      // attributes: PUBLIC_ORDER_FIELDS,
+      include: {
+        model: OrderItem,
+        required: false,
+        include: {
+          
+        }
+      }
     });
     res.json(orders);
   } catch (err) {
