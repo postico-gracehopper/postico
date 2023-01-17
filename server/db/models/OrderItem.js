@@ -70,6 +70,15 @@ OrderItem.addToCart = async function (userId, productId, quantity) {
   }
 };
 
+OrderItem.changeQuantity = async function (orderItemId, num) {
+  const orderItem = await OrderItem.findByPk(orderItemId, {
+    include: Product,
+  });
+  orderItem.quantity += num;
+  await orderItem.save();
+  const orderSubTotal = await Order.findByPk(orderItem.orderId);
+  return { orderItem, orderSubTotal };
+};
 /**
  * hooks
  */
