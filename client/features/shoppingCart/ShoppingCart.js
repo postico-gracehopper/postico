@@ -23,7 +23,7 @@ const ShoppingCart = () => {
           <ul>
             {items && items.length ? (
               items.map((item) => (
-                <li key={`Cart Item ${item.id}`}>
+                <li key={`Cart Item ${item.orderItemId}`}>
                   <ShoppingCartItem item={item} />
                 </li>
               ))

@@ -1,11 +1,10 @@
 'use strict';
 const {
   db,
-  models: { User, Product, Order, OrderItem  },
+  models: { User, Product, Order, OrderItem },
 } = require('../server/db');
 const { faker } = require('@faker-js/faker');
-require("dotenv").config()
-
+require('dotenv').config();
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -18,11 +17,10 @@ const genCategory = () => {
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
-
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
-  const NUM_USERS_AND_PRODUCTS = 100
+  const NUM_USERS_AND_PRODUCTS = 100;
   let users = [];
   let products = [];
 
@@ -120,7 +118,7 @@ async function seed() {
     zipCode: '10002',
     adminRights: true,
     isGuest: false,
-  })
+  });
 
   // Hardcode a single demo user to test cart functionality.
   const demoUser = User.create({
@@ -133,9 +131,7 @@ async function seed() {
     city: 'Houston',
     zipCode: '77056',
     isGuest: false,
-  })
-
-  
+  });
 
   // Hardcode a single demo product to test cart functionality.
   const demoProduct = Product.create({
@@ -149,8 +145,8 @@ async function seed() {
   });
 
   const guest1 = User.create({
-    username: "guest1"
-  })
+    username: 'guest1',
+  });
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).

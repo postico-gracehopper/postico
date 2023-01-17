@@ -15,7 +15,11 @@ const AddToCartButton = ({ product, quantity }) => {
   const handleAddToCart = async (evt) => {
     evt.preventDefault();
     try {
-      await axios.post('/api/orders', { userId, productId, quantity }, {headers: {authorization: window.localStorage.getItem("token")}});
+      await axios.post(
+        '/api/orders',
+        { userId, productId, quantity },
+        { headers: { authorization: window.localStorage.getItem('token') } }
+      );
       dispatch(fetchAllUserItemsAsync(userId));
     } catch (err) {
       console.error('Failed to add-to-cart (POST /api/orders)', err);
