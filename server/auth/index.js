@@ -42,10 +42,11 @@ function filterUserPublic(usr){
 }
 
 function filterGuestPublic(usr){
-  const PUBLIC_FIELDS = ['isGuest']
+  const PUBLIC_FIELDS = ['id', 'isGuest']
   return Object.keys(usr.dataValues).filter(key => PUBLIC_FIELDS.includes(key))
             .reduce((obj, key) => Object.assign(obj, {[key]: usr[key]}), {})
 }
+
 router.get('/me', async (req, res, next) => {
   try {
     if (req.headers.authorization) { // if the requestor has a token

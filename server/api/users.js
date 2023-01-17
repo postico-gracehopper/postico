@@ -110,7 +110,7 @@ router.put('/:id', verifyInteger, verifyNotGuest,
 });
 
 // Restrict only Specific User or Admin
-router.delete('/:id', verifyInteger, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
+router.delete('/:id', verifyInteger, verifyNotGuest, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     await User.destroy({ where: { id: id } });

@@ -42,7 +42,7 @@ describe("Products", () => {
             const res = await request(app)
                 .post('/api/products/', {name: "poles", price: "1312.43"})
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST PUT /product/", async () => {
@@ -50,21 +50,21 @@ describe("Products", () => {
                 .put('/api/products', [{id: 2, price: "1312.43"}, 
                     {id: 2, price: "1341.43"}])
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST PUT /product/:id", async () => {
             const res = await request(app)
                 .put('/api/products/33', {price: "1312.43"})
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST DELETE /product/:id", async () => {
             const res = await request(app)
                 .delete('/api/products/33', {price: "1312.43"})
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
     })
 
@@ -95,14 +95,14 @@ describe("Products", () => {
             const res = await request(app)
                 .post('/api/products/', {name: "poles", price: "1312.43"})
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
         it("USER PUT /product/:id", async () => {
             const res = await request(app)
                 .put('/api/products/11', {price: "1312.43"})
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
 
@@ -111,7 +111,7 @@ describe("Products", () => {
                 .put('/api/products', [{id: 2, price: "1312.43"}, 
                     {id: 4, price: "1341.43"}])
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
 
@@ -119,7 +119,7 @@ describe("Products", () => {
             const res = await request(app)
                 .delete('/api/products/11')
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
     })
 

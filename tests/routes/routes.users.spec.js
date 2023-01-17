@@ -24,7 +24,7 @@ describe("Users", () => {
             const res = await request(app)
                 .get('/api/users')
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
             
         }).timeout(5000)
 
@@ -32,7 +32,7 @@ describe("Users", () => {
             const res = await request(app)
                 .get(`/api/users/${23}`)
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST GET /users/:myId", async () => {
@@ -47,7 +47,7 @@ describe("Users", () => {
             const res = await request(app)
                 .post('/api/users/')
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST PUT MULTIPLE /user/", async () => {
@@ -56,7 +56,7 @@ describe("Users", () => {
                 .send([{username: "ringoStarr", password: "drummer"}, 
                 {username: "elvis", password: "houndDog"}])
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
 
@@ -65,7 +65,7 @@ describe("Users", () => {
                 .put('/api/users/33')
                 .send({username: "new_username"})
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST PUT /user/:myId", async () => {
@@ -74,14 +74,14 @@ describe("Users", () => {
                 .put(`/api/users/${id}`)
                 .send({addressLine1: `${Math.floor(Math.random()*1000)} Drifter Lane`})
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
 
         it("GUEST DELETE /user/:id", async () => {
             const res = await request(app)
                 .delete('/api/users/10')
                 .set('authorization', userTokens.guest)
-                .expect(500)
+                .expect(401)
         })
     })
 
@@ -91,7 +91,7 @@ describe("Users", () => {
             const res = await request(app)
                 .get('/api/users')
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
             
         }).timeout(5000)
 
@@ -99,7 +99,7 @@ describe("Users", () => {
             const res = await request(app)
                 .get(`/api/users/${23}`)
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
         it("USER GET /users/:myId", async () => {
@@ -114,16 +114,16 @@ describe("Users", () => {
             const res = await request(app)
                 .post('/api/users/')
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
         it("USER PUT MULTIPLE /user/", async () => {
             const res = await request(app)
-                .put('/api/users')
+                .put('/api/users/')
                 .send([{username: "ringoStarr", password: "drummer"}, 
                 {username: "elvis", password: "houndDog"}])
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
 
@@ -132,7 +132,7 @@ describe("Users", () => {
                 .put('/api/users/33')
                 .send({username: "new_username"})
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
 
         it("USER PUT /user/:myId", async () => {
@@ -149,7 +149,7 @@ describe("Users", () => {
             const res = await request(app)
                 .delete('/api/users/10')
                 .set('authorization', userTokens.user)
-                .expect(500)
+                .expect(401)
         })
     })
 
@@ -185,7 +185,7 @@ describe("Users", () => {
         })
 
         it("ADMIN PUT /user/:id", async () => {
-            const newUser = await User.findOne({where: {name: "newestUser"}})
+            const newUser = await User.findOne({where: {username: "newestUser"}})
             const res = await request(app)
                 .put(`/api/users/${newUser.id}`, {email: "newestUser@gmail.com"})
                 .set('authorization', userTokens.admin)
@@ -194,7 +194,7 @@ describe("Users", () => {
 
 
         it("ADMIN PUT MULTIPLE /user/", async () => {
-            const newUser = await User.findOne({where: {name: "newestUser"}})
+            const newUser = await User.findOne({where: {username: "newestUser"}})
             const res = await request(app)
                 .put('/api/users', [
                     {id: newUser.id, addressLine1: randAddress()}, 
@@ -205,7 +205,7 @@ describe("Users", () => {
 
 
         it("ADMIN DELETE /user/:id", async () => {
-            const newUser = await User.findOne({where: {name: "newestUser"}})
+            const newUser = await User.findOne({where: {username: "newestUser"}})
             const res = await request(app)
                 .delete(`/api/users/${newUser.id}`)
                 .set('authorization', userTokens.admin)

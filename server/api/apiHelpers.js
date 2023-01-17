@@ -24,7 +24,9 @@ const attachUserDataToReq = async (req, res, next) => {
       req.user = user
       next();
   } catch(err){
-      next(err)
+    err.status = 404
+    err.message = "token user not found"
+    next(err)
   }
 }
 
@@ -39,6 +41,8 @@ async function verifyIsSpecificUserOrAdmin(req, res, next){
           throw new Error ("Permission denied - must be admin or specific user")
         }
     } catch(err){
+        err.status = 401
+        err.message = "Must be admin or specific user"
         next(err)
     }
 }
@@ -51,6 +55,8 @@ async function verifyIsAdmin(req, res, next){
             throw new Error("Only allowed for admin users.")
         }
     } catch(err){
+        err.status = 401
+        err.message = "Must be admin user"
         next(err)
     }
 }
@@ -63,6 +69,8 @@ async function verifyNotGuest(req, res, next){
       next()
     }
   } catch(err){
+    err.status = 401
+    err.message = "Guest cannot access user data"
     next(err)
   }
 }
