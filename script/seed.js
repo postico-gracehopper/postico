@@ -1,10 +1,9 @@
 'use strict';
 const {
   db,
-  models: { User, Product, Order, OrderItem  },
+  models: { User, Product, Order, OrderItem },
 } = require('../server/db');
 const { faker } = require('@faker-js/faker');
-
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -17,11 +16,10 @@ const genCategory = () => {
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
-
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
-  const NUM_USERS_AND_PRODUCTS = 100
+  const NUM_USERS_AND_PRODUCTS = 100;
   let users = [];
   let products = [];
 
@@ -144,7 +142,6 @@ async function seed() {
       'https://www.basemountainsports.com/wp-content/uploads/2021/02/ski-rentals-base-mounatin-sports-co.jpg',
     category: 'Skis',
   });
-
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).
