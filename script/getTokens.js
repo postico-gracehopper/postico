@@ -3,10 +3,10 @@ const {db,
 } = require("../server/db")
 
 try {
-    const guest = User.findOne({where: {adminRights: false}}).then((usr) =>
+    const guest = User.findOne({where: {adminRights: false, isGuest: true}}).then((usr) =>
         console.log(`GUEST_TOKEN=${usr.generateToken()}`)
     )
-    const user = User.findOne({where: {username: "demo_user"}}).then((usr) =>
+    const user = User.findOne({where: {username: "demo_user", adminRights: false, isGuest: false}}).then((usr) =>
         console.log(`USER_TOKEN=${usr.generateToken()}`)
     )
     const admin = User.findOne({where: {adminRights: true}}).then((usr) =>

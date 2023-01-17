@@ -208,5 +208,12 @@ User.prototype.getCart = async function(){
   return cart
 }
 
+User.prototype.getOrderNumbers = async function(){
+  const orders = await Order.findAll({
+    where: { userId: this.id},
+    attributes: ['id']})
+  return orders && orders.length ? orders.map(obj => obj['id']) : []
+}
+
 
 module.exports = User;

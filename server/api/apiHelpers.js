@@ -74,10 +74,30 @@ async function verifyNotGuest(req, res, next){
   }
 }
 
+async function verifyOwnsOrderOrIsAdmin(req, res, next){
+  if (req.user.adminRights) {
+    next()
+  } else {
+    try{
+      const orderNums = await req.user.getOrderNumbers()
+      const { id } = req.params
+      if (orderNums.includes(id)) {
+        next()
+      } else {
+        throw new Error("User does not own this order")
+      }
+    } catch(err){
+      err.status = 401
+      err.message = "User does not own this order"
+    }
+  }
+}
+
 module.exports = { 
     verifyInteger,
     verifyIsSpecificUserOrAdmin,
     verifyIsAdmin,
     verifyNotGuest,
     attachUserDataToReq,
+    verifyOwnsOrderOrIsAdmin,
 }

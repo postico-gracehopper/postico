@@ -62,7 +62,6 @@ router.put('/', verifyIsAdmin, async (req, res, next) => {
 });
 
 
-// Restrict only Specific User or Admin
 router.get('/:id', verifyInteger, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -75,28 +74,26 @@ router.get('/:id', verifyInteger, verifyIsSpecificUserOrAdmin, async (req, res, 
   }
 });
 
-
-
 //  fetch the order for a given user, including its associated orderItems
-router.get('/:id/cart', verifyInteger, async (req, res, next) => {
+router.get('/:id/cart', verifyInteger, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
-    const orders = await Order.findOne({
-      where: { userId: user.id, orderPaid: false },
-      include: {
-        model: OrderItem,
-        include: {
-          model: Product,
-        },
-      },
-    });
-    res.json(orders);
+    // const user = await User.findByPk(req.params.id);
+    // const orders = await Order.findOne({
+    //   where: { userId: user.id, orderPaid: false },
+    //   include: {
+    //     model: OrderItem,
+    //     include: {
+    //       model: Product,
+    //     },
+    //   },
+    // });
+    const cart = await User.getUnwrappedCartForUserId(req.user.id)
+    res.json(cart);
   } catch (err) {
     next(err);
   }
 });
 
-// Restrict only Specific User or Admin
 router.put('/:id', verifyInteger, verifyNotGuest, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -108,7 +105,6 @@ router.put('/:id', verifyInteger, verifyNotGuest, verifyIsSpecificUserOrAdmin, a
   }
 });
 
-// Restrict only Specific User or Admin
 router.delete('/:id', verifyInteger, verifyNotGuest, verifyIsSpecificUserOrAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
