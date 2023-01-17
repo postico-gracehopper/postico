@@ -4,6 +4,7 @@ import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
 import Checkout from '../checkout/Checkout';
 import { Link } from 'react-router-dom';
+import { selectCartId } from './shoppingCartSlice';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -13,7 +14,12 @@ const ShoppingCart = () => {
 
   const items = useSelector((state) => state.shoppingCart.orderItems);
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
-  const orderId = useSelector((state) => state.shoppingCart);
+  // const orderId = useSelector(selectCartId);
+  const orderId = 1;
+
+  const dollarsToCents = (amount) => {
+    return parseInt(amount) * 100;
+  };
 
   return (
     <>
@@ -32,9 +38,9 @@ const ShoppingCart = () => {
             )}
           </ul>
           <Checkout
-            amount={subTotal}
             name="Postico checkout"
             description="Get ready to ski!"
+            amount={dollarsToCents(subTotal)}
             orderId={orderId}
           />
           {/* TODO disable checkout button if cart empty */}

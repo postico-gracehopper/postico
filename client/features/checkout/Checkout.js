@@ -15,19 +15,21 @@ const errorPayment = (data) => {
   alert("We're sorry, an error occurred with your payment information.");
 };
 
-const dollarsToCents = (amount) => {
-  return parseInt(amount) * 100;
-};
-
 const onToken = (amount, description, orderId) => (token) =>
   axios
-    .put('/api/orders', {
+    .put(`/api/orders/${orderId}`, {
       orderPaid: true,
     })
     .then(successPayment)
     .catch(errorPayment);
 
-const Checkout = ({ name, description, amount, handleCheckoutSuccess }) => {
+const Checkout = ({
+  name,
+  description,
+  amount,
+  orderId,
+  handleCheckoutSuccess,
+}) => {
   return (
     <div>
       <StripeCheckout
