@@ -4,6 +4,7 @@ import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
 import Checkout from '../checkout/Checkout';
 import { Link } from 'react-router-dom';
+import { fetchAllUserItemsAsync } from './shoppingCartSlice';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -14,6 +15,10 @@ const ShoppingCart = () => {
   const items = useSelector((state) => state.shoppingCart.orderItems);
 
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
+
+  useEffect(() => {
+    dispatch(fetchAllUserItemsAsync(userId));
+  }, []);
 
   return (
     <>

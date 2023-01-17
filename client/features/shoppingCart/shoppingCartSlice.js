@@ -5,10 +5,21 @@ import axios from 'axios';
 export const fetchAllUserItemsAsync = createAsyncThunk(
   'GET AllUserItems',
   async (userId) => {
+    console.log('dispatch fetch all');
     const { data } = await axios.get(`/api/users/${userId}/cart`, {
       headers: { authorization: window.localStorage.getItem('token') },
     });
     return data;
+  }
+);
+
+export const addToCartAsync = createAsyncThunk(
+  'POST AddToCart',
+  async (productInfo, thunkAPI) => {
+    const { data } = await axios.post('/api/orders', productInfo, {
+      headers: { authorization: window.localStorage.getItem('token') },
+    });
+    thunkAPI.dispatch(fetchAllUserItemsAsync(productInfo.userId));
   }
 );
 
@@ -41,6 +52,15 @@ const shoppingCartSlice = createSlice({
       state.orderItems = action.payload.orderItems;
       state.subTotal = +action.payload.total;
       state.cartId = action.payload.cartId;
+      state.orderItems = [...state.orderItems].map((item) => {
+        const price = +item.price;
+        item.totalItemPrice = price * item.quantity;
+        return item;
+      });
+      state.subTotal = [...state.orderItems].reduce((acc, item) => {
+        const num = +item.totalItemPrice;
+        return acc + num;
+      }, 0);
     });
     builder.addCase(ChangeQuantityAsync.fulfilled, (state, action) => {
       console.log('ACTION.PAYLOAD | QTY CHANGE ', action.payload);

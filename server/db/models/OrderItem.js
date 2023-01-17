@@ -112,10 +112,10 @@ OrderItem.afterCreate(async (orderItem) => {
   updateItemPrices(orderItem);
   updateTotalOrderPrice(orderItem);
 });
-// OrderItem.afterSave(async (orderItem) => {
-//   updateItemPrices(orderItem);
-//   updateTotalOrderPrice(orderItem);
-// });
+OrderItem.afterSave(async (orderItem) => {
+  updateItemPrices(orderItem);
+  updateTotalOrderPrice(orderItem);
+});
 OrderItem.afterUpdate(async (orderItem) => {
   updateItemPrices(orderItem);
   updateTotalOrderPrice(orderItem);
