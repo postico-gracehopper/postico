@@ -253,12 +253,10 @@ function CRUDTable({data: ogData,
 
   // Let's add a data resetter/randomizer to help
   // illustrate that flow...
-  const resetData = () => setData(originalData)
 
   return (
     <div className='interactive-table-container'>
       <h2>{titleText}</h2>
-      <button onClick={resetData}>Reset Data</button>
       { addMode ?
       <AddForm columns={columns} handleCreate={handleCreateAction}/>
       :
