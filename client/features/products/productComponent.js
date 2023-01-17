@@ -26,7 +26,7 @@ const Products = () => {
                   </h2>
                   <h2>${product.price}</h2>
                 </span>
-                <p>{product.description}</p>
+                <p className="text-[8px]">{product.description}</p>
               </Link>
               <AddToCartButton product={product} quantity={1} />
             </div>
