@@ -5,10 +5,9 @@ import axios from 'axios';
 export const fetchAllUserItemsAsync = createAsyncThunk(
   'GET AllUserItems',
   async (userId) => {
-    // console.log('****** THUNK ENTER *******');
-    // console.log('USERID: ', userId);
-    const { data } = await axios.get(`/api/users/${userId}/cart`);
-    // console.log('🚀 ~ file: shoppingCartSlice.js:12 ~ data', data);
+    const { data } = await axios.get(`/api/users/${userId}/cart`, {
+      headers: { authorization: window.localStorage.getItem('token') },
+    });
     return data;
   }
 );
@@ -16,27 +15,18 @@ export const fetchAllUserItemsAsync = createAsyncThunk(
 export const ChangeQuantityAsync = createAsyncThunk(
   'PUT order',
   async (inputs) => {
-    console.log('****** QTY THUNK ENTER *******');
-    console.log('🚀 ~ file: shoppingCartSlice.js:19 ~ inputs', inputs);
-
-    const { data } = await axios.put('/api/orders/', inputs);
-    console.log('🚀 ~ file: shoppingCartSlice.js:23 ~ data', data);
-
+    // console.log('ENTER THUNK');
+    const { data } = await axios.put('/api/orders/', inputs, {
+      headers: { authorization: window.localStorage.getItem('token') },
+    });
     return data;
   }
 );
 
-// export const removeQuantityAsync = createAsyncThunk(
-//   'PUT order',
-//   async (orderItemId, num) => {
-//     const { data } = await axios.put('/api/order/', { orderItemId, num });
-//     return data;
-//   }
-// );
-
 const initialState = {
   orderItems: {},
   subTotal: 0,
+  cartId: -1,
   isFetching: true,
   error: null,
 };
@@ -47,14 +37,16 @@ const shoppingCartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAllUserItemsAsync.fulfilled, (state, action) => {
+      console.log('ACTION-PAYLOAD | FETCH CART ', action.payload);
       state.orderItems = action.payload.orderItems;
-      state.subTotal = action.payload.total;
+      state.subTotal = +action.payload.total;
+      state.cartId = action.payload.cartId;
     });
     builder.addCase(ChangeQuantityAsync.fulfilled, (state, action) => {
-      console.log('ACTION.PAYLOAD>>>>>: ', action.payload);
+      console.log('ACTION.PAYLOAD | QTY CHANGE ', action.payload);
       const { orderItem, orderSubTotal } = action.payload;
       state.orderItems = [...state.orderItems].map((item) => {
-        if (item.id === orderItem.id) {
+        if (item.orderItemId === orderItem.id) {
           item.quantity = orderItem.quantity;
           const num = +orderItem.product.price;
           item.totalItemPrice = orderItem.quantity * num;
@@ -81,4 +73,8 @@ export const selectShoppingCart = (state) => {
 
 export const selectSubTotal = (state) => {
   return state.subTotal;
+};
+
+export const selectCartId = (state) => {
+  return state.cartId;
 };

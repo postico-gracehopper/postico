@@ -8,13 +8,7 @@ require("dotenv").config()
 
 router.post('/login', async (req, res, next) => {
   try {
-    // const permanentAccount = await User.authenticate(req.body)
-    // const token = req.headers.authorization 
-    // const tokenAccount = await User.findByToken(token)
-    // if (tokenAccount.isGuest && !tokenAccount.password){
-    //   await User.destroy({where: {id: tokenAccount.id}}) // guest -> login, destroy the guest account
-    // } 
-    res.send({ token: await User.authenticate(req.body) });
+    res.status(200).send({ token: await User.authenticate(req.body) });
   } catch (err) {
     next(err);
   }
@@ -23,6 +17,7 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const user = await User.create(req.body);
+    console.log(req.body)
     res.send({ token: await user.generateToken() });
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
@@ -42,10 +37,11 @@ function filterUserPublic(usr){
 }
 
 function filterGuestPublic(usr){
-  const PUBLIC_FIELDS = ['isGuest']
+  const PUBLIC_FIELDS = ['id', 'isGuest']
   return Object.keys(usr.dataValues).filter(key => PUBLIC_FIELDS.includes(key))
             .reduce((obj, key) => Object.assign(obj, {[key]: usr[key]}), {})
 }
+
 router.get('/me', async (req, res, next) => {
   try {
     if (req.headers.authorization) { // if the requestor has a token
@@ -59,11 +55,9 @@ router.get('/me', async (req, res, next) => {
         res.send(filterUserPublic(userObj))
       }
     } else { 
-      // if the requestor does not have a token
-      // await User.create()  // Create a new user
+      // if the requestor does not have a token -> create new user
       const guest = await User.create({isGuest: true})
-      // send the user profile (whatever's needed) & token
-      res.send({token: await guest.generateToken()}) // send the new user's token
+      res.send({token: await guest.generateToken()}) 
     }
   }
   catch (ex) {

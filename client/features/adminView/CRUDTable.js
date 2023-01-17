@@ -8,8 +8,11 @@ const EditableCell = ({
   row: { index },
   column: { id },
   updateMyData, // This is a custom function that we supplied to our table instance
+  endpoint: detailsEndpoint
 }) => {
   // We need to keep and update the state of the cell normally
+
+  
   const [value, setValue] = React.useState(initialValue)
   const [beenChanged, setBeenChanged] = React.useState(false)
   const onChange = e => {
@@ -33,7 +36,7 @@ const EditableCell = ({
     }
   }
 
-  return id === "id" ? <p style={{fontSize: "0.75rem", margin: "0px", padding: "0px"}}>{value}</p> : 
+  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p className="td-index" style={{fontSize: "0.75rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
       <input className={beenChanged ? "td-input-changed" : ""} value={value || ""} onChange={onChange} onBlur={onBlur} />
 }
 
@@ -79,7 +82,7 @@ function AddForm({columns, handleCreate}){
   </div>
 }
 // Be sure to pass our updateMyData and the skipPageReset option
-function Table({ columns, data, updateMyData, skipPageReset, handleDelete }) {
+function Table({ columns, data, updateMyData, skipPageReset, handleDelete, endpoint }) {
   // For this example, we're using pagination to illustrate how to stop
   // the current page from resetting when our data changes
   // Otherwise, nothing is different here.
@@ -102,7 +105,7 @@ function Table({ columns, data, updateMyData, skipPageReset, handleDelete }) {
     {
       columns,
       data,
-      defaultColumn,
+      defaultColumn: {Cell: EditableCell},
       // use the skipPageReset option to disable page resetting temporarily
       autoResetPage: !skipPageReset,
       // updateMyData isn't part of the API, but
@@ -136,7 +139,7 @@ function Table({ columns, data, updateMyData, skipPageReset, handleDelete }) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps()}>{cell.render('Cell', {endpoint: endpoint, width: "100px"})}</td>
                 })}
                 <td className="del-entry" onClick={() => handleDelete(data[i])}>❌</td>
               </tr>
@@ -197,6 +200,7 @@ function CRUDTable({data: ogData,
           handleDelete: handleDeleteAction,
           handletitle: titleText,
           handleCreate: handleCreateAction,
+          singlePageEndpoint: endpoint
         }) {
   const columns = React.useMemo(() => Object.keys(ogData[0]).map(k => {
     return {Header: k[0].toUpperCase() + k.slice(1,), accessor: k}
@@ -265,6 +269,7 @@ function CRUDTable({data: ogData,
         skipPageReset={skipPageReset}
         setPageSize={50}
         handleDelete={handleDeleteAction}
+        endpoint={endpoint}
       />
           }
       

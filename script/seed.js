@@ -1,10 +1,10 @@
 'use strict';
 const {
   db,
-  models: { User, Product, Order, OrderItem  },
+  models: { User, Product, Order, OrderItem },
 } = require('../server/db');
 const { faker } = require('@faker-js/faker');
-
+require('dotenv').config();
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -17,11 +17,10 @@ const genCategory = () => {
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
-
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
-  const NUM_USERS_AND_PRODUCTS = 100
+  const NUM_USERS_AND_PRODUCTS = 100;
   let users = [];
   let products = [];
 
@@ -108,11 +107,11 @@ async function seed() {
   });
 
   // Hardcode a single admin user in the seed.
-  User.create({
+  const adminUser = User.create({
     firstName: 'Admin1',
     lastName: 'Postico',
     username: 'Admin1',
-    password: 'blackdiamond',
+    password: process.env.DEFAULT_PASSWORD,
     email: 'admin1@posticogroup.com',
     addressLine1: '123 Admin Road',
     city: 'New York',
@@ -126,7 +125,7 @@ async function seed() {
     firstName: 'David',
     lastName: 'Demoson',
     username: 'demo_user',
-    password: 'blackdiamond',
+    password: process.env.DEFAULT_PASSWORD,
     email: 'demo_user@posticogroup.com',
     addressLine1: '1001 Demo Road',
     city: 'Houston',
@@ -145,6 +144,9 @@ async function seed() {
     category: 'Skis',
   });
 
+  const guest1 = User.create({
+    username: 'guest1',
+  });
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).

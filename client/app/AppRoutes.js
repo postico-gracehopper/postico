@@ -17,14 +17,12 @@ import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSli
  */
 
 const AppRoutes = () => {
-  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const isLoggedIn = useSelector((state) => !!state.auth.me.username);
   const userId = useSelector((state) => state.auth.me.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('ENTER APPROUTES USE EFFECT');
     if (userId) {
-      console.log('APPROUTE USERID: ', userId);
       dispatch(fetchAllUserItemsAsync(userId));
     } else {
       //clear cart action reducer
@@ -55,15 +53,12 @@ const AppRoutes = () => {
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
-          /> 
+          />
           <Route
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
-          <Route
-            path="/admin/*"
-            element={<AdminRouter />}
-          />
+          <Route path="/admin/*" element={<AdminRouter />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/checkout" element={<ShoppingCart />} />
         </Routes>

@@ -4,12 +4,14 @@ import AdminTablePage from "./AdminTablePage";
 
 const AdminProductsView = () => {
     const title = "Products"
-    const apiEndpoint = "/api/products/"
+    const apiEndpoint = "/api/products"
     const fields = ['id', 'name', 'description', 'price', 'category', 'image']
+    const linkLoc = "/admin/products"
     return <div><AdminTablePage
                 title={title}
                 apiEndpoint={apiEndpoint}
-                fields={fields} />
+                fields={fields} 
+                linkLoc={linkLoc} />
             </div>
 }
 
