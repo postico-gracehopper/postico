@@ -29,7 +29,7 @@ const AddToCartButton = ({ product, quantity }) => {
     <button
       type="submit"
       onClick={handleAddToCart}
-      className="font-plex uppercase shadow-[inset_0_0_0_rgba(0,0,0,0.6)]"
+      className="font-plex uppercase text-xs text-tahiti"
     >
       Add to cart
     </button>
@@ -37,20 +37,3 @@ const AddToCartButton = ({ product, quantity }) => {
 };
 
 export default AddToCartButton;
-
-// addToCart a {
-//   font-family: "Open Sans", sans-serif;
-//   font-size: inherit;
-//   box-shadow: inset 0 0 0 0 #c32f27;
-//   color: #c32f27;
-//   margin: 0 -0.25rem;
-//   padding: 0 0.25rem;
-//   transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-//   text-transform: uppercase;
-//   text-decoration: none;
-// }
-// nav a:hover {
-//   box-shadow: inset 250px 0 0 0 #c32f27;
-//   font-size: inherit;
-//   color: black;
-// }
