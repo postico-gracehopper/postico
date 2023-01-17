@@ -15,6 +15,10 @@ const errorPayment = (data) => {
   alert("We're sorry, an error occurred with your payment information.");
 };
 
+const dollarsToCents = (amount) => {
+  return parseInt(amount) * 100;
+};
+
 const onToken = (amount, description) => (token) =>
   axios
     .put('http://localhost:8080', {
@@ -45,3 +49,14 @@ const Checkout = ({ name, description, amount, handleCheckoutSuccess }) => {
 };
 
 export default Checkout;
+
+// const onToken = (amount, description) => (token) =>
+//   axios
+//     .put('http://localhost:8080', {
+//       description,
+//       source: token.id,
+//       currency: CURRENCY,
+//       amount: dollarsToCents(amount),
+//     })
+//     .then(successPayment)
+//     .catch(errorPayment);
