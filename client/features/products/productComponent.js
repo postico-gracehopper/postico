@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
+import SearchBar from '../searchBar/searchBar';
 import {
   changeFilter,
   changeSortBy,
@@ -46,6 +47,7 @@ const Products = () => {
           <option value="Price: Low to High">Price: Low to High</option>
           <option value="Price: High to Low">Price: High to Low</option>
         </select>
+        <SearchBar />
       </span>
       {products.map((product) => {
         return (
