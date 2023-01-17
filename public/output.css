@@ -1272,11 +1272,11 @@ nav.secondary-nav > .sec-nav-chosen {
 }
 
 .itemsColumn {
-  flex: 3;
+  flex: 2;
 }
 
 .summaryColumn {
-  flex: 2;
+  flex: 1;
 }
 
 .cartItem {
