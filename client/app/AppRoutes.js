@@ -16,7 +16,7 @@ import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSli
  */
 
 const AppRoutes = () => {
-  const isLoggedIn = useSelector((state) => !state.auth.me.isGuest);
+  const isLoggedIn = useSelector((state) => !!state.auth.me.username);
   const userId = useSelector((state) => state.auth.me.id);
   const dispatch = useDispatch();
 
