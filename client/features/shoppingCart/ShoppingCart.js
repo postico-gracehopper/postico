@@ -12,8 +12,8 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
 
   const items = useSelector((state) => state.shoppingCart.orderItems);
-
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
+  const orderId = useSelector((state) => state.shoppingCart);
 
   return (
     <>
@@ -31,7 +31,12 @@ const ShoppingCart = () => {
               <li>Cart empty!</li>
             )}
           </ul>
-          <Checkout amount={subTotal} />
+          <Checkout
+            amount={subTotal}
+            name="Postico checkout"
+            description="Get ready to ski!"
+            orderId={orderId}
+          />
           {/* TODO disable checkout button if cart empty */}
           <Link to="/products">
             <button>Keep shopping</button>
