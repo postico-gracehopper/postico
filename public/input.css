@@ -181,7 +181,7 @@ div.add-form-container > button.submit-record {
 
 body {
   font-family: sans-serif;
-  margin: 0px; 
+  margin: 0px;
 }
 
 a {
@@ -194,7 +194,7 @@ label {
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  /* margin: 1em; */
 }
 
 form div {
@@ -207,22 +207,22 @@ table {
   border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
-  overflow:scroll;
+  overflow: scroll;
 }
 
-tr, td {
+tr,
+td {
   border: 1px solid black;
   flex-shrink: 1 !important;
   min-width: auto !important;
   padding: 1px;
-
 }
 
 table.interactive-table {
   background-color: white;
 }
 
-.interactive-table-container{
+.interactive-table-container {
   background-color: lightblue;
   margin: 100px auto;
 }
@@ -237,7 +237,6 @@ table.interactive-table {
   position: relative;
   left: 85%;
   bottom: 5%;
-
 }
 
 .interactive-table-container > button.addNew {
@@ -246,19 +245,18 @@ table.interactive-table {
   position: relative;
   left: 65%;
   bottom: 5%;
-
 }
 
 .td-input-changed {
   background-color: yellow;
 }
 
-td.del-entry:hover{
+td.del-entry:hover {
   filter: brightness(0.05);
   cursor: pointer;
 }
 
-tr:hover{
+tr:hover {
   filter: brightness(0.8);
 }
 
@@ -315,7 +313,6 @@ nav.secondary-nav > .sec-nav-chosen {
   margin: 1rem;
   padding: 1rem;
 }
-
 
 /* Cart styling */
 
