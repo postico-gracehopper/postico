@@ -19,13 +19,10 @@ const dollarsToCents = (amount) => {
   return parseInt(amount) * 100;
 };
 
-const onToken = (amount, description) => (token) =>
+const onToken = (amount, description, orderId) => (token) =>
   axios
-    .put('http://localhost:8080', {
-      description,
-      source: token.id,
-      currency: CURRENCY,
-      amount: dollarsToCents(amount),
+    .put('/api/orders', {
+      orderPaid: true,
     })
     .then(successPayment)
     .catch(errorPayment);
@@ -37,7 +34,7 @@ const Checkout = ({ name, description, amount, handleCheckoutSuccess }) => {
         name={name}
         description={description}
         amount={amount}
-        token={onToken(amount, description, handleCheckoutSuccess)}
+        token={onToken(amount, description, orderId, handleCheckoutSuccess)}
         currency={CURRENCY}
         billingAddress
         shippingAddress
