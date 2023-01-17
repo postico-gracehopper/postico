@@ -19,7 +19,7 @@ const AddToCartButton = ({ product, quantity }) => {
       dispatch(fetchAllUserItemsAsync(userId));
     } catch (err) {
       console.error('Failed to add-to-cart (POST /api/orders)', err);
-      error.innerText = err.response
+      err.innerText = err.response
         ? err.response.data.message
         : 'Request Timed Out';
     }
