@@ -4,7 +4,6 @@ const attachUserDataToReq = async (req, res, next) => {
   try{ 
       const {authorization: token} = req.headers
       const user = await User.findByToken(token)
-      console.log("attach user data: using userID", user.id)
       if (user === null) throw new Error("Must have token to access api")
       req.user = user
       next();

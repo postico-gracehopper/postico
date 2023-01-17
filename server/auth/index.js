@@ -14,6 +14,7 @@ router.post('/login', async (req, res, next) => {
     // if (tokenAccount.isGuest && !tokenAccount.password){
     //   await User.destroy({where: {id: tokenAccount.id}}) // guest -> login, destroy the guest account
     // } 
+    console.log(req.body)
     res.status(200).send({ token: await User.authenticate(req.body) });
   } catch (err) {
     next(err);
@@ -48,7 +49,6 @@ function filterGuestPublic(usr){
 }
 
 router.get('/me', async (req, res, next) => {
-  console.log("reached router.get /me/", "authoization:", req.headers)
   try {
     if (req.headers.authorization) { // if the requestor has a token
       let userObj = await User.findByToken(req.headers.authorization)

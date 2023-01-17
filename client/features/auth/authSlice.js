@@ -12,7 +12,6 @@ const TOKEN = 'token';
 export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
   
   const token = window.localStorage.getItem(TOKEN);
-  console.log("ME CALLED, TOKEN", token)
   try {
     const res = await axios.get('/auth/me', {
       headers: {
@@ -70,7 +69,6 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, action) => {
-      console.log(action.payload)
       if (
         Object.keys(action.payload).includes('token') &&
         Object.keys(action.payload).length === 1
