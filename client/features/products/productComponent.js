@@ -13,7 +13,7 @@ const Products = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="bg-ecru">
       <div className="grid grid-cols-4 gap-2 px-4 py-4">
         {products.map((product) => {
           return (
