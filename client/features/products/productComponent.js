@@ -14,7 +14,7 @@ const Products = () => {
 
   return (
     <div>
-      <div>
+      <div className="grid grid-cols-4 gap-2 px-4 py-4">
         {products.map((product) => {
           return (
             <div key={product.id}>
