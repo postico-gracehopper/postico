@@ -74,6 +74,7 @@ const User = db.define('user', {
  */
 User.prototype.correctPassword = function (candidatePwd) {
   //we need to compare the plain version to an encrypted version of the password
+  console.log("in correct Pwd", candidatePwd, this.password)
   return bcrypt.compare(candidatePwd, this.password);
 };
 
@@ -85,7 +86,9 @@ User.prototype.generateToken = function () {
  * classMethods
  */
 User.authenticate = async function ({ username, password }) {
-  const user = await this.findOne({ where: { username } });
+  console.log(username, password)
+  const user = await this.findOne({ where: { username: username } });
+  console.log(user)
   if (!user || !(await user.correctPassword(password))) {
     const error = Error('Incorrect username/password');
     error.status = 401;
