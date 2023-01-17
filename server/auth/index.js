@@ -55,11 +55,9 @@ router.get('/me', async (req, res, next) => {
         res.send(filterUserPublic(userObj))
       }
     } else { 
-      // if the requestor does not have a token
-      // await User.create()  // Create a new user
+      // if the requestor does not have a token -> create new user
       const guest = await User.create({isGuest: true})
-      // send the user profile (whatever's needed) & token
-      res.send({token: await guest.generateToken()}) // send the new user's token
+      res.send({token: await guest.generateToken()}) 
     }
   }
   catch (ex) {
