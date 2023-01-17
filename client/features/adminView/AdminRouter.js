@@ -5,6 +5,7 @@ import AdminUsersView from "./AdminUsersView";
 import AdminOrdersView from "./AdminOrdersView"
 import SingleProduct from "../products/singleProductComponent"
 import SingleUser from "../users/singleUserComponent"
+import DetailEditUser from "./DetailEditUser";
 
 const AdminRouter = () => {
     const current = useLocation().pathname.split('/').slice(2,)[0]
@@ -25,7 +26,7 @@ const AdminRouter = () => {
             <Route path="/orders" element={<AdminOrdersView />} />
             <Route path="/orders/:id" element={<p>Order details shown here</p>} />
             <Route path="/products/:id" element={<SingleProduct />} />
-            <Route path="/users/:id" element={<SingleUser />} />
+            <Route path="/users/:id" element={<DetailEditUser />} />
         </Routes>
     </div>
 }
