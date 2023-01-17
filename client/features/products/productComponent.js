@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
 import {
   changeFilter,
@@ -49,7 +48,7 @@ const Products = () => {
         </select>
       </span>
       <div className="grid grid-cols-3 gap-4 px-4 py-4 m-4 justify-center">
-      {products.map((product) => {
+        {products.map((product) => {
           return (
             <div key={product.id}>
               <GridProduct
@@ -60,13 +59,13 @@ const Products = () => {
                 description={product.description}
                 price={product.price}
               />
-            <AddToCartButton product={product} quantity={1} />
-          </div>
-        );
-      })}
+              <AddToCartButton product={product} quantity={1} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
-  </div>
 };
 
 export default Products;
