@@ -1,11 +1,10 @@
 'use strict';
 const {
   db,
-  models: { User, Product, Order, OrderItem  },
+  models: { User, Product, Order, OrderItem },
 } = require('../server/db');
 const { faker } = require('@faker-js/faker');
-require("dotenv").config()
-
+require('dotenv').config();
 
 const genExpDate = () => {
   const month = Math.ceil(Math.random() * 12);
@@ -18,11 +17,39 @@ const genCategory = () => {
   return categories[Math.floor(Math.random() * categories.length)];
 };
 
+const genPhoto = (type) => {
+  if (type === 'Skis') {
+    const samples = [
+      'https://images.evo.com/imgp/700/226839/913503/lib-tech-yewps-skis-2023-.jpg',
+      'https://images.evo.com/imgp/700/209780/852673/zag-h-106-nurse-skis-2023-.jpg',
+      'https://i.ebayimg.com/images/g/ygEAAOSwfLNjNcSC/s-l1600.jpg',
+      'https://images.evo.com/imgp/enlarge/201424/832801/clone.jpg',
+    ];
+  } else if (type === 'Boots') {
+    const samples = [
+      'https://www.rossignol.com/media/catalog/product/resized/550x550/422943/rbj8050_speed_80_rgb72dpi_01.jpg',
+      'https://content.backcountry.com/images/items/1200/TEC/TECR06R/ULTORA.jpg',
+      'https://cdn.shopify.com/s/files/1/1373/6495/products/2022-HEAD-Raptor-WCR-120S-Ski-Boot_b2fa096d-6e58-47a1-b21d-6e0273434f45_1800x1800.jpg?v=1621280266',
+      'https://i1.adis.ws/i/k2/k2_2122_mindbender_130_1?w=412&fmt=webp&fmt.interlaced=true&bg=white&dpi=144',
+      'https://cdn11.bigcommerce.com/s-tq0ucjapr8/images/stencil/1280w/products/17711/513810/2b6e2596728d8d6cab0db529aaa4703dd26459b32ff1a935b8fe250430ff8b7b__77128.1672693129.jpg?c=1',
+    ];
+  } else {
+    const samples = [
+      'https://ridestore.imgix.net/catalog/product/F0844_01_d06t9Lt.jpg?w=525&auto=format&q=70&dpr=2&usm=15&fit=max',
+      'https://ridestore.imgix.net/catalog/product/F0848_01_3fDoxHb.jpg?w=525&auto=format&q=70&dpr=2&usm=15&fit=max',
+      'https://ridestore.imgix.net/catalog/product/F0845_01_XbJSS3c.jpg?w=525&auto=format&q=70&dpr=2&usm=15&fit=max',
+      'https://www.montecwear.com/images/H0917_01_eSu5W3d.jpg?w=525&dpr=2',
+      'https://www.montecwear.com/images/H0906_01_u1WX2a1.jpg?w=525&dpr=2',
+    ];
+  }
+  const randomNumber = Math.floor(Math.random() * samples.length);
+  return samples[randomNumber];
+};
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
-  const NUM_USERS_AND_PRODUCTS = 100
+  const NUM_USERS_AND_PRODUCTS = 100;
   let users = [];
   let products = [];
 
@@ -62,7 +89,7 @@ async function seed() {
       name: faker.commerce.productAdjective() + ' ' + type,
       description: faker.lorem.sentence(12),
       price: faker.commerce.price(),
-      image: faker.image.abstract(),
+      image: genPhoto(type),
       category: type,
     };
 
@@ -120,7 +147,7 @@ async function seed() {
     zipCode: '10002',
     adminRights: true,
     isGuest: false,
-  })
+  });
 
   // Hardcode a single demo user to test cart functionality.
   const demoUser = User.create({
@@ -133,9 +160,7 @@ async function seed() {
     city: 'Houston',
     zipCode: '77056',
     isGuest: false,
-  })
-
-  
+  });
 
   // Hardcode a single demo product to test cart functionality.
   const demoProduct = Product.create({
@@ -149,8 +174,8 @@ async function seed() {
   });
 
   const guest1 = User.create({
-    username: "guest1"
-  })
+    username: 'guest1',
+  });
 
   // Hardcode a single shopping cart and associate it with demo user.
   // TODO: Troubleshoot use of magic methods for associated models (see console log below).
