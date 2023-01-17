@@ -207,10 +207,15 @@ table {
   border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
+  overflow:scroll;
 }
 
-td, tr {
+tr, td {
   border: 1px solid black;
+  flex-shrink: 1 !important;
+  min-width: auto !important;
+  padding: 1px;
+
 }
 
 table.interactive-table {

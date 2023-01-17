@@ -7,8 +7,6 @@ const { verifyInteger,
 
 const PUBLIC_PRODUCT_FIELDS = ['id', 'name', 'description', 'price', 'image', 'category'] 
 
-
-
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
@@ -20,8 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-// restricted to ADMIN 
-router.post('/', async (req, res, next) => {
+router.post('/', verifyIsAdmin, async (req, res, next) => {
   try {
     const product = req.body
     await Product.create(product)
@@ -31,9 +28,8 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
+router.put('/', verifyIsAdmin, async (req, res, next) => {
   try {
-    // $ add server-side verification
     const changedProducts = req.body
     if (Array.isArray(changedProducts)){
         changedProducts.forEach(async user => {
@@ -49,7 +45,7 @@ router.put('/', async (req, res, next) => {
 });
 
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', verifyInteger, async (req, res, next) => {
   try {
     const { id } = req.params
     const product = await Product.findByPk(id, {
@@ -61,8 +57,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// Restricted to ADMIN 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', verifyInteger, verifyIsAdmin, async (req, res, next) => {
   try {
     const { id } = req.params
     const updatedProduct = req.body
@@ -73,8 +68,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-// Restricted to ADMIN 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', verifyInteger, verifyIsAdmin, async (req, res, next) => {
   try {
     const { id } = req.params
     await Product.destroy({where: {id: id}})

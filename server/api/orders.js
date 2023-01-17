@@ -14,7 +14,6 @@ const {
 router.get('/', verifyIsAdmin, async (req, res, next) => {
   try {
     const orders = await Order.findAllWithProducts()
-
     res.json(orders);
   } catch (err) {
     next(err);
