@@ -11,6 +11,7 @@ import Users from '../features/users/userComponent';
 import SingleUser from '../features/users/singleUserComponent';
 import AdminRouter from '../features/adminView/AdminRouter';
 import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
+
 /**
  * COMPONENT
  */
@@ -52,15 +53,12 @@ const AppRoutes = () => {
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
-          /> 
+          />
           <Route
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
-          <Route
-            path="/admin/*"
-            element={<AdminRouter />}
-          />
+          <Route path="/admin/*" element={<AdminRouter />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/checkout" element={<ShoppingCart />} />
         </Routes>
