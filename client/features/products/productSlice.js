@@ -31,13 +31,19 @@ export const createProductAsync = createAsyncThunk(
   }
 );
 
+const initialState = {
+  products: [],
+  filter: 'All',
+  sortBy: '-',
+};
+
 const productsSlice = createSlice({
   name: 'products',
-  initialState: [],
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
-      return action.payload;
+      state.products = action.payload;
     });
     builder.addCase(createProductAsync.fulfilled, (state, action) => {
       return state.push(action.payload);
@@ -47,4 +53,4 @@ const productsSlice = createSlice({
 
 export default productsSlice.reducer;
 
-export const selectProducts = (state) => state.products;
+export const selectProducts = (state) => state.products.products;

@@ -40,6 +40,7 @@ const AuthForm = ({ name, displayName }) => {
                   name="username"
                   type="text"
                   placeholder="Your username"
+                  className="bg-gray-50 border border-stone text-stone text-sm rounded-lg focus:ring-tahiti focus:border-tahiti block w-full p-2.5"
                 />
               </div>
               <div>
@@ -47,18 +48,19 @@ const AuthForm = ({ name, displayName }) => {
                   htmlFor="password"
                   className="font-bold uppercase text-grey-darker block mb-2"
                 >
-                  <small>Password</small>
+                  Password
                 </label>
                 <input
                   name="password"
                   type="password"
                   placeholder="Your password"
+                  className="bg-gray-50 border border-stone text-stone text-sm rounded-lg focus:ring-tahiti focus:border-tahiti block w-full p-2.5"
                 />
               </div>
-              <div className="content-center my-4">
+              <div className="text-center my-4">
                 <button
                   type="submit"
-                  className="bg-pool hover:bg-tahiti text-white font-bold py-2 px-16 rounded text-center uppercase tracking-widest"
+                  className="bg-pool hover:bg-tahiti text-white font-bold py-2 px-8 rounded text-center uppercase tracking-widest"
                 >
                   {displayName}
                 </button>
@@ -68,7 +70,7 @@ const AuthForm = ({ name, displayName }) => {
                   <p className="italic font-xs">
                     Don't have an account?{' '}
                     <a href="/signup" className="text-pool hover:text-tahiti">
-                      Create an account
+                      Create one here.
                     </a>
                   </p>
                 )}
