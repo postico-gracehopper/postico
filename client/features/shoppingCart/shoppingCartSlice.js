@@ -7,7 +7,8 @@ export const fetchAllUserItemsAsync = createAsyncThunk(
   async (userId) => {
     // console.log('****** THUNK ENTER *******');
     // console.log('USERID: ', userId);
-    const { data } = await axios.get(`/api/users/${userId}/cart`);
+    const { data } = await axios.get(`/api/users/${userId}/cart`, 
+        {headers: {authorization: window.localStorage.getItem("token")}});
     // console.log('🚀 ~ file: shoppingCartSlice.js:12 ~ data', data);
     return data;
   }
