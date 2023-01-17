@@ -67,8 +67,6 @@ const User = db.define('user', {
   },
 });
 
-
-
 /**
  * instanceMethods
  */
@@ -124,96 +122,106 @@ User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 
-
-User.getUnwrappedCartForUserId = async function(usrId){
+User.getUnwrappedCartForUserId = async function (usrId) {
   const cart = await Order.findOne({
     where: {
       userId: usrId,
-      orderPaid: false
+      orderPaid: false,
     },
     include: {
       model: OrderItem,
-      required: false,
+      // required: false,
       include: {
-        model: Product
+        model: Product,
       },
     },
-  })
-  return cart ? {       //UNPACKAGED CART
-    cartId: cart.id,
-    orderId: cart.id,
-    total: cart.total,
-    orderPaid: cart.orderPaid,
-    orderItems: cart.orderItems && cart.orderItems.length ? cart.orderItems.map(item => {
-      return {
-        productId: item.product.id, // if order items, map them and return the following fields
-        name: item.product.name,
-        description: item.product.description,
-        price: item.product.price,
-        image: item.product.image,
-        category: item.product.category,
-        orderItemId: item.id,
-        quantity: item.quantity,
-        totalItemPrice: item.totalItemPrice,
+  });
+  return cart
+    ? {
+        //UNPACKAGED CART
+        cartId: cart.id,
+        orderId: cart.id,
+        total: cart.total,
+        orderPaid: cart.orderPaid,
+        orderItems:
+          cart.orderItems && cart.orderItems.length
+            ? cart.orderItems.map((item) => {
+                return {
+                  productId: item.product.id, // if order items, map them and return the following fields
+                  name: item.product.name,
+                  description: item.product.description,
+                  price: item.product.price,
+                  image: item.product.image,
+                  category: item.product.category,
+                  orderItemId: item.id,
+                  quantity: item.quantity,
+                  totalItemPrice: item.totalItemPrice,
+                };
+              })
+            : [], // if there is a cart, but no items
       }
-    }) : [] // if there is a cart, but no items
-  } : {
-    userId: usrId,
-    cartId: null,
-    orderId: null,
-    total: "00.00",        // DEFAULT NULL CART
-    orderPaid: false,
-    orderItems: []
-  }
-} 
+    : {
+        userId: usrId,
+        cartId: null,
+        orderId: null,
+        total: '00.00', // DEFAULT NULL CART
+        orderPaid: false,
+        orderItems: [],
+      };
+};
 
-User.prototype.getUnwrappedCart = async function(){
-  return User.getUnwrappedCartForUserId(this.id)
-}
+User.prototype.getUnwrappedCart = async function () {
+  return User.getUnwrappedCartForUserId(this.id);
+};
 
-User.prototype.addToCart = async function(productId, qty, op=(a, b) => a + b){
-  const cart = await this.getCart()
-  const product = await Product.findOne({where: {id: productId}})
-  const [oItem, oItemWasCreated]= await OrderItem.findOrCreate({
+User.prototype.addToCart = async function (
+  productId,
+  qty,
+  op = (a, b) => a + b
+) {
+  const cart = await this.getCart();
+  const product = await Product.findOne({ where: { id: productId } });
+  const [oItem, oItemWasCreated] = await OrderItem.findOrCreate({
     where: {
       orderId: cart.id,
-      productId: product.id
+      productId: product.id,
     },
     defaults: {
       productId: product.id,
       orderId: cart.id,
-    }})
+    },
+  });
   await oItem.update({
-    quantity: (oItemWasCreated ? qty : op(oItem.quantity, qty)),
-    totalItemPrice: (oItemWasCreated ? product.price*qty 
-      : String(op(Number(oItem.totalItemPrice),  product.price*qty)))
-  })
+    quantity: oItemWasCreated ? qty : op(oItem.quantity, qty),
+    totalItemPrice: oItemWasCreated
+      ? product.price * qty
+      : String(op(Number(oItem.totalItemPrice), product.price * qty)),
+  });
   await cart.update({
-    total: String(op(Number(cart.total), product.price*qty))
-  })
-}
+    total: String(op(Number(cart.total), product.price * qty)),
+  });
+};
 
+User.prototype.removeFromCart = async function (productId, qty) {
+  this.addToCart(productId, qty, (a, b) => a - b);
+};
 
-User.prototype.removeFromCart = async function(productId, qty){
-  this.addToCart(productId, qty, (a, b) => a - b)
-}
-  
-
-User.prototype.getCart = async function(){
+User.prototype.getCart = async function () {
   const [cart, wasCreated] = await Order.findOrCreate({
     where: {
       userId: this.id,
-      orderPaid: false
-    }})
-  return cart
-}
+      orderPaid: false,
+    },
+  });
+  return cart;
+};
 
-User.prototype.getOrderNumbers = async function(){
+User.prototype.getOrderNumbers = async function () {
   const orders = await Order.findAll({
-    where: { userId: this.id},
-    attributes: ['id']})
-  return orders && orders.length ? orders.map(obj => obj['id']) : []
-}
-
+    where: { userId: this.id },
+    attributes: ['id'],
+  });
+  return orders && orders.length ? orders.map((obj) => obj['id']) : [];
+};
 
 module.exports = User;

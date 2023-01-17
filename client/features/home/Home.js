@@ -9,7 +9,7 @@ const Home = (props) => {
   const username = useSelector((state) => state.auth.me.username);
 
   return (
-    <div class="relative overflow-hidden">
+    <div className="relative overflow-hidden">
       <img
         src="https://www.ischgl.com/media/ischgl/WINTER/SKIGEBIET/image-thumb__53475433__og-image/SKI_ALPIN_2022%20%287%29.webp"
         className="object-cover w-full h-full"
