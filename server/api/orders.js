@@ -109,11 +109,13 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   try {
     console.log('****** PUT ROUTE ENTER *******');
-    const { id, num } = req.body;
+    const { orderItemId, num } = req.body;
     console.log('🚀 ~ file: orders.js:136 ~ router.put ~ req.body', req.body);
     console.log('🚀 ~ file: orders.js:136 ~ router.put ~ num', num);
-    console.log('🚀 ~ file: orders.js:136 ~ router.put ~ id', id);
-    const orderItem = await OrderItem.findByPk(id, { include: Product });
+    console.log('🚀 ~ file: orders.js:136 ~ router.put ~ id', orderItemId);
+    const orderItem = await OrderItem.findByPk(orderItemId, {
+      include: Product,
+    });
     orderItem.quantity += num;
     await orderItem.save();
     const orderSubTotal = await Order.findByPk(orderItem.orderId);
