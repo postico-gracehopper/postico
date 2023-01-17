@@ -6,10 +6,12 @@ const AdminUsersView = () => {
     const apiEndpoint = "/api/users"
     const fields = ['id', 'username', 'firstName', 'lastName', 
         'email', 'adminRights', 'isGuest']
+    const linkLoc = "/admin/users"
     return <div><AdminTablePage
                 title={title}
                 apiEndpoint={apiEndpoint}
-                fields={fields} />
+                fields={fields}
+                linkLoc={linkLoc} />
             </div>
 }
 

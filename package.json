@@ -18,6 +18,7 @@
     "test": "NODE_ENV=test JWT=a_secret mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" --require @babel/register --require esm ",
     "test:dev": "npm run test -- --watch",
     "test:dev:models": "npm run test:dev -- --grep=model",
+    "test:routes:auth": "mocha \"./tests/routes/routes.auth.spec.js\"",
     "test:routes": "mocha \"./tests/routes/*.spec.js\"",
     "log:tokens": "node ./script/getTokens.js"
   },

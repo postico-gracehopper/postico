@@ -6,11 +6,13 @@ const AdminProductsView = () => {
     const title = "Orders"
     const apiEndpoint = "/api/orders"
     const fields = ["id", "userId", "total", "orderPaid"]
+    const linkLoc = "/admin/orders"
     
     return <div><AdminTablePage
                 title={title}
                 apiEndpoint={apiEndpoint}
-                fields={fields} />
+                fields={fields}
+                linkLoc={linkLoc} />
             </div>
 }
 

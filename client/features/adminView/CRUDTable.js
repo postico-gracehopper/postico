@@ -12,7 +12,7 @@ const EditableCell = ({
 }) => {
   // We need to keep and update the state of the cell normally
 
-  console.log(initialValue)
+  
   const [value, setValue] = React.useState(initialValue)
   const [beenChanged, setBeenChanged] = React.useState(false)
   const onChange = e => {
@@ -36,8 +36,8 @@ const EditableCell = ({
     }
   }
 
-  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p style={{fontSize: "0.75rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
-      <input className={beenChanged ? "td-input-changed" : ""} value={String(value) || ""} onChange={onChange} onBlur={onBlur} />
+  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p className="td-index" style={{fontSize: "0.75rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
+      <input className={beenChanged ? "td-input-changed" : ""} value={value || ""} onChange={onChange} onBlur={onBlur} />
 }
 
 // Set our editable cell renderer as the default Cell renderer
@@ -105,7 +105,7 @@ function Table({ columns, data, updateMyData, skipPageReset, handleDelete, endpo
     {
       columns,
       data,
-      defaultColumn: {width: "auto"},
+      defaultColumn: {Cell: EditableCell},
       // use the skipPageReset option to disable page resetting temporarily
       autoResetPage: !skipPageReset,
       // updateMyData isn't part of the API, but
@@ -139,7 +139,7 @@ function Table({ columns, data, updateMyData, skipPageReset, handleDelete, endpo
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell', {endpoint: endpoint})}</td>
+                  return <td {...cell.getCellProps()}>{cell.render('Cell', {endpoint: endpoint, width: "100px"})}</td>
                 })}
                 <td className="del-entry" onClick={() => handleDelete(data[i])}>❌</td>
               </tr>
