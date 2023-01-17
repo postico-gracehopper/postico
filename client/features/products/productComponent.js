@@ -15,7 +15,7 @@ const Products = () => {
 
   return (
     <div className="bg-ecru">
-      <div className="grid grid-cols-4 gap-2 px-4 py-4">
+      <div className="grid grid-cols-4 gap-2 px-4 py-4 m-4">
         {products.map((product) => {
           return (
             <div key={product.id}>
