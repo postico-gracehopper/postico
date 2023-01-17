@@ -17,9 +17,6 @@ export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
       headers: {
         authorization: token,
       },
-      payload: {
-        tokie: token
-      }
     });
     if (!token && res.data.token) {
       window.localStorage.setItem(TOKEN, res.data.token);

@@ -26,7 +26,7 @@ const Footer = () => {
             {isAdmin ? (
               <a
                 className="font-xl mb-2 uppercase font-plex tracking-widest"
-                href="/adminview"
+                href="/admin/"
               >
                 Admin dashboard
               </a>
