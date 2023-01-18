@@ -56,7 +56,7 @@ const ShoppingCart = () => {
           </Link>
         </div>
         <div className="summaryColumn">
-          <h3 className="text-3xl mt-8 tracking-wider">Summary</h3>
+          <h3 className="text-3xl mt-8 tracking-wider text-right">Summary</h3>
           <ul>
             {items && items.length ? (
               <>

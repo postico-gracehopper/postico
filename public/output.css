@@ -1116,6 +1116,10 @@ body {
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .font-plex {
   font-family: IBM Plex Sans, sans-serif;
 }
