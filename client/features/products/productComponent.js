@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
+import SearchBar from '../searchBar/searchBar';
 import {
   changeFilter,
   changeSortBy,
@@ -22,15 +23,20 @@ const Products = () => {
   };
 
   useEffect(() => {
-    console.log('HERE');
     dispatch(fetchProductsAsync());
   }, [dispatch]);
 
   return (
     <div className="bg-ecru">
       <span className="flex">
-        <label htmlFor="product-filter">Filter Products By: </label>
+        <label
+          className="font-plex text-stone text-base"
+          htmlFor="product-filter"
+        >
+          Filter Products By:{' '}
+        </label>
         <select
+          className="rounded-md font-plex w-auto text-sm text-slate-600"
           name="product-filter"
           id="product-filter"
           onChange={handleFilter}
@@ -40,12 +46,23 @@ const Products = () => {
           <option value="Apparel">Apparel</option>
           <option value="Skis">Skis</option>
         </select>
-        <label htmlFor="product-sort">Sort Products by: </label>
-        <select name="product-sort" id="product-sort" onChange={handleSort}>
+        <label
+          className="font-plex text-slate-600 text-base"
+          htmlFor="product-sort"
+        >
+          Sort Products by:{' '}
+        </label>
+        <select
+          className="font-plex w-auto text-sm text-slate-600"
+          name="product-sort"
+          id="product-sort"
+          onChange={handleSort}
+        >
           <option value="-">-</option>
           <option value="Price: Low to High">Price: Low to High</option>
           <option value="Price: High to Low">Price: High to Low</option>
         </select>
+        <SearchBar />
       </span>
       <div className="grid grid-cols-4 gap-4 px-4 py-4 m-4 justify-center">
         {products.map((product) => {

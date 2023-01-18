@@ -84,16 +84,6 @@ router.get(
   verifyIsSpecificUserOrAdmin,
   async (req, res, next) => {
     try {
-      // const user = await User.findByPk(req.params.id);
-      // const orders = await Order.findOne({
-      //   where: { userId: user.id, orderPaid: false },
-      //   include: {
-      //     model: OrderItem,
-      //     include: {
-      //       model: Product,
-      //     },
-      //   },
-      // });
       const cart = await User.getUnwrappedCartForUserId(req.user.id);
       res.json(cart);
     } catch (err) {
