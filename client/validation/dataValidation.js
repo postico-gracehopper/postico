@@ -19,7 +19,8 @@ function switchValidateUserOnKey(key, val){
             return {lastName: String(val)}
 
         case "email":
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)) throw new Error("Does not match email format")
+            // if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)) throw new Error("Does not match email format")
+            if (typeof val !== "string") throw new Error("does not match email format")
             return {email: val}
 
         case "addressLine1":
@@ -79,3 +80,5 @@ function validateUserFields(usrObj, callback=null){
         throw err
     }
 }
+
+module.exports = { validateUserFields }

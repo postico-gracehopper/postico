@@ -1302,13 +1302,21 @@ td {
   padding: 1px;
 }
 
+.admin-view-subtitle {
+  text-align: center;
+  color: black;
+  font-weight: 700;
+  font-size: 32pt;
+  padding: 50px auto 50px;
+  margin-bottom: -10px;
+}
+
 table.interactive-table {
   background-color: white;
 }
 
 .interactive-table-container {
   background-color: lightblue;
-  margin: 100px auto;
 }
 
 .interactive-table-container > h2 {
@@ -1321,6 +1329,8 @@ table.interactive-table {
   position: relative;
   left: 85%;
   bottom: 5%;
+  padding: 5px;
+  border: 1px black solid;
 }
 
 .interactive-table-container > button.addNew {
@@ -1329,6 +1339,8 @@ table.interactive-table {
   position: relative;
   left: 65%;
   bottom: 5%;
+  padding: 5px;
+  border: 1px black solid;
 }
 
 .td-input-changed {

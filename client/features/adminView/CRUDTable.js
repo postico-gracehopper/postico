@@ -36,7 +36,7 @@ const EditableCell = ({
     }
   }
 
-  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p className="td-index" style={{fontSize: "0.75rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
+  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p className="td-index" style={{fontSize: "1.1rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
       <input className={beenChanged ? "td-input-changed" : ""} value={value || ""} onChange={onChange} onBlur={onBlur} />
 }
 
@@ -248,7 +248,6 @@ function CRUDTable({data: ogData,
 
   return (
     <div className='interactive-table-container'>
-      <h2>{titleText}</h2>
       { addMode ?
       <AddForm columns={columns} handleCreate={handleCreateAction}/>
       :
