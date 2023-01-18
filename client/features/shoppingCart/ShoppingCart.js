@@ -41,13 +41,16 @@ const ShoppingCart = () => {
               <li>Cart empty!</li>
             )}
           </ul>
-          <Checkout
-            amount={dollarsToCents(subTotal)}
-            name="Postico checkout"
-            description="Get ready to ski!"
-            orderId={orderId}
-          />
-          {/* TODO disable checkout button if cart empty */}
+          {items && items.length ? (
+            <Checkout
+              amount={dollarsToCents(subTotal)}
+              name="Postico checkout"
+              description="Get ready to ski!"
+              orderId={orderId}
+            />
+          ) : (
+            <p>No checkout button for you :(</p>
+          )}
           <Link to="/products">
             <button>Keep shopping</button>
           </Link>
