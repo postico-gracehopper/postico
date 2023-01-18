@@ -1,16 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 
 const CURRENCY = 'USD';
 
 const successPayment = () => {
   alert('Thank you! Your order has been successfully processed.');
-  // const navigate = useNavigate();
-  // navigate('/products');
-  // Alert as well?
-  // Email integration?
 };
 
 const errorPayment = (err) => {
