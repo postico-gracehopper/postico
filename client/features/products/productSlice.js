@@ -94,11 +94,15 @@ export const sortedAndFilteredProducts = createSelector(
     }
 
     if (sortBy === 'Price: Low to High') {
-      sorted = [...filtered].sort((a, b) => (a.price < b.price ? -1 : 0));
+      sorted = [...filtered].sort((a, b) =>
+        Number(a.price) < Number(b.price) ? -1 : 0
+      );
     }
 
     if (sortBy === 'Price: High to Low') {
-      sorted = [...filtered].sort((a, b) => (a.price > b.price ? -1 : 0));
+      sorted = [...filtered].sort((a, b) =>
+        Number(a.price) > Number(b.price) ? -1 : 0
+      );
     }
 
     if (searchBy.length > 0) {

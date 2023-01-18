@@ -20,6 +20,8 @@ function SearchBar() {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <SearchIcon sx={{ marginRight: '10px' }} />
       <Input
+        className="font-plex text-tahiti"
+        htmlFor
         placeholder="Search Products"
         onChange={handleSearch}
         sx={{
