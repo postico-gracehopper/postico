@@ -14,6 +14,20 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
+    validate: {
+      isUnique: function (value, next) {
+        User.findOne({
+          where: { username: value },
+          attributes: ['id'],
+        }).then(function (user) {
+          if (user) {
+            next('Username');
+          } else {
+            next();
+          }
+        });
+      },
+    },
   },
   password: {
     type: Sequelize.STRING,
@@ -26,9 +40,21 @@ const User = db.define('user', {
   },
   email: {
     type: Sequelize.STRING,
-    // TODO require unique?
+    unique: true,
     validate: {
       isEmail: true,
+      isUnique: function (value, next) {
+        User.findOne({
+          where: { email: value },
+          attributes: ['id'],
+        }).then(function (user) {
+          if (user) {
+            next('Email');
+          } else {
+            next();
+          }
+        });
+      },
     },
   },
   addressLine1: {
@@ -41,20 +67,6 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   zipCode: {
-    type: Sequelize.INTEGER,
-  },
-  //TODO validate that it is 5-digits?
-  //TODO likely remove all payments because using stripe
-  creditCardNumber: {
-    type: Sequelize.STRING,
-  },
-  creditCardName: {
-    type: Sequelize.STRING,
-  },
-  creditCardExpiration: {
-    type: Sequelize.STRING,
-  },
-  creditCardCVV: {
     type: Sequelize.INTEGER,
   },
   adminRights: {
