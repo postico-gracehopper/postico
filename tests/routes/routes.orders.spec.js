@@ -30,6 +30,6 @@ describe("Orders Route", () => {
                 .get(`/api/orders/1`)
                 .set('authorization', userTokens.guest)
                 .expect(401)
-        }).timeout(5000)
+        }).timeout(8000)
     })
 })

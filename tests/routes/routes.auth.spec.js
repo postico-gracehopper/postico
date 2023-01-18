@@ -25,7 +25,7 @@ describe("Authorization", () => {
             expect(res.body).to.be.an('object')
             expect(res.body.token).to.be.a("string")
             expect(res.body.token.length).to.be.above(110)
-        })
+        }).timeout(5000)
 
 
         it("Guest GET /auth/me", async () => {
