@@ -1,6 +1,7 @@
 const { models: { User }} = require('../db')
 
 const attachUserDataToReq = async (req, res, next) => {
+  
   try{ 
       const {authorization: token} = req.headers
       const user = await User.findByToken(token)
@@ -107,6 +108,7 @@ async function verifyOwnsOrderItemOrIsAdmin(req, res, next){
         throw new Error("User does not own this order")
       }
     } catch(err){
+      console.log(err)
       err.status = 401
       err.message = "User does not own this order"
     }

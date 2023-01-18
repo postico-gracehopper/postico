@@ -232,17 +232,21 @@ User.prototype.getOrderNumbers = async function () {
   return orders && orders.length ? orders.map((obj) => obj['id']) : [];
 };
 
-User.prototype.getAllActiveOrderItemNumbers = async function () {
-  const order = await Order.findOne({
-    where: { userId: this.id, orderPaid: false },
-    include: {
-      model: OrderItem,
-      attributes: ["id"]
-    },
-  });
-  return order && order.orderItems && order.orderItems.length ? 
-      order.orderItems.map(orderI => orderI["id"]) :
-      []
+User.prototype.getAllActiveOrderItemNums = async function () {
+  try {
+    const order = await Order.findOne({
+      where: { userId: this.id, orderPaid: false },
+      include: {
+        model: OrderItem,
+        attributes: ["id"]
+      },
+    });
+    return order && order.orderItems && order.orderItems.length ? 
+        order.orderItems.map(orderI => orderI["id"]) :
+        []
+  } catch(err){
+    console.log(err)
+  }
 };
 
 module.exports = User;
