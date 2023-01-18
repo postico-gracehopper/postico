@@ -12,7 +12,7 @@ const {
 // ADMIN only
 router.get('/', verifyIsAdmin, async (req, res, next) => {
   try {
-    const orders = await Order.findAllWithProducts();
+    const orders = await Order.findAll()
     res.json(orders);
   } catch (err) {
     next(err);
@@ -27,7 +27,17 @@ router.get(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const order = await Order.findOneWithProducts(id);
+      const order = await Order.findOne({
+        where: {id: id},
+        include: [{
+          model: OrderItem,
+          include: {
+            model: Product
+          }
+        },
+        {model: User,
+         attributes: ["id", "email"]}]
+      })
       res.json(order);
     } catch (err) {
       next(err);
