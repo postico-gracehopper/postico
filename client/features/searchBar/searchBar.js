@@ -1,21 +1,31 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Input, IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  sortedAndFilteredProducts,
+  changeSearchBy,
+} from '../products/productSlice';
 
-function SearchBar({ placeholder, onChange, searchBarWidth }) {
+function SearchBar() {
+  const products = useSelector(sortedAndFilteredProducts);
+  const dispatch = useDispatch();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(changeSearchBy(e.target.value));
+  };
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <SearchIcon sx={{ marginRight: '10px' }} />
       <Input
-        placeholder={placeholder}
-        onChange={onChange}
+        placeholder="Search Products"
+        onChange={handleSearch}
         sx={{
-          width: searchBarWidth,
-          color: 'rgba(0, 0, 0, 0.6)',
-          fontSize: '1.1rem',
+          color: 'rgba(0, 0, 0, 0.8)',
+          fontSize: '1rem',
         }}
-        disableUnderline
       ></Input>
     </Box>
   );
