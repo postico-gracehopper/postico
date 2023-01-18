@@ -23,7 +23,7 @@ const DetailEditUser = () => {
             <p>Order ID: {orderData.id}</p>
             <p>Order Total: ${orderData.total}</p>
             <p>Order Paid: {String(orderData.orderPaid)}</p>
-            <p>User's email: {orderData.user.email}</p>
+            <p>User's email: {orderData.user.email || "none"}</p>
             {orderData && orderData.orderItems && orderData.orderItems.length ?
             orderData.orderItems.map((item, index) => {
                 return <div key={index} style={{backgroundColor: "lightblue", marginTop: "10px", display: "flex"}}>
