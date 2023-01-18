@@ -66,10 +66,14 @@ const DetailEditUser = () => {
             </tbody>
         </table>
         : <p>Loading user data</p>}
-        <button onClick={handleSubmit}>Save</button> 
+        <button   onClick={handleSubmit}
+                  className="bg-pool hover:bg-tahiti text-white font-bold py-2 px-8 rounded text-center uppercase tracking-widest"
+        >
+        Save
+        </button>
     </div>
 }
 
-
+// <button onClick={handleSubmit}>Save</button> 
 
 export default DetailEditUser; 

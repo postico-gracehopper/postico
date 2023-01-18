@@ -6,6 +6,7 @@ const {
   verifyInteger,
   verifyIsAdmin,
   verifyOwnsOrderOrIsAdmin,
+  verifyOwnsOrderItemOrIsAdmin,
 } = require('./apiHelpers');
 
 // ADMIN only
@@ -36,8 +37,11 @@ router.get(
 
 router.post('/', async (req, res, next) => {
   try {
-    const { productId, quantity } = req.body;
-    const userId = req.user.id;
+    const { productId, quantity, userId } = req.body;
+    // custom middleware
+    if (!req.user.adminRights) {
+        if (Number(userId) !== Number(req.user.id)) throw new Error("User does not own the cart")
+    }
     await OrderItem.addToCart(userId, productId, quantity);
     res.status(201).send();
   } catch (err) {
@@ -46,7 +50,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // change quantity
-router.put('/', async (req, res, next) => {
+router.put('/', verifyOwnsOrderItemOrIsAdmin, async (req, res, next) => {
   try {
     // console.log('****** PUT ROUTE ENTER *******');
     const { orderItemId, num } = req.body;

@@ -886,12 +886,12 @@ body {
   overscroll-behavior: none;
 }
 
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
 .rounded {
   border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .rounded-full {
@@ -921,14 +921,14 @@ body {
   background-color: rgb(245 244 240 / var(--tw-bg-opacity));
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
 .bg-pool {
   --tw-bg-opacity: 1;
   background-color: rgb(126 200 193 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .bg-stone {
@@ -1114,14 +1114,14 @@ body {
   color: rgb(64 181 195 / var(--tw-text-opacity));
 }
 
-.text-stone {
-  --tw-text-opacity: 1;
-  color: rgb(66 65 64 / var(--tw-text-opacity));
-}
-
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-stone {
+  --tw-text-opacity: 1;
+  color: rgb(66 65 64 / var(--tw-text-opacity));
 }
 
 .text-pool {
@@ -1302,13 +1302,41 @@ td {
   padding: 1px;
 }
 
+.admin-view-subtitle {
+  text-align: center;
+  color: white;
+  text-shadow: rgb(0, 0, 0) 2px 0 10px;
+  font-weight: 700;
+  font-size: 32pt;
+  padding: 50px auto 50px;
+  padding-bottom: 40px;
+  padding-top: 40px;
+  margin-bottom: -10px;
+}
+
+.banner-Products {
+  border: black 1px solid;
+  background-image: url('https://www.skirack.com/media/wysiwyg/images/skirack/nordic-department-1-933x367_1.jpg');
+}
+
+.banner-Users {
+  background-image: url('https://cdm0lfbn.cloudimg.io/v7/_images_base_/image_uploader/photos/d4/original/esf-vallorcine-ski-school-group-ski-lessons-chamonix-chamonix-vallorcine-5.jpg?ua=1579879343&p=large');
+  background-position-x: center;
+  background-position-y: center;
+}
+
+.banner-Orders {
+  background-image: url('https://blog.sigmaphoto.com/wp-content/uploads/2019/01/Liam-Doran-2805.jpg');
+  background-position-x: center;
+  background-position-y: center;
+}
+
 table.interactive-table {
   background-color: white;
 }
 
 .interactive-table-container {
   background-color: lightblue;
-  margin: 100px auto;
 }
 
 .interactive-table-container > h2 {
@@ -1321,6 +1349,8 @@ table.interactive-table {
   position: relative;
   left: 85%;
   bottom: 5%;
+  padding: 5px;
+  border: 1px black solid;
 }
 
 .interactive-table-container > button.addNew {
@@ -1329,6 +1359,8 @@ table.interactive-table {
   position: relative;
   left: 65%;
   bottom: 5%;
+  padding: 5px;
+  border: 1px black solid;
 }
 
 .td-input-changed {

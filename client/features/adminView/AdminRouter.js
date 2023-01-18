@@ -6,6 +6,7 @@ import AdminOrdersView from "./AdminOrdersView"
 import SingleProduct from "../products/singleProductComponent"
 import SingleUser from "../users/singleUserComponent"
 import DetailEditUser from "./DetailEditUser";
+import AdminLanding from "./AdminLanding";
 
 const AdminRouter = () => {
     const current = useLocation().pathname.split('/').slice(2,)[0]
@@ -20,7 +21,7 @@ const AdminRouter = () => {
         </nav>
         <Routes>
             <Route path="/*" element={<p>ADMIN ROUTE COULD NOT BE FOUND</p>} />
-            <Route path="/" element={<p>HOME</p>} />
+            <Route path="/" element={<AdminLanding />} />
             <Route path="/products" element={<AdminProductsView />} />
             <Route path="/users" element={<AdminUsersView />} />
             <Route path="/orders" element={<AdminOrdersView />} />

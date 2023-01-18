@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, dispatch } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 /*
@@ -19,6 +19,7 @@ export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
     });
     if (!token && res.data.token) {
       window.localStorage.setItem(TOKEN, res.data.token);
+      thunkAPI.dispatch(me())
     }
     return res.data;
   } catch (err) {
@@ -68,7 +69,7 @@ export const authSlice = createSlice({
       window.localStorage.removeItem(TOKEN);
       state.me = {};
       state.error = null;
-      // add functionality to request a new token (call auth/me) immediately
+      me() // call me automatically to get a guest token
     },
   },
   extraReducers: (builder) => {
