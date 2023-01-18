@@ -13,7 +13,9 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
 
   const items = useSelector((state) => state.shoppingCart.orderItems);
+
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
+
   // const orderId = useSelector(selectCartId);
   const orderId = 1;
 
@@ -38,9 +40,9 @@ const ShoppingCart = () => {
             )}
           </ul>
           <Checkout
+            amount={dollarsToCents(subTotal)}
             name="Postico checkout"
             description="Get ready to ski!"
-            amount={dollarsToCents(subTotal)}
             orderId={orderId}
           />
           {/* TODO disable checkout button if cart empty */}
@@ -53,9 +55,26 @@ const ShoppingCart = () => {
           <ul>
             {items && items.length ? (
               <>
-                <li>Subtotal: ${subTotal}</li>
-                <li>Shipping: Free</li>
-                <li>Total: ${subTotal}</li>
+                <table className="border-separate border-spacing-2 border border-slate-400">
+                  <tbody>
+                    <tr>
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                        Subtotal:
+                      </td>
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                        ${subTotal}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Shipping:</td>
+                      <td>Free</td>
+                    </tr>
+                    <tr>
+                      <td>Total:</td>
+                      <td>${subTotal}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </>
             ) : (
               <>

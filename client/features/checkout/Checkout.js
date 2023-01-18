@@ -17,9 +17,13 @@ const errorPayment = (data) => {
 
 const onToken = (amount, description, orderId) => (token) =>
   axios
-    .put(`/api/orders/${orderId}`, {
-      orderPaid: true,
-    })
+    .put(
+      `/api/orders/${orderId}`,
+      {
+        orderPaid: true,
+      },
+      { headers: { authorization: window.localStorage.getItem('token') } }
+    )
     .then(successPayment)
     .catch(errorPayment);
 
