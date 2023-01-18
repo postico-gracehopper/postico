@@ -10,7 +10,6 @@ const TOKEN = 'token';
   THUNKS
 */
 export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
-  
   const token = window.localStorage.getItem(TOKEN);
   try {
     const res = await axios.get('/auth/me', {
@@ -23,18 +22,26 @@ export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
     }
     return res.data;
   } catch (err) {
-    if (err.response.data === "bad token") {
-      window.localStorage.removeItem(TOKEN)
-      thunkAPI.dispatch(me())
+    if (err.response.data === 'bad token') {
+      window.localStorage.removeItem(TOKEN);
+      thunkAPI.dispatch(me());
     }
   }
 });
 
 export const authenticate = createAsyncThunk(
   'auth/authenticate',
-  async ({ username, password, method }, thunkAPI) => {
+  async ({ username, password, email, method }, thunkAPI) => {
     try {
-      const res = await axios.post(`/auth/${method}`, { username, password });
+      if (method === 'Login') {
+        const res = await axios.post(`/auth/login`, { username, password });
+      } else {
+        const res = await axios.post(`/auth/signup`, {
+          username,
+          password,
+          email,
+        });
+      }
       window.localStorage.setItem(TOKEN, res.data.token);
       thunkAPI.dispatch(me());
     } catch (err) {
