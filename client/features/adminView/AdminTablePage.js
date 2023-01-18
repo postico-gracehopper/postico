@@ -4,6 +4,8 @@ import CRUDTable from './CRUDTable';
 
 const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc }) => {
   let [entries, setEntries] = useState([]);
+  let [renderTrigger, setRenderTrigger] = useState(Date.now())
+
   const authHeader = {
     headers: { authorization: window.localStorage.token || 0 },
   };
@@ -21,13 +23,14 @@ const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc }) => {
       .then(() => {
         alert('Successfully updated ' + changedData.length + ' ' + title);
       })
+      .then(setRenderTrigger("update!"))
       .catch((err) => console.log(err.message));
   }
-  function deleteEntry(user) {
+  function deleteEntry(entry) {
     axios
-      .delete(`${apiEndpoint}${user.id}`, authHeader)
+      .delete(`${apiEndpoint}/${entry.id}`, authHeader)
       .then(() => {
-        alert('Successfully deleted user ' + user.id);
+        alert(`Successfully deleted ${title} ${entry.id}`);
       })
       .catch((err) => console.log(err.message));
   }
@@ -50,6 +53,7 @@ const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc }) => {
       axios.get(apiEndpoint, authHeader).then((response) => {
         setEntries(narrowFieldsEntries(response.data));
       });
+
     }
   }, [entries]);
 
@@ -57,6 +61,7 @@ const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc }) => {
     <div>
       {entries && entries.length ? (
         <CRUDTable
+          key={renderTrigger}
           title={title}
           data={entries}
           handleSave={updateEntry}
