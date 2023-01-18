@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 /*
@@ -19,7 +19,7 @@ export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
     });
     if (!token && res.data.token) {
       window.localStorage.setItem(TOKEN, res.data.token);
-      thunkAPI.dispatch(me())
+      thunkAPI.dispatch(me());
     }
     return res.data;
   } catch (err) {
@@ -32,12 +32,14 @@ export const me = createAsyncThunk('auth/me', async (meState, thunkAPI) => {
 
 export const authenticate = createAsyncThunk(
   'auth/authenticate',
-  async ({ username, password, email, method }, thunkAPI) => {
+  async ({ username, password, method, email }, thunkAPI) => {
     try {
-      if (method === 'Login') {
-        const res = await axios.post(`/auth/login`, { username, password });
+      let res = '';
+      if (method === 'login') {
+        console.log('Enter login thunk');
+        res = await axios.post(`/auth/login`, { username, password });
       } else {
-        const res = await axios.post(`/auth/signup`, {
+        res = await axios.post(`/auth/signup`, {
           username,
           password,
           email,
@@ -69,7 +71,7 @@ export const authSlice = createSlice({
       window.localStorage.removeItem(TOKEN);
       state.me = {};
       state.error = null;
-      me() // call me automatically to get a guest token
+      me(); // call me automatically to get a guest token
     },
   },
   extraReducers: (builder) => {
