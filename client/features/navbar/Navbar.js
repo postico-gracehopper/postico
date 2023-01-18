@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../app/store';
+import CartIcon from './CartIcon';
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -11,6 +12,9 @@ const Navbar = () => {
     dispatch(logout());
     navigate('/login');
   };
+
+  const items = useSelector((state) => state.shoppingCart.orderItems);
+  const itemsInCart = String(items.length);
 
   return (
     <div>
@@ -23,37 +27,37 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
               {/* The navbar will show these links after you log in */}
-              <Link to="/home" className="hover:text-tahiti">
+              <Link to="/home" className="hover:text-tahiti mt-2">
                 Home
               </Link>
-              <Link to="/products" className="hover:text-tahiti">
+              <Link to="/products" className="hover:text-tahiti mt-2">
                 Shop
               </Link>
-              <Link to="/checkout" className="hover:text-tahiti">
-                Checkout
-              </Link>
-              <button
+              <span
                 type="button"
                 onClick={logoutAndRedirectHome}
-                className="hover:text-tahiti"
+                className="inline-block hover:text-tahiti mt-2"
               >
                 LOGOUT
-              </button>
+              </span>
+              <Link to="/checkout" className="hover:text-tahiti mt-0">
+                <CartIcon number={itemsInCart} />
+              </Link>
             </div>
           ) : (
             <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
               {/* The navbar will show these links before you log in */}
-              <Link to="/home" className="hover:text-tahiti">
+              <Link to="/home" className="hover:text-tahiti mt-2">
                 Home
               </Link>
-              <Link to="/products" className="hover:text-tahiti">
+              <Link to="/products" className="hover:text-tahiti mt-2">
                 Shop
-              </Link>
-              <Link to="/checkout" className="hover:text-tahiti">
-                Checkout
               </Link>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+              <Link to="/checkout" className="hover:text-tahiti mt-0">
+                <CartIcon number={itemsInCart} />
+              </Link>
             </div>
           )}
         </div>
