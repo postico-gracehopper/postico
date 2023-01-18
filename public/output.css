@@ -890,6 +890,10 @@ body {
   overscroll-behavior: none;
 }
 
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -1090,11 +1094,6 @@ body {
 
 .text-\[8px\] {
   font-size: 8px;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
 }
 
 .font-bold {
