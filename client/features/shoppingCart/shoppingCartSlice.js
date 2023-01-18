@@ -45,7 +45,14 @@ const initialState = {
 const shoppingCartSlice = createSlice({
   name: 'shoppingCart',
   initialState,
-  reducers: {},
+  reducers: {
+    emptyCart(state, action) {
+      console.log('EMPTY CART');
+      state.orderItems = {};
+      state.subTotal = 0;
+      state.cartId = -1;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAllUserItemsAsync.fulfilled, (state, action) => {
       console.log('ACTION-PAYLOAD | FETCH CART ', action.payload);
@@ -98,3 +105,5 @@ export const selectSubTotal = (state) => {
 export const selectCartId = (state) => {
   return state.cartId;
 };
+
+export const { emptyCart } = shoppingCartSlice.actions;
