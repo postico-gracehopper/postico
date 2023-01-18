@@ -28,13 +28,16 @@ const Products = () => {
 
   return (
     <div className="bg-ecru relative overflow-hidden">
-      <span className="flex bg-anguilla">
+      <span className="flex bg-anguilla justify-between content-center">
         <span className="m-4 whitespace-nowrap">
-          <span className="text-ecru text-xs italic" htmlFor="product-filter">
+          <span
+            className="text-ecru text-xs italic mx-2"
+            htmlFor="product-filter"
+          >
             Filter by:{' '}
           </span>
           <select
-            className="rounded-md font-plex w-auto text-xs text-stone"
+            className="rounded-md font-plex w-auto text-xs mx-1 text-stone"
             name="product-filter"
             id="product-filter"
             onChange={handleFilter}
@@ -44,11 +47,14 @@ const Products = () => {
             <option value="Apparel">Apparel</option>
             <option value="Skis">Skis</option>
           </select>
-          <span className="text-ecru text-xs italic" htmlFor="product-sort">
+          <span
+            className="text-ecru text-xs italic ml-4 mr-2"
+            htmlFor="product-sort"
+          >
             Sort products by:{' '}
           </span>
           <select
-            className="rounded-md font-plex w-auto text-xs text-stone"
+            className="rounded-md font-plex w-auto text-xs mx-1 text-stone"
             name="product-sort"
             id="product-sort"
             onChange={handleSort}
@@ -58,7 +64,7 @@ const Products = () => {
             <option value="Price: High to Low">Price: High to Low</option>
           </select>
         </span>
-        <span>
+        <span className="m-4 inline-block w-1/2">
           <SearchBar />
         </span>
       </span>

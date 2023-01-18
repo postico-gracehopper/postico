@@ -21,9 +21,8 @@ function SearchBar() {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <SearchIcon sx={{ marginRight: '10px' }} />
       <Input
-        className="font-plex text-tahiti tracking-widest italic"
         placeholder="Search products"
-        fullWidth={true}
+        fullWidth
         onChange={handleSearch}
         sx={{
           color: 'rgba(0, 0, 0, 0.8)',
