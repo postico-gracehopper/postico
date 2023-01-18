@@ -4,7 +4,7 @@ import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
 import Checkout from '../checkout/Checkout';
 import { Link } from 'react-router-dom';
-import { selectCartId } from './shoppingCartSlice';
+import selectCartId from './shoppingCartSlice';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -15,9 +15,11 @@ const ShoppingCart = () => {
   const items = useSelector((state) => state.shoppingCart.orderItems);
 
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
+  const orderId = useSelector((state) => state.shoppingCart.cartId);
 
   // const orderId = useSelector(selectCartId);
-  const orderId = 1;
+  console.log(orderId);
+  // const orderId = 1;
 
   const dollarsToCents = (amount) => {
     return parseInt(amount) * 100;
