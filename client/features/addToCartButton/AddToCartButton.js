@@ -24,7 +24,7 @@ const AddToCartButton = ({ product, quantity }) => {
         { headers: { authorization: window.localStorage.getItem('token') } }
       );
       dispatch(addToCartAsync({ userId, productId, quantity }));
-      //dispatch(fetchAllUserItemsAsync(userId));
+      dispatch(fetchAllUserItemsAsync(userId));
     } catch (err) {
       console.error('Failed to add-to-cart (POST /api/orders)', err);
       err.innerText = err.response
