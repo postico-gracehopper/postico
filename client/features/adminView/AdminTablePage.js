@@ -67,7 +67,7 @@ const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc, validation }) => 
 
   return (
     <div>
-      <h2 className="admin-view-subtitle">{title}</h2>
+      <h2 className={`admin-view-subtitle banner-${title}`}>{title}</h2>
       {entries && entries.length ? (
         <CRUDTable
           key={renderTrigger}
