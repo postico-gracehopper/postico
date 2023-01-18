@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
+import SearchBar from '../searchBar/searchBar';
 import {
   changeFilter,
   changeSortBy,
@@ -22,7 +23,6 @@ const Products = () => {
   };
 
   useEffect(() => {
-    console.log('HERE');
     dispatch(fetchProductsAsync());
   }, [dispatch]);
 
@@ -46,6 +46,7 @@ const Products = () => {
           <option value="Price: Low to High">Price: Low to High</option>
           <option value="Price: High to Low">Price: High to Low</option>
         </select>
+        <SearchBar />
       </span>
       <div className="grid grid-cols-3 gap-4 px-4 py-4 m-4 justify-center">
         {products.map((product) => {

@@ -45,6 +45,7 @@ const initialState = {
   products: [],
   filter: 'All',
   sortBy: '-',
+  searchBy: '',
 };
 
 const productsSlice = createSlice({
@@ -56,6 +57,9 @@ const productsSlice = createSlice({
     },
     changeSortBy(state, action) {
       state.sortBy = action.payload;
+    },
+    changeSearchBy(state, action) {
+      state.searchBy = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -71,10 +75,11 @@ const productsSlice = createSlice({
 export const selectProducts = (state) => state.products.products;
 export const selectFilter = (state) => state.products.filter;
 export const selectSortBy = (state) => state.products.sortBy;
+export const selectSearchBy = (state) => state.products.searchBy;
 
 export const sortedAndFilteredProducts = createSelector(
-  [selectProducts, selectFilter, selectSortBy],
-  (products, filter, sortBy) => {
+  [selectProducts, selectFilter, selectSortBy, selectSearchBy],
+  (products, filter, sortBy, searchBy) => {
     let productsArray = products;
 
     let filtered =
@@ -96,9 +101,21 @@ export const sortedAndFilteredProducts = createSelector(
       sorted = [...filtered].sort((a, b) => (a.price > b.price ? -1 : 0));
     }
 
+    if (searchBy.length > 0) {
+      return sorted.filter((product) => {
+        if (searchBy === '') {
+          return product;
+        } else if (
+          product.name.toLowerCase().includes(searchBy.toLowerCase())
+        ) {
+          return product;
+        }
+      });
+    }
     return sorted;
   }
 );
 
 export default productsSlice.reducer;
-export const { changeFilter, changeSortBy } = productsSlice.actions;
+export const { changeFilter, changeSortBy, changeSearchBy } =
+  productsSlice.actions;
