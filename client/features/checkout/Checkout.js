@@ -5,7 +5,7 @@ import StripeCheckout from 'react-stripe-checkout';
 
 const CURRENCY = 'USD';
 
-const successPayment = (data) => {
+const successPayment = () => {
   alert('Thank you! Your order has been successfully processed.');
   // const navigate = useNavigate();
   // navigate('/products');
@@ -15,12 +15,12 @@ const successPayment = (data) => {
 
 const errorPayment = (err) => {
   alert("We're sorry, an error occurred with your payment information.");
-  console.log(error.response.data);
+  console.log(err);
 };
 
 const onToken = (amount, description, orderId) => (token) => {
   try {
-    const { data } = axios.all([
+    axios.all([
       axios.put(
         `/api/orders/${orderId}`,
         {
@@ -39,10 +39,10 @@ const onToken = (amount, description, orderId) => (token) => {
         { headers: { authorization: window.localStorage.getItem('token') } }
       ),
     ]);
-    successPayment(data);
-    handleCheckoutSuccess();
-  } catch (error) {
-    errorPayment(error);
+    successPayment();
+    // handleCheckoutSuccess();
+  } catch (err) {
+    errorPayment(err);
   }
 };
 
