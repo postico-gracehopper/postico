@@ -14,6 +14,20 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
+    validate: {
+      isUnique: function (value, next) {
+        User.findOne({
+          where: { username: value },
+          attributes: ['id'],
+        }).then(function (user) {
+          if (user) {
+            next('Username');
+          } else {
+            next();
+          }
+        });
+      },
+    },
   },
   password: {
     type: Sequelize.STRING,
@@ -26,9 +40,21 @@ const User = db.define('user', {
   },
   email: {
     type: Sequelize.STRING,
-    // TODO require unique?
+    unique: true,
     validate: {
       isEmail: true,
+      isUnique: function (value, next) {
+        User.findOne({
+          where: { email: value },
+          attributes: ['id'],
+        }).then(function (user) {
+          if (user) {
+            next('Email');
+          } else {
+            next();
+          }
+        });
+      },
     },
   },
   addressLine1: {
@@ -41,20 +67,6 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   zipCode: {
-    type: Sequelize.INTEGER,
-  },
-  //TODO validate that it is 5-digits?
-  //TODO likely remove all payments because using stripe
-  creditCardNumber: {
-    type: Sequelize.STRING,
-  },
-  creditCardName: {
-    type: Sequelize.STRING,
-  },
-  creditCardExpiration: {
-    type: Sequelize.STRING,
-  },
-  creditCardCVV: {
     type: Sequelize.INTEGER,
   },
   adminRights: {
@@ -222,6 +234,31 @@ User.prototype.getOrderNumbers = async function () {
     attributes: ['id'],
   });
   return orders && orders.length ? orders.map((obj) => obj['id']) : [];
+};
+
+User.prototype.getOrderNumbers = async function () {
+  const orders = await Order.findAll({
+    where: { userId: this.id },
+    attributes: ['id'],
+  });
+  return orders && orders.length ? orders.map((obj) => obj['id']) : [];
+};
+
+User.prototype.getAllActiveOrderItemNums = async function () {
+  try {
+    const order = await Order.findOne({
+      where: { userId: this.id, orderPaid: false },
+      include: {
+        model: OrderItem,
+        attributes: ["id"]
+      },
+    });
+    return order && order.orderItems && order.orderItems.length ? 
+        order.orderItems.map(orderI => orderI["id"]) :
+        []
+  } catch(err){
+    console.log(err)
+  }
 };
 
 module.exports = User;

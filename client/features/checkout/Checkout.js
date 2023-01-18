@@ -1,43 +1,69 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 
-const stripePublishable =
-  'pk_test_51MP7w1FWXTILHlSV3vokErIg8Nam9egRpydJIBKI5Z6AKWYhERRFUdPZoDiivAwN2exAevWsqG6kuHAqRg4L5KAp00alD9lZt9';
-const PAYMENT_SERVER_URL = 'http://localhost:8080';
 const CURRENCY = 'USD';
 
-const successPayment = (data) => {
-  alert('Thank you! Payment was successfully processed');
+const successPayment = () => {
+  alert('Thank you! Your order has been successfully processed.');
+  // const navigate = useNavigate();
+  // navigate('/products');
+  // Alert as well?
+  // Email integration?
 };
 
-const errorPayment = (data) => {
+const errorPayment = (err) => {
   alert("We're sorry, an error occurred with your payment information.");
+  console.log(err);
 };
 
-const onToken = (amount, description) => (token) =>
-  axios
-    .put('http://localhost:8080', {
-      description,
-      source: token.id,
-      currency: CURRENCY,
-      amount: dollarsToCents(amount),
-    })
-    .then(successPayment)
-    .catch(errorPayment);
+const onToken = (amount, description, orderId) => (token) => {
+  try {
+    axios.all([
+      axios.put(
+        `/api/orders/${orderId}`,
+        {
+          orderPaid: true,
+        },
+        { headers: { authorization: window.localStorage.getItem('token') } }
+      ),
+      axios.post(
+        '/api/stripe/checkout',
+        {
+          description,
+          source: token.id,
+          currency: CURRENCY,
+          amount,
+        },
+        { headers: { authorization: window.localStorage.getItem('token') } }
+      ),
+    ]);
+    successPayment();
+    // handleCheckoutSuccess();
+  } catch (err) {
+    errorPayment(err);
+  }
+};
 
-const Checkout = ({ name, description, amount, handleCheckoutSuccess }) => {
+const Checkout = ({
+  name,
+  description,
+  amount,
+  orderId,
+  handleCheckoutSuccess,
+}) => {
   return (
     <div>
       <StripeCheckout
         name={name}
         description={description}
         amount={amount}
-        token={onToken(amount, description, handleCheckoutSuccess)}
+        token={onToken(amount, description, orderId, handleCheckoutSuccess)}
         currency={CURRENCY}
         billingAddress
         shippingAddress
-        stripeKey="pk_test_Tm68jOcpaletOdKFzp80ochj00YAnOJpLE"
+        stripeKey="pk_test_51MP7w1FWXTILHlSV3vokErIg8Nam9egRpydJIBKI5Z6AKWYhERRFUdPZoDiivAwN2exAevWsqG6kuHAqRg4L5KAp00alD9lZt9"
         label="Pay with 💳"
       />
     </div>

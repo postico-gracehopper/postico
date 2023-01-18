@@ -1,6 +1,7 @@
 const { models: { User }} = require('../db')
 
 const attachUserDataToReq = async (req, res, next) => {
+  
   try{ 
       const {authorization: token} = req.headers
       const user = await User.findByToken(token)
@@ -13,6 +14,7 @@ const attachUserDataToReq = async (req, res, next) => {
     next(err)
   }
 }
+
 
 function verifyInteger(req, res, next){
     try {
@@ -93,11 +95,32 @@ async function verifyOwnsOrderOrIsAdmin(req, res, next){
   }
 }
 
+async function verifyOwnsOrderItemOrIsAdmin(req, res, next){
+  if (req.user.adminRights) {
+    next()
+  } else {
+    try{
+      const { orderItemId } = req.body
+      const ownedOrderItemNums = await req.user.getAllActiveOrderItemNums() 
+      if (ownedOrderItemNums.includes(orderItemId)) {
+        next()
+      } else {
+        throw new Error("User does not own this order")
+      }
+    } catch(err){
+      console.log(err)
+      err.status = 401
+      err.message = "User does not own this order"
+    }
+  }
+}
+
 module.exports = { 
+    attachUserDataToReq,
     verifyInteger,
     verifyIsSpecificUserOrAdmin,
     verifyIsAdmin,
     verifyNotGuest,
-    attachUserDataToReq,
     verifyOwnsOrderOrIsAdmin,
+    verifyOwnsOrderItemOrIsAdmin,
 }

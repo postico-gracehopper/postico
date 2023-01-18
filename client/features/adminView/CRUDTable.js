@@ -36,7 +36,7 @@ const EditableCell = ({
     }
   }
 
-  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p className="td-index" style={{fontSize: "0.75rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
+  return id === "id" ? <a href={`${detailsEndpoint}/${value}`}><p className="td-index" style={{fontSize: "1.1rem", margin: "0px", padding: "0px", color: "blue"}}>{value}</p></a>  : 
       <input className={beenChanged ? "td-input-changed" : ""} value={value || ""} onChange={onChange} onBlur={onBlur} />
 }
 
@@ -200,7 +200,8 @@ function CRUDTable({data: ogData,
           handleDelete: handleDeleteAction,
           handletitle: titleText,
           handleCreate: handleCreateAction,
-          singlePageEndpoint: endpoint
+          singlePageEndpoint: endpoint,
+          triggerRender: triggeredTime
         }) {
   const columns = React.useMemo(() => Object.keys(ogData[0]).map(k => {
     return {Header: k[0].toUpperCase() + k.slice(1,), accessor: k}
@@ -234,29 +235,19 @@ function CRUDTable({data: ogData,
   }
 
 
-  // function tableActionsOnSave(ev){
-  //     handleSaveAction(changedData)
-  //     setOriginalData(data)
-  // }
 
-  // function tableActionsOnAddNew(ev){
-  //   return ""
-
-  // }
   // After data chagnes, we turn the flag back off
   // so that if data actually changes when we're not
   // editing it, the page is reset
   React.useEffect(() => {
     setSkipPageReset(true)
-    setData(ogData)
-  }, [ogData, originalData])
+  }, [ogData])
 
   // Let's add a data resetter/randomizer to help
   // illustrate that flow...
 
   return (
     <div className='interactive-table-container'>
-      <h2>{titleText}</h2>
       { addMode ?
       <AddForm columns={columns} handleCreate={handleCreateAction}/>
       :
