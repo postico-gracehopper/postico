@@ -26,10 +26,10 @@ const ShoppingCart = () => {
   };
 
   return (
-    <>
+    <div className="p-11">
       <div className="cartContent">
         <div className="itemsColumn">
-          <h3>Shopping Cart</h3>
+          <h3 className="text-3xl mt-8 tracking-wider">Shopping Cart</h3>
           <ul>
             {items && items.length ? (
               items.map((item) => (
@@ -56,7 +56,7 @@ const ShoppingCart = () => {
           </Link>
         </div>
         <div className="summaryColumn">
-          <h3>Summary</h3>
+          <h3 className="text-3xl mt-8 tracking-wider">Summary</h3>
           <ul>
             {items && items.length ? (
               <>
@@ -91,7 +91,7 @@ const ShoppingCart = () => {
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

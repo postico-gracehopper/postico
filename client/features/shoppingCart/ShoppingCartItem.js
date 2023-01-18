@@ -28,7 +28,9 @@ const ShoppingCartItem = ({ item }) => {
           <img src={image} />
         </div>
         <div className="cartInfoCol">
-          <h4>{name}</h4>
+          <h4 className="text-sm uppercase font-plex tracking-widest">
+            {name}
+          </h4>
           <h5>${totalItemPrice}</h5>
         </div>
         <div className="cartQuantityCol">
