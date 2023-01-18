@@ -49,7 +49,6 @@ const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc }) => {
     if (entries && !entries.length) {
       axios.get(apiEndpoint, authHeader).then((response) => {
         setEntries(narrowFieldsEntries(response.data));
-        console.log(response.data);
       });
     }
   }, [entries]);
