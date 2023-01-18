@@ -50,7 +50,8 @@ router.post('/', async (req, res, next) => {
     const { productId, quantity, userId } = req.body;
     // custom middleware
     if (!req.user.adminRights) {
-        if (Number(userId) !== Number(req.user.id)) throw new Error("User does not own the cart")
+      if (Number(userId) !== Number(req.user.id))
+        throw new Error('User does not own the cart');
     }
     await OrderItem.addToCart(userId, productId, quantity);
     res.status(201).send();
@@ -62,7 +63,6 @@ router.post('/', async (req, res, next) => {
 // change quantity
 router.put('/', verifyOwnsOrderItemOrIsAdmin, async (req, res, next) => {
   try {
-    // console.log('****** PUT ROUTE ENTER *******');
     const { orderItemId, num } = req.body;
     const data = await OrderItem.changeQuantity(orderItemId, num);
     const { orderItem, orderSubTotal } = data;
