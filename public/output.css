@@ -876,12 +876,12 @@ body {
   overscroll-behavior: none;
 }
 
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
 .rounded {
   border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .rounded-full {
@@ -911,14 +911,14 @@ body {
   background-color: rgb(245 244 240 / var(--tw-bg-opacity));
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
 .bg-pool {
   --tw-bg-opacity: 1;
   background-color: rgb(126 200 193 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .bg-stone {
@@ -1099,14 +1099,14 @@ body {
   color: rgb(64 181 195 / var(--tw-text-opacity));
 }
 
-.text-stone {
-  --tw-text-opacity: 1;
-  color: rgb(66 65 64 / var(--tw-text-opacity));
-}
-
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-stone {
+  --tw-text-opacity: 1;
+  color: rgb(66 65 64 / var(--tw-text-opacity));
 }
 
 .text-pool {
