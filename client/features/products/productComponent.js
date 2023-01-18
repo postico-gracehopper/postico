@@ -64,7 +64,7 @@ const Products = () => {
         </select>
         <SearchBar />
       </span>
-      <div className="grid grid-cols-3 gap-4 px-4 py-4 m-4 justify-center">
+      <div className="grid grid-cols-4 gap-4 px-4 py-4 m-4 justify-center">
         {products.map((product) => {
           return (
             <div key={product.id}>
