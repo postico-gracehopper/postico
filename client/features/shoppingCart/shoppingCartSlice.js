@@ -5,10 +5,21 @@ import axios from 'axios';
 export const fetchAllUserItemsAsync = createAsyncThunk(
   'GET AllUserItems',
   async (userId) => {
+    console.log('dispatch fetch all');
     const { data } = await axios.get(`/api/users/${userId}/cart`, {
       headers: { authorization: window.localStorage.getItem('token') },
     });
     return data;
+  }
+);
+
+export const addToCartAsync = createAsyncThunk(
+  'POST AddToCart',
+  async (productInfo, thunkAPI) => {
+    const { data } = await axios.post('/api/orders', productInfo, {
+      headers: { authorization: window.localStorage.getItem('token') },
+    });
+    thunkAPI.dispatch(fetchAllUserItemsAsync(productInfo.userId));
   }
 );
 
@@ -34,13 +45,29 @@ const initialState = {
 const shoppingCartSlice = createSlice({
   name: 'shoppingCart',
   initialState,
-  reducers: {},
+  reducers: {
+    emptyCart(state, action) {
+      console.log('EMPTY CART');
+      state.orderItems = {};
+      state.subTotal = 0;
+      state.cartId = -1;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAllUserItemsAsync.fulfilled, (state, action) => {
       console.log('ACTION-PAYLOAD | FETCH CART ', action.payload);
       state.orderItems = action.payload.orderItems;
       state.subTotal = +action.payload.total;
       state.cartId = action.payload.cartId;
+      state.orderItems = [...state.orderItems].map((item) => {
+        const price = +item.price;
+        item.totalItemPrice = price * item.quantity;
+        return item;
+      });
+      state.subTotal = [...state.orderItems].reduce((acc, item) => {
+        const num = +item.totalItemPrice;
+        return acc + num;
+      }, 0);
     });
     builder.addCase(ChangeQuantityAsync.fulfilled, (state, action) => {
       console.log('ACTION.PAYLOAD | QTY CHANGE ', action.payload);
@@ -78,3 +105,5 @@ export const selectSubTotal = (state) => {
 export const selectCartId = (state) => {
   return state.cartId;
 };
+
+export const { emptyCart } = shoppingCartSlice.actions;

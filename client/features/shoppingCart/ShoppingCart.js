@@ -4,6 +4,7 @@ import { selectMe } from '../auth/authSlice';
 import ShoppingCartItem from './ShoppingCartItem';
 import Checkout from '../checkout/Checkout';
 import { Link } from 'react-router-dom';
+import selectCartId from './shoppingCartSlice';
 
 const ShoppingCart = () => {
   const data = useSelector(selectMe);
@@ -14,6 +15,15 @@ const ShoppingCart = () => {
   const items = useSelector((state) => state.shoppingCart.orderItems);
 
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
+  const orderId = useSelector((state) => state.shoppingCart.cartId);
+
+  // const orderId = useSelector(selectCartId);
+  console.log(orderId);
+  // const orderId = 1;
+
+  const dollarsToCents = (amount) => {
+    return parseInt(amount) * 100;
+  };
 
   return (
     <>
@@ -31,7 +41,12 @@ const ShoppingCart = () => {
               <li>Cart empty!</li>
             )}
           </ul>
-          <Checkout amount={subTotal} />
+          <Checkout
+            amount={dollarsToCents(subTotal)}
+            name="Postico checkout"
+            description="Get ready to ski!"
+            orderId={orderId}
+          />
           {/* TODO disable checkout button if cart empty */}
           <Link to="/products">
             <button>Keep shopping</button>
@@ -42,9 +57,26 @@ const ShoppingCart = () => {
           <ul>
             {items && items.length ? (
               <>
-                <li>Subtotal: ${subTotal}</li>
-                <li>Shipping: Free</li>
-                <li>Total: ${subTotal}</li>
+                <table className="border-separate border-spacing-2 border border-slate-400">
+                  <tbody>
+                    <tr>
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                        Subtotal:
+                      </td>
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                        ${subTotal}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Shipping:</td>
+                      <td>Free</td>
+                    </tr>
+                    <tr>
+                      <td>Total:</td>
+                      <td>${subTotal}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </>
             ) : (
               <>

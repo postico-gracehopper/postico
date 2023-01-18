@@ -3,18 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../app/store';
 import CartIcon from './CartIcon';
+import { emptyCart } from '../shoppingCart/shoppingCartSlice';
 
 const Navbar = () => {
-  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const isGuest = useSelector((state) => !!state.auth.me.isGuest);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutAndRedirectHome = () => {
     dispatch(logout());
-    navigate('/login');
+    dispatch(emptyCart());
+    navigate('/home');
   };
 
   const items = useSelector((state) => state.shoppingCart.orderItems);
-  const itemsInCart = String(items.length);
+  const itemsInCart = items.length ? items.length : 0;
 
   return (
     <div>
@@ -24,7 +26,7 @@ const Navbar = () => {
           <div className="text-3xl font-bungee pl-1 pr-3 text-tahiti">
             Placeholder
           </div>
-          {isLoggedIn ? (
+          {!isGuest ? (
             <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
               {/* The navbar will show these links after you log in */}
               <Link to="/home" className="hover:text-tahiti mt-2">
@@ -53,8 +55,12 @@ const Navbar = () => {
               <Link to="/products" className="hover:text-tahiti mt-2">
                 Shop
               </Link>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/login" className="hover:text-tahiti mt-2">
+                Login
+              </Link>
+              <Link to="/signup" className="hover:text-tahiti mt-2">
+                Sign Up
+              </Link>
               <Link to="/checkout" className="hover:text-tahiti mt-0">
                 <CartIcon number={itemsInCart} />
               </Link>
