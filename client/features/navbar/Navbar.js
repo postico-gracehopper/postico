@@ -16,7 +16,9 @@ const Navbar = () => {
   };
 
   const items = useSelector((state) => state.shoppingCart.orderItems);
-  const itemsInCart = items.length ? items.length : 0;
+  const itemsInCart = items.length
+    ? items.reduce((acc, item) => (item.quantity > 0 ? acc + 1 : acc), 0)
+    : 0;
 
   return (
     <div>
