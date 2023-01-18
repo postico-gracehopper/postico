@@ -26,7 +26,7 @@ const AuthForm = ({ name, displayName }) => {
     // const username = evt.target.username.value;
     // const password = evt.target.password.value;
     // const email = evt.target.email.value;
-    if (displayName === 'login') {
+    if (displayName === 'Login') {
       if (username && password) {
         dispatch(authenticate({ username, password, method: formName }));
         setDisplayTooltip(false);

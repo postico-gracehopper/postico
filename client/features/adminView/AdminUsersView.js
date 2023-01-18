@@ -1,5 +1,6 @@
 import React from "react";
 import AdminTablePage from "./AdminTablePage"
+import { validateUserFields } from '../../validation/dataValidation';
 
 const AdminUsersView = () => {
     const title = "Users"
@@ -10,7 +11,8 @@ const AdminUsersView = () => {
                 title={title}
                 apiEndpoint={apiEndpoint}
                 fields={fields}
-                linkLoc={linkLoc} />
+                linkLoc={linkLoc}
+                validation={validateUserFields} />
             </div>
 }
 
