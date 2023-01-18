@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { authenticate } from '../../app/store';
 
 /**
@@ -23,23 +24,23 @@ const AuthForm = ({ name, displayName }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const formName = evt.target.name;
+    console.log('Formname: ', formName);
     // const username = evt.target.username.value;
     // const password = evt.target.password.value;
     // const email = evt.target.email.value;
-    if (displayName === 'login') {
+    if (formName === 'login') {
       if (username && password) {
         setDisplayTooltip(false);
         dispatch(authenticate({ username, password, method: formName }));
       } else {
         setInitialUsernameRender(false);
         setInitialPasswordRender(false);
-        setInitialEmailRender(false);
         setDisplayTooltip(true);
       }
     } else {
       if (username && password && email) {
         setDisplayTooltip(false);
-        dispatch(authenticate({ username, password, email, method: formName }));
+        dispatch(authenticate({ username, password, method: formName, email }));
       } else {
         setInitialUsernameRender(false);
         setInitialPasswordRender(false);

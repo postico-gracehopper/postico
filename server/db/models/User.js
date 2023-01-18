@@ -82,9 +82,9 @@ const User = db.define('user', {
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function (candidatePwd) {
+User.prototype.correctPassword = async function (candidatePwd) {
   //we need to compare the plain version to an encrypted version of the password
-  return bcrypt.compare(candidatePwd, this.password);
+  return await bcrypt.compare(candidatePwd, this.password);
 };
 
 User.prototype.generateToken = function () {
@@ -250,14 +250,14 @@ User.prototype.getAllActiveOrderItemNums = async function () {
       where: { userId: this.id, orderPaid: false },
       include: {
         model: OrderItem,
-        attributes: ["id"]
+        attributes: ['id'],
       },
     });
-    return order && order.orderItems && order.orderItems.length ? 
-        order.orderItems.map(orderI => orderI["id"]) :
-        []
-  } catch(err){
-    console.log(err)
+    return order && order.orderItems && order.orderItems.length
+      ? order.orderItems.map((orderI) => orderI['id'])
+      : [];
+  } catch (err) {
+    console.log(err);
   }
 };
 
