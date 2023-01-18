@@ -30,7 +30,11 @@ const AddToCartButton = ({ product, quantity }) => {
   };
 
   return (
-    <button type="submit" onClick={handleAddToCart}>
+    <button
+      type="submit"
+      onClick={handleAddToCart}
+      className="font-plex uppercase text-xs text-tahiti"
+    >
       Add to cart
     </button>
   );
