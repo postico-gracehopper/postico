@@ -111,7 +111,6 @@ router.put(
     try {
       const { id } = req.params;
       const updatedUser = req.body;
-      console.log(updatedUser)
       await User.update(updatedUser, { where: { id: id } });
       res.status(201).send();
     } catch (err) {
