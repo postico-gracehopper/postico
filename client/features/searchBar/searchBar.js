@@ -21,7 +21,7 @@ function SearchBar() {
       <SearchIcon sx={{ marginRight: '10px' }} />
       <Input
         className="font-plex text-tahiti"
-        htmlFor
+        htmlFor="Product Search"
         placeholder="Search Products"
         onChange={handleSearch}
         sx={{

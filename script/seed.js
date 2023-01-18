@@ -97,20 +97,27 @@ async function seed() {
     products.push(newProduct);
   }
 
-  // for (let i=0; i<NUM_USERS_AND_PRODUCTS*2; i++){
-  //   const u = Math.floor(Math.random()*NUM_USERS_AND_PRODUCTS)
-  //   const p = Math.floor(Math.random()*NUM_USERS_AND_PRODUCTS)
+  // //create a random number of dummy shopping carts
+  // for (let i = 0; i < NUM_USERS_AND_PRODUCTS * 2; i++) {
+  //   //create a random userId
+  //   const u = Math.floor(Math.random() * NUM_USERS_AND_PRODUCTS);
+  //   //create a random productId
+  //   const p = Math.floor(Math.random() * NUM_USERS_AND_PRODUCTS);
+
+  //   //create an order that is associated with the randomly generated userId
   //   const [order, created] = await Order.findOrCreate({
   //     where: {
   //       userId: u,
   //       orderPaid: false,
-  //     }
-  //   })
+  //     },
+  //   });
+
+  //   //if the order was created, now create an order item to populate the order
   //   if (created) {
   //     const orderItem = await OrderItem.create({
   //       quantity: 1,
   //       productId: p,
-  //       orderId: order.id
+  //       orderId: order.id,
   //     });
   //   } else {
   //     const [orderItem, createdOrderItem] = await OrderItem.findOrCreate({
@@ -124,8 +131,9 @@ async function seed() {
   //         productId: p, // associate the product
   //         quantity: 1, // set it's quantity
   //       },
-  //   })
-  // }}
+  //     });
+  //   }
+  // }
 
   // For each item in the arrays we've made, create a new instance in the database.
   users.forEach(async (user) => {
@@ -178,12 +186,9 @@ async function seed() {
     username: 'guest1',
   });
 
+  //const
   // Hardcode a single shopping cart and associate it with demo user.
-  // TODO: Troubleshoot use of magic methods for associated models (see console log below).
-  // const demoCart = ShoppingCart.create();
-  // console.log(
-  //   "ShoppingCart's methods are " + Object.keys(ShoppingCart.__proto__)
-  // );
+
   // demoCart.setUser(demoUser);
 
   // // Hardcode a single shopping cart item and associate it with demo cart we just made.
