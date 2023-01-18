@@ -28,8 +28,8 @@ const AuthForm = ({ name, displayName }) => {
     // const email = evt.target.email.value;
     if (displayName === 'login') {
       if (username && password) {
-        setDisplayTooltip(false);
         dispatch(authenticate({ username, password, method: formName }));
+        setDisplayTooltip(false);
       } else {
         setInitialUsernameRender(false);
         setInitialPasswordRender(false);
