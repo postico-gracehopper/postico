@@ -55,8 +55,12 @@ const Navbar = () => {
               <Link to="/products" className="hover:text-tahiti mt-2">
                 Shop
               </Link>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/login" className="hover:text-tahiti mt-2">
+                Login
+              </Link>
+              <Link to="/signup" className="hover:text-tahiti mt-2">
+                Sign Up
+              </Link>
               <Link to="/checkout" className="hover:text-tahiti mt-0">
                 <CartIcon number={itemsInCart} />
               </Link>
