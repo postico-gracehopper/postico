@@ -14,6 +14,7 @@ const attachUserDataToReq = async (req, res, next) => {
   }
 }
 
+
 function verifyInteger(req, res, next){
     try {
       const num = Number(req.params.id)
@@ -93,11 +94,31 @@ async function verifyOwnsOrderOrIsAdmin(req, res, next){
   }
 }
 
+async function verifyOwnsOrderItemOrIsAdmin(req, res, next){
+  if (req.user.adminRights) {
+    next()
+  } else {
+    try{
+      const { orderItemId } = req.body
+      const ownedOrderItemNums = await req.user.getAllActiveOrderItemNums() 
+      if (ownedOrderItemNums.includes(orderItemId)) {
+        next()
+      } else {
+        throw new Error("User does not own this order")
+      }
+    } catch(err){
+      err.status = 401
+      err.message = "User does not own this order"
+    }
+  }
+}
+
 module.exports = { 
+    attachUserDataToReq,
     verifyInteger,
     verifyIsSpecificUserOrAdmin,
     verifyIsAdmin,
     verifyNotGuest,
-    attachUserDataToReq,
     verifyOwnsOrderOrIsAdmin,
+    verifyOwnsOrderItemOrIsAdmin,
 }

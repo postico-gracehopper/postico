@@ -224,4 +224,25 @@ User.prototype.getOrderNumbers = async function () {
   return orders && orders.length ? orders.map((obj) => obj['id']) : [];
 };
 
+User.prototype.getOrderNumbers = async function () {
+  const orders = await Order.findAll({
+    where: { userId: this.id },
+    attributes: ['id'],
+  });
+  return orders && orders.length ? orders.map((obj) => obj['id']) : [];
+};
+
+User.prototype.getAllActiveOrderItemNumbers = async function () {
+  const order = await Order.findOne({
+    where: { userId: this.id, orderPaid: false },
+    include: {
+      model: OrderItem,
+      attributes: ["id"]
+    },
+  });
+  return order && order.orderItems && order.orderItems.length ? 
+      order.orderItems.map(orderI => orderI["id"]) :
+      []
+};
+
 module.exports = User;
