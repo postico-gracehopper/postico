@@ -880,6 +880,10 @@ body {
   border-collapse: collapse;
 }
 
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -918,10 +922,6 @@ body {
 
 .justify-between {
   justify-content: space-between;
-}
-
-.justify-evenly {
-  justify-content: space-evenly;
 }
 
 .gap-11 {
@@ -1139,10 +1139,6 @@ body {
   padding-right: 1.5rem;
 }
 
-.pt-8 {
-  padding-top: 2rem;
-}
-
 .pt-4 {
   padding-top: 1rem;
 }
@@ -1151,20 +1147,12 @@ body {
   padding-left: 2.5rem;
 }
 
-.pl-1 {
-  padding-left: 0.25rem;
-}
-
-.pr-3 {
-  padding-right: 0.75rem;
+.pr-8 {
+  padding-right: 2rem;
 }
 
 .pb-4 {
   padding-bottom: 1rem;
-}
-
-.pr-8 {
-  padding-right: 2rem;
 }
 
 .text-center {
@@ -1177,10 +1165,6 @@ body {
 
 .font-plex {
   font-family: IBM Plex Sans, sans-serif;
-}
-
-.font-bungee {
-  font-family: Bungee, sans-serif;
 }
 
 .text-xs {
@@ -1207,11 +1191,6 @@ body {
   line-height: 2rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-\[8px\] {
   font-size: 8px;
 }
@@ -1219,6 +1198,11 @@ body {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .font-bold {

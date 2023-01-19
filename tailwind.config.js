@@ -39,6 +39,10 @@ module.exports = {
         yeseva: ['Yeseva One', 'serif'],
         patrick: ['Patrick Hand SC', 'sans-serif'],
       },
+      animation: {
+        'spin-slow': 'spin 5s linear infinite',
+      },
     },
+    plugins: [],
   },
 };
