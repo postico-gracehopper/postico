@@ -1020,6 +1020,11 @@ body {
   border-color: rgb(66 65 64 / var(--tw-border-opacity));
 }
 
+.border-t-pebble {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(211 211 211 / var(--tw-border-opacity));
+}
+
 .bg-ecru {
   --tw-bg-opacity: 1;
   background-color: rgb(245 244 240 / var(--tw-bg-opacity));
@@ -1485,7 +1490,6 @@ form div {
 
 table {
   margin: 10px auto;
-  border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
   overflow: scroll;
@@ -1493,7 +1497,6 @@ table {
 
 tr,
 td {
-  border: 1px solid black;
   flex-shrink: 1 !important;
   min-width: auto !important;
   padding: 1px;
@@ -1547,7 +1550,6 @@ table.interactive-table {
   left: 85%;
   bottom: 5%;
   padding: 5px;
-  border: 1px black solid;
 }
 
 .interactive-table-container > button.addNew {
@@ -1557,7 +1559,6 @@ table.interactive-table {
   left: 65%;
   bottom: 5%;
   padding: 5px;
-  border: 1px black solid;
 }
 
 .td-input-changed {

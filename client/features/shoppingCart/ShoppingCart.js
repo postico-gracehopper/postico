@@ -25,7 +25,7 @@ const ShoppingCart = () => {
     <div className="p-11 bg-ecru">
       <div className="cartContent">
         <div className="itemsColumn">
-          <h3 className="text-3xl mt-8 tracking-wider">Shopping Cart</h3>
+          <h3 className="text-3xl mt-8 font-bitter">Shopping cart</h3>
           <hr className="h-px my-8 bg-pebble border-0"></hr>
           <ul>
             {items && items.length ? (
@@ -58,35 +58,39 @@ const ShoppingCart = () => {
           </div>
         </div>
         <div className="summaryColumn">
-          <h3 className="text-3xl mt-8 tracking-wider text-right">Summary</h3>
-          <hr className="h-px my-8 bg-pebble border-0"></hr>
+          <h3 className="text-3xl mt-8 font-bitter text-right">Summary</h3>
+          <hr className="h-px my-8 bg-pebble border-0 "></hr>
           <ul>
             {items && items.length ? (
               <>
                 <table>
                   <tbody className="border-collapse border-none">
                     <tr>
-                      <td className="px-6 py-4 text-plex uppercase tracking-widest border-none">
+                      <td className="px-6 py-4 font-plex uppercase">
                         Subtotal:
                       </td>
-                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
-                        ${subTotal}
+                      <td className="px-6 py-4 font-plex uppercase">
+                        $
+                        {subTotal.toLocaleString('en-US', {
+                          minimumFractionDigits: 2,
+                        })}
                       </td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                      <td className="px-6 py-4 font-plex uppercase">
                         Shipping:
                       </td>
-                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
-                        Free
-                      </td>
+                      <td className="px-6 py-4 font-plex uppercase">Free</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 font-2xl text-plex uppercase tracking-widest border-t-2">
+                      <td className="px-6 py-4 text-2xl font-plex font-bold uppercase border-t-2 border-t-pebble">
                         Total:
                       </td>
-                      <td className="px-6 py-4 font-2xl text-plex uppercase tracking-widest border-t-2">
-                        ${subTotal}
+                      <td className="px-6 py-4 text-2xl font-plex font-bold uppercase border-t-2 border-t-pebble">
+                        $
+                        {subTotal.toLocaleString('en-US', {
+                          minimumFractionDigits: 2,
+                        })}
                       </td>
                     </tr>
                   </tbody>

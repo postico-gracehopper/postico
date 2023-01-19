@@ -204,7 +204,6 @@ form div {
 
 table {
   margin: 10px auto;
-  border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
   overflow: scroll;
@@ -212,7 +211,6 @@ table {
 
 tr,
 td {
-  border: 1px solid black;
   flex-shrink: 1 !important;
   min-width: auto !important;
   padding: 1px;
@@ -263,7 +261,6 @@ table.interactive-table {
   left: 85%;
   bottom: 5%;
   padding: 5px;
-  border: 1px black solid;
 }
 
 .interactive-table-container > button.addNew {
@@ -273,7 +270,6 @@ table.interactive-table {
   left: 65%;
   bottom: 5%;
   padding: 5px;
-  border: 1px black solid;
 }
 
 .td-input-changed {
