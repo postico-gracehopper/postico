@@ -82,6 +82,13 @@ OrderItem.changeQuantity = async function (orderItemId, num) {
   const orderSubTotal = await Order.findByPk(orderItem.orderId);
   return { orderItem, orderSubTotal };
 };
+
+OrderItem.removeItemFromOrder = async function (orderItemId) {
+  const orderItem = await OrderItem.findByPk(orderItemId);
+  await orderItem.destroy();
+  return orderItem;
+};
+
 /**
  * hooks
  */
