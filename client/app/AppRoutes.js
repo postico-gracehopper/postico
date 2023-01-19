@@ -35,6 +35,7 @@ const AppRoutes = () => {
     <div>
       {isLoggedIn ? (
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/*" element={<FourOhFour />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<Products />} />
@@ -43,9 +44,11 @@ const AppRoutes = () => {
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<SingleUser />} />
+          <Route path="/login" element={<Home />} />
         </Routes>
       ) : (
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/*" element={<FourOhFour />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<Products />} />
