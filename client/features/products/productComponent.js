@@ -9,6 +9,7 @@ import {
   fetchProductsAsync,
 } from './productSlice';
 import GridProduct from './GridProduct';
+import AddToCartModal from '../addToCartModal/addToCartModal';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const Products = () => {
                 description={product.description}
                 price={product.price}
               />
-              <AddToCartButton product={product} quantity={1} />
+              <AddToCartModal product={product} quantity={1} />
             </div>
           );
         })}
