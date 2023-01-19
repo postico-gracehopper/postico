@@ -20,6 +20,7 @@ module.exports = {
       creamsoda: '#FFF5CB',
       white: '#FFFFFF',
       stone: '#424140',
+      pebble: '#D3D3D3',
       black: '000000',
       greener: '#0BDA51',
     },

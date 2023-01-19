@@ -26,10 +26,11 @@ const ShoppingCart = () => {
   };
 
   return (
-    <div className="p-11">
+    <div className="p-11 bg-ecru">
       <div className="cartContent">
         <div className="itemsColumn">
           <h3 className="text-3xl mt-8 tracking-wider">Shopping Cart</h3>
+          <hr className="h-px my-8 bg-pebble border-0"></hr>
           <ul>
             {items && items.length ? (
               items.map((item) => (
@@ -41,29 +42,35 @@ const ShoppingCart = () => {
               <li>Cart empty!</li>
             )}
           </ul>
-          {items && items.length ? (
-            <Checkout
-              amount={dollarsToCents(subTotal)}
-              name="Postico checkout"
-              description="Get ready to ski!"
-              orderId={orderId}
-            />
-          ) : (
-            <p>No checkout button for you :(</p>
-          )}
-          <Link to="/products">
-            <button>Keep shopping</button>
-          </Link>
+          <hr className="h-px my-8 bg-pebble border-0"></hr>
+          <div className="flex justify-between content-center">
+            <button className="inline-block px-8 py-2 bg-darkcru hover:bg-tahiti hover:text-white hover:scale-110 ease-in-out duration-200">
+              <Link to="/products">
+                <p>Keep shopping</p>
+              </Link>
+            </button>
+            {items && items.length ? (
+              <Checkout
+                amount={dollarsToCents(subTotal)}
+                name="Postico checkout"
+                description="Get ready to ski!"
+                orderId={orderId}
+              />
+            ) : (
+              <p>No checkout button for you :(</p>
+            )}
+          </div>
         </div>
         <div className="summaryColumn">
           <h3 className="text-3xl mt-8 tracking-wider text-right">Summary</h3>
+          <hr className="h-px my-8 bg-pebble border-0"></hr>
           <ul>
             {items && items.length ? (
               <>
-                <table className="border-separate border-spacing-2 border border-slate-400">
-                  <tbody>
+                <table>
+                  <tbody className="border-collapse border-none">
                     <tr>
-                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest border-none">
                         Subtotal:
                       </td>
                       <td className="px-6 py-4 text-plex uppercase tracking-widest">
@@ -71,12 +78,20 @@ const ShoppingCart = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td>Shipping:</td>
-                      <td>Free</td>
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                        Shipping:
+                      </td>
+                      <td className="px-6 py-4 text-plex uppercase tracking-widest">
+                        Free
+                      </td>
                     </tr>
                     <tr>
-                      <td>Total:</td>
-                      <td>${subTotal}</td>
+                      <td className="px-6 py-4 font-2xl text-plex uppercase tracking-widest border-t-2">
+                        Total:
+                      </td>
+                      <td className="px-6 py-4 font-2xl text-plex uppercase tracking-widest border-t-2">
+                        ${subTotal}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

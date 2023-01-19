@@ -383,7 +383,7 @@ nav.secondary-nav > .sec-nav-chosen {
 }
 
 .cartQuantityCol {
-  flex: 1;
+  max-width: 90px;
 }
 
 ul {
