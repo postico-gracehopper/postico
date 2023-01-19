@@ -5,7 +5,6 @@ import axios from 'axios';
 export const fetchAllUserItemsAsync = createAsyncThunk(
   'GET AllUserItems',
   async (userId) => {
-    console.log('dispatch fetch all');
     const { data } = await axios.get(`/api/users/${userId}/cart`, {
       headers: { authorization: window.localStorage.getItem('token') },
     });
@@ -26,7 +25,6 @@ export const addToCartAsync = createAsyncThunk(
 export const ChangeQuantityAsync = createAsyncThunk(
   'PUT order',
   async (inputs) => {
-    // console.log('ENTER THUNK');
     const { data } = await axios.put('/api/orders/', inputs, {
       headers: { authorization: window.localStorage.getItem('token') },
     });
@@ -47,7 +45,6 @@ const shoppingCartSlice = createSlice({
   initialState,
   reducers: {
     emptyCart(state, action) {
-      console.log('EMPTY CART');
       state.orderItems = {};
       state.subTotal = 0;
       state.cartId = -1;
@@ -55,7 +52,7 @@ const shoppingCartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAllUserItemsAsync.fulfilled, (state, action) => {
-      console.log('ACTION-PAYLOAD | FETCH CART ', action.payload);
+      // console.log('ACTION-PAYLOAD | FETCH CART ', action.payload);
       state.orderItems = action.payload.orderItems;
       state.subTotal = +action.payload.total;
       state.cartId = action.payload.cartId;
@@ -70,7 +67,7 @@ const shoppingCartSlice = createSlice({
       }, 0);
     });
     builder.addCase(ChangeQuantityAsync.fulfilled, (state, action) => {
-      console.log('ACTION.PAYLOAD | QTY CHANGE ', action.payload);
+      // console.log('ACTION.PAYLOAD | QTY CHANGE ', action.payload);
       const { orderItem, orderSubTotal } = action.payload;
       state.orderItems = [...state.orderItems].map((item) => {
         if (item.orderItemId === orderItem.id) {

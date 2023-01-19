@@ -17,10 +17,6 @@ const ShoppingCart = () => {
   const subTotal = useSelector((state) => state.shoppingCart.subTotal);
   const orderId = useSelector((state) => state.shoppingCart.cartId);
 
-  // const orderId = useSelector(selectCartId);
-  console.log(orderId);
-  // const orderId = 1;
-
   const dollarsToCents = (amount) => {
     return parseInt(amount) * 100;
   };
