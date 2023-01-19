@@ -48,6 +48,7 @@ const ShoppingCartItem = ({ item }) => {
             >
               <span className="m-auto text-2xl font-thin">−</span>
             </button>
+
             <p className="focus:outline-none text-center w-full bg-[#ebe9e1] font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center justify-center text-[#374151]  outline-none">
               {quantity}
             </p>
@@ -58,9 +59,9 @@ const ShoppingCartItem = ({ item }) => {
             >
               <span className="m-auto text-2xl font-thin">+</span>
             </button>
-          </nobr>
+          </div>
           <button type="submit" onClick={handleRemove}>
-            Remove item
+            <small>Remove item</small>
           </button>
         </div>
       </div>
@@ -69,23 +70,3 @@ const ShoppingCartItem = ({ item }) => {
 };
 
 export default ShoppingCartItem;
-
-{
-  /* <div className="cartQuantityCol">
-<p>Quantity: {quantity}</p>
-<
->
-  <button type="submit" onClick={handleIncrement}>
-    +
-  </button>
-  <span> / </span>
-  <button
-    type="submit"
-    onClick={handleDecrement}
-    disabled={quantity >= 0 ? false : true}
-  >
-    -
-  </button>
-</nobr>
-</div> */
-}
