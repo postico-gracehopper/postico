@@ -11,7 +11,7 @@ const AdminTablePage = ({ apiEndpoint, fields, title, linkLoc, validation }) => 
   };
   function createEntry(entryData) {
     axios
-      .post(apiEndpoint, validation ? validation(entryData) : entryData, authHeader)
+      .post(apiEndpoint, entryData, authHeader)
       .then(getReq)
       .then(() => {
         alert('Successfully created ' + title + ':' + JSON.stringify(entryData));

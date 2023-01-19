@@ -49,9 +49,13 @@ router.put('/', verifyIsAdmin, async (req, res, next) => {
     const changedUsers = req.body;
     if (Array.isArray(changedUsers)) {
       changedUsers.forEach(async (user) => {
+        delete user.username
+        delete user.email
         await User.update(user, { where: { id: user.id } });
       });
     } else {
+      delete changedUsers.username
+      delete changedUsers.email
       await User.update(changedUsers, { where: { id: changedUsers.id } });
     }
     res.status(201).send();
@@ -101,6 +105,8 @@ router.put(
     try {
       const { id } = req.params;
       const updatedUser = req.body;
+      delete updatedUser.username
+      delete updatedUser.email
       await User.update(updatedUser, { where: { id: id } });
       res.status(201).send();
     } catch (err) {
