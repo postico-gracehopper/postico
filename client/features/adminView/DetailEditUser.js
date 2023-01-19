@@ -17,10 +17,6 @@ const DetailEditUser = () => {
         'city',
         'zipCode',
         'adminRights',
-        'creditCardNumber',
-        'creditCardName',
-        'creditCardExpiration',
-        'creditCardCVV'
       ];
 
     useEffect(()=> {
@@ -68,6 +64,7 @@ const DetailEditUser = () => {
         : <p>Loading user data</p>}
         <button   onClick={handleSubmit}
                   className="bg-pool hover:bg-tahiti text-white font-bold py-2 px-8 rounded text-center uppercase tracking-widest"
+                  style={{marginLeft: "55%"}}
         >
         Save
         </button>

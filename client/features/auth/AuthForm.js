@@ -26,8 +26,8 @@ const AuthForm = ({ name, displayName }) => {
     const formName = evt.target.name;
     if (formName === 'login') {
       if (username && password) {
-        setDisplayTooltip(false);
         dispatch(authenticate({ username, password, method: formName }));
+        setDisplayTooltip(false);
       } else {
         setInitialUsernameRender(false);
         setInitialPasswordRender(false);
