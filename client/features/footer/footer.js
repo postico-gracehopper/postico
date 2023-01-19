@@ -11,21 +11,21 @@ const Footer = () => {
         <div className="grid lg:grid-cols-3 gap-11">
           <div className="mb-6 md:mb-0 col-span-2">
             <h5 className="font-xl mb-2 uppercase font-plex tracking-widest">
-              Tagline
+              Welcome to Yardsale
             </h5>
 
             <p className="mb-8 text-xs">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-              atque ea quis molestias. Fugiat pariatur maxime quis culpa
-              corporis vitae repudiandae aliquam voluptatem veniam, est atque
-              cumque eum delectus sint.
+              Whether you're a pro or a novice, we've got all the ski gear you
+              need to make your next ski trip a success...or a memorable
+              failure. Whatever happens, don't worry––it's probably not our
+              fault.
             </p>
           </div>
 
           <div className="flex items-center justify-center">
             {isAdmin ? (
               <a
-                className="font-xl mb-2 uppercase font-plex tracking-widest"
+                className="font-xl mb-2 uppercase font-plex tracking-widest text-center hover:text-tahiti hover:scale-110 ease-in-out duration-200"
                 href="/admin/"
               >
                 Admin dashboard
