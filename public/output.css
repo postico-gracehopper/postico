@@ -1179,8 +1179,8 @@ body {
   padding-right: 2rem;
 }
 
-.pb-4 {
-  padding-bottom: 1rem;
+.pt-2 {
+  padding-top: 0.5rem;
 }
 
 .text-center {
@@ -1282,9 +1282,9 @@ body {
   letter-spacing: 0.05em;
 }
 
-.text-tahiti {
+.text-anguilla {
   --tw-text-opacity: 1;
-  color: rgb(64 181 195 / var(--tw-text-opacity));
+  color: rgb(26 135 161 / var(--tw-text-opacity));
 }
 
 .text-white {

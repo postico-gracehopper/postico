@@ -50,8 +50,6 @@ const SingleProduct = () => {
                   </div>
                   <select
                     className="rounded-md font-plex text-xs p-1 mb-4 text-stone"
-                    name="product-filter"
-                    id="product-filter"
                     onChange={handleQuantity}
                   >
                     <option value="1">1</option>

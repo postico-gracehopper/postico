@@ -74,6 +74,7 @@ const Products = () => {
             <div key={product.id}>
               <GridProduct
                 key={product.id}
+                product={product}
                 id={product.id}
                 image={product.image}
                 name={product.name}

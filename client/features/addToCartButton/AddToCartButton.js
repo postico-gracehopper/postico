@@ -27,7 +27,7 @@ const AddToCartButton = ({ product, quantity }) => {
     <button
       type="submit"
       onClick={handleAddToCart}
-      className="font-plex uppercase text-xs text-tahiti"
+      className="font-plex uppercase text-xs text-anguilla  hover:text-tahiti hover:scale-110 ease-in-out duration-200"
     >
       Add to cart
     </button>
