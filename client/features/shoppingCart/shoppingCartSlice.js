@@ -32,6 +32,17 @@ export const ChangeQuantityAsync = createAsyncThunk(
   }
 );
 
+export const RemoveItemAsync = createAsyncThunk(
+  'DELETE OrderItem',
+  async (orderItemId) => {
+    const { data } = await axios.delete(`/api/orders/`, {
+      headers: { authorization: window.localStorage.getItem('token') },
+      data: { orderItemId: orderItemId },
+    });
+    return data;
+  }
+);
+
 const initialState = {
   orderItems: {},
   subTotal: 0,
@@ -81,6 +92,11 @@ const shoppingCartSlice = createSlice({
         const num = +item.totalItemPrice;
         return acc + num;
       }, 0);
+    });
+    builder.addCase(RemoveItemAsync.fulfilled, (state, action) => {
+      state.orderItems = [...state.orderItems].filter(
+        (item) => item.orderItemId !== action.payload.id
+      );
     });
   },
 });

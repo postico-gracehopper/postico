@@ -73,6 +73,16 @@ router.put('/:id', verifyInteger, verifyIsAdmin, async (req, res, next) => {
   }
 });
 
+router.delete('/', verifyOwnsOrderItemOrIsAdmin, async (req, res, next) => {
+  try {
+    const { orderItemId } = req.body;
+    const data = await OrderItem.removeItemFromOrder(orderItemId);
+    res.send(data);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete('/:id', verifyInteger, verifyIsAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChangeQuantityAsync } from './shoppingCartSlice';
+import { ChangeQuantityAsync, RemoveItemAsync } from './shoppingCartSlice';
 import { useDispatch } from 'react-redux';
 
 const ShoppingCartItem = ({ item }) => {
@@ -19,6 +19,11 @@ const ShoppingCartItem = ({ item }) => {
     if (quantity > 0) {
       dispatch(ChangeQuantityAsync({ orderItemId, num }));
     }
+  };
+
+  const handleRemove = (evt) => {
+    evt.preventDefault();
+    dispatch(RemoveItemAsync(orderItemId));
   };
 
   return (
@@ -53,7 +58,10 @@ const ShoppingCartItem = ({ item }) => {
             >
               <span className="m-auto text-2xl font-thin">+</span>
             </button>
-          </div>
+          </nobr>
+          <button type="submit" onClick={handleRemove}>
+            Remove item
+          </button>
         </div>
       </div>
     </>
@@ -65,7 +73,8 @@ export default ShoppingCartItem;
 {
   /* <div className="cartQuantityCol">
 <p>Quantity: {quantity}</p>
-<nobr>
+<
+>
   <button type="submit" onClick={handleIncrement}>
     +
   </button>
