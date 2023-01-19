@@ -48,9 +48,7 @@ const ShoppingCartItem = ({ item }) => {
             >
               <span className="m-auto text-2xl font-thin">−</span>
             </button>
-            <button type="submit" onClick={handleRemove}>
-              Remove item
-            </button>
+
             <p className="focus:outline-none text-center w-full bg-[#ebe9e1] font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center justify-center text-[#374151]  outline-none">
               {quantity}
             </p>
@@ -62,6 +60,9 @@ const ShoppingCartItem = ({ item }) => {
               <span className="m-auto text-2xl font-thin">+</span>
             </button>
           </div>
+          <button type="submit" onClick={handleRemove}>
+            <small>Remove item</small>
+          </button>
         </div>
       </div>
     </>
