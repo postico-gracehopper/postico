@@ -204,7 +204,6 @@ form div {
 
 table {
   margin: 10px auto;
-  border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
   overflow: scroll;
@@ -212,7 +211,6 @@ table {
 
 tr,
 td {
-  border: 1px solid black;
   flex-shrink: 1 !important;
   min-width: auto !important;
   padding: 1px;
@@ -228,7 +226,6 @@ td {
   padding-bottom: 40px;
   padding-top: 40px;
   margin-bottom: -10px;
-  
 }
 
 .banner-Products {
@@ -264,7 +261,6 @@ table.interactive-table {
   left: 85%;
   bottom: 5%;
   padding: 5px;
-  border: 1px black solid;
 }
 
 .interactive-table-container > button.addNew {
@@ -274,7 +270,6 @@ table.interactive-table {
   left: 65%;
   bottom: 5%;
   padding: 5px;
-  border: 1px black solid;
 }
 
 .td-input-changed {
@@ -339,7 +334,7 @@ nav.secondary-nav > .sec-nav-chosen {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border: solid 1px black;
+  border: none;
   margin: 1rem;
   padding: 1rem;
 }
@@ -364,7 +359,7 @@ nav.secondary-nav > .sec-nav-chosen {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border: solid 1px black;
+  border: none;
   margin: 1rem;
   padding: 1rem;
 }
@@ -384,7 +379,7 @@ nav.secondary-nav > .sec-nav-chosen {
 }
 
 .cartQuantityCol {
-  flex: 1;
+  max-width: 90px;
 }
 
 ul {

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../app/store';
-import CartIcon from './CartIcon';
 import { emptyCart } from '../shoppingCart/shoppingCartSlice';
+import CartIcon from './CartIcon';
 
 const Navbar = () => {
   const isGuest = useSelector((state) => !!state.auth.me.isGuest);
@@ -22,14 +22,15 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="relative container mx-auto px-8 bg-[#f5f4f0]">
+      <nav className="relative container mx-auto bg-[#f5f4f0]">
         {/* Flex container */}
-        <div className="flex items-center justify-evenly">
-          <div className="text-3xl font-bungee pl-1 pr-3 text-tahiti">
-            Placeholder
-          </div>
+        <div className="flex items-center justify-between">
+          <img
+            src="https://media2.giphy.com/media/OYFDJPlGVs0l95DJQy/giphy.gif?cid=790b76112d2f993760dec2f2e69a749bb903f14f33ea7d0e&rid=giphy.gif&ct=g"
+            width="200"
+          />
           {!isGuest ? (
-            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
+            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest pr-8">
               {/* The navbar will show these links after you log in */}
               <Link to="/home" className="hover:text-tahiti mt-2">
                 Home
@@ -49,7 +50,7 @@ const Navbar = () => {
               </Link>
             </div>
           ) : (
-            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
+            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest pr-8">
               {/* The navbar will show these links before you log in */}
               <Link to="/home" className="hover:text-tahiti mt-2">
                 Home
