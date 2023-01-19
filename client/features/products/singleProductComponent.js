@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   fetchSingleProductAsync,
@@ -9,17 +9,22 @@ import { useParams } from 'react-router-dom';
 import AddToCartButton from '../addToCartButton/AddToCartButton';
 
 const SingleProduct = () => {
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const product = useSelector(selectSingleProduct);
   const { id } = useParams();
-  const quantity = useSelector((state) => state.singleProduct.quantity);
 
   useEffect(() => {
     dispatch(fetchSingleProductAsync(id));
   }, [id]);
 
   const handleQuantity = (evt) => {
-    dispatch(changeQuantity(evt.target.value));
+    console.log('evt.target: ', evt.target.value);
+    console.log('evt.target: ', typeof evt.target.value);
+    const num = +evt.target.value;
+    console.log('num: ', num);
+    console.log('num: ', typeof num);
+    setQuantity(num);
   };
 
   return (
