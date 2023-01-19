@@ -50,7 +50,7 @@ const Navbar = () => {
               </Link>
             </div>
           ) : (
-            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest">
+            <div className="hidden md:flex space-x-6 text-sm uppercase font-plex tracking-widest pr-8">
               {/* The navbar will show these links before you log in */}
               <Link to="/home" className="hover:text-tahiti mt-2">
                 Home
