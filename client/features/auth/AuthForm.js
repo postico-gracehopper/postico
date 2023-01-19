@@ -59,7 +59,7 @@ const AuthForm = ({ name, displayName }) => {
       <form onSubmit={handleSubmit} name={name} className="block">
         <div className="block">
           <div className="block">
-            {displayName === 'Login' ? (
+            {/* {displayName === 'Login' ? (
               <h1 className="font-plex mb-6 font-xl text-center uppercase tracking-widest block">
                 Login
               </h1>
@@ -67,7 +67,7 @@ const AuthForm = ({ name, displayName }) => {
               <h1 className="font-plex mb-6 font-xl text-center uppercase tracking-widest block">
                 Create an account
               </h1>
-            )}
+            )} */}
             <div className="border-tahiti p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg block">
               <div className="mb-4 block">
                 <label
@@ -115,7 +115,7 @@ const AuthForm = ({ name, displayName }) => {
                 <div className="block">
                   <label
                     htmlFor="email"
-                    className="font-bold uppercase text-grey-darker mb-2 block"
+                    className="font-bold uppercase text-grey-darker w-full mt-2 mb-2 block"
                   >
                     Email
                   </label>
@@ -150,6 +150,16 @@ const AuthForm = ({ name, displayName }) => {
                     Don't have an account?{' '}
                     <a href="/signup" className="text-pool hover:text-tahiti">
                       Create one here.
+                    </a>
+                  </p>
+                )}
+              </div>
+              <div className="block">
+                {displayName === 'Sign Up' && (
+                  <p className="italic font-xs">
+                    Already have an account?{' '}
+                    <a href="/login" className="text-pool hover:text-tahiti">
+                      Log in here.
                     </a>
                   </p>
                 )}

@@ -9,6 +9,7 @@ import {
   fetchProductsAsync,
 } from './productSlice';
 import GridProduct from './GridProduct';
+import AddToCartModal from '../addToCartModal/addToCartModal';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -27,42 +28,46 @@ const Products = () => {
   }, [dispatch]);
 
   return (
-    <div className="bg-ecru">
-      <span className="flex">
-        <label
-          className="font-plex text-stone text-base"
-          htmlFor="product-filter"
-        >
-          Filter Products By:{' '}
-        </label>
-        <select
-          className="rounded-md font-plex w-auto text-sm text-slate-600"
-          name="product-filter"
-          id="product-filter"
-          onChange={handleFilter}
-        >
-          <option value="All">All</option>
-          <option value="Boots">Boots</option>
-          <option value="Apparel">Apparel</option>
-          <option value="Skis">Skis</option>
-        </select>
-        <label
-          className="font-plex text-slate-600 text-base"
-          htmlFor="product-sort"
-        >
-          Sort Products by:{' '}
-        </label>
-        <select
-          className="font-plex w-auto text-sm text-slate-600"
-          name="product-sort"
-          id="product-sort"
-          onChange={handleSort}
-        >
-          <option value="-">-</option>
-          <option value="Price: Low to High">Price: Low to High</option>
-          <option value="Price: High to Low">Price: High to Low</option>
-        </select>
-        <SearchBar />
+    <div className="bg-ecru relative overflow-hidden">
+      <span className="flex bg-anguilla justify-between content-center">
+        <span className="m-4 whitespace-nowrap">
+          <span
+            className="text-ecru text-xs italic mx-2"
+            htmlFor="product-filter"
+          >
+            Filter by:{' '}
+          </span>
+          <select
+            className="rounded-md font-plex w-auto text-xs mx-1 text-stone"
+            name="product-filter"
+            id="product-filter"
+            onChange={handleFilter}
+          >
+            <option value="All">All</option>
+            <option value="Boots">Boots</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Skis">Skis</option>
+          </select>
+          <span
+            className="text-ecru text-xs italic ml-4 mr-2"
+            htmlFor="product-sort"
+          >
+            Sort products by:{' '}
+          </span>
+          <select
+            className="rounded-md font-plex w-auto text-xs mx-1 text-stone"
+            name="product-sort"
+            id="product-sort"
+            onChange={handleSort}
+          >
+            <option value="-">-</option>
+            <option value="Price: Low to High">Price: Low to High</option>
+            <option value="Price: High to Low">Price: High to Low</option>
+          </select>
+        </span>
+        <span className="m-4 inline-block w-1/2">
+          <SearchBar />
+        </span>
       </span>
       <div className="grid grid-cols-4 gap-4 px-4 py-4 m-4 justify-center">
         {products.map((product) => {
@@ -70,13 +75,14 @@ const Products = () => {
             <div key={product.id}>
               <GridProduct
                 key={product.id}
+                product={product}
                 id={product.id}
                 image={product.image}
                 name={product.name}
                 description={product.description}
                 price={product.price}
               />
-              <AddToCartButton product={product} quantity={1} />
+              <AddToCartModal product={product} quantity={1} />
             </div>
           );
         })}
