@@ -736,6 +736,11 @@ body {
   margin-right: 0.25rem;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -1099,6 +1104,10 @@ body {
   padding: 0px;
 }
 
+.p-1 {
+  padding: 0.25rem;
+}
+
 .p-11 {
   padding: 2.75rem;
 }
@@ -1300,6 +1309,11 @@ body {
 
 .text-black {
   color: 000000;
+}
+
+.text-pebble {
+  --tw-text-opacity: 1;
+  color: rgb(211 211 211 / var(--tw-text-opacity));
 }
 
 .text-\[\#4b5563\] {
