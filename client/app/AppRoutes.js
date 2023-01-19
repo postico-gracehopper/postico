@@ -11,6 +11,7 @@ import Users from '../features/users/userComponent';
 import SingleUser from '../features/users/singleUserComponent';
 import AdminRouter from '../features/adminView/AdminRouter';
 import { fetchAllUserItemsAsync } from '../features/shoppingCart/shoppingCartSlice';
+import FourOhFour from '../features/errors/404';
 
 /**
  * COMPONENT
@@ -45,10 +46,7 @@ const AppRoutes = () => {
         </Routes>
       ) : (
         <Routes>
-          {/* <Route
-            path="/*"
-            element={<AuthForm name="login" displayName="Login" />}
-          /> */}
+          <Route path="/*" element={<FourOhFour />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route

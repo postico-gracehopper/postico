@@ -17,13 +17,13 @@ const Home = (props) => {
       />
       {!isGuest ? (
         <div className="absolute bottom-16 right-2 w-1/2 transform skew-y-3 bg-tahiti">
-          <div className="text-4xl text-center font-plex text-ecru font-bold transform -skew-y-6">
+          <div className="text-4xl text-center font-plex text-[#000000] font-bold">
             Welcome back, <i>{username}</i>
           </div>
         </div>
       ) : (
         <div className="absolute bottom-16 right-2 w-1/2 transform skew-y-3 bg-tahiti">
-          <div className="text-4xl text-center font-plex text-ecru font-bold transform -skew-y-6">
+          <div className="text-4xl text-center font-plex text-[#000000] font-bold">
             Where ACLs go to tear.
           </div>
         </div>

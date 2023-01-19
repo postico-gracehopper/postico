@@ -663,14 +663,6 @@ body {
   position: relative;
 }
 
-.top-0 {
-  top: 0px;
-}
-
-.left-0 {
-  left: 0px;
-}
-
 .bottom-16 {
   bottom: 4rem;
 }
@@ -685,6 +677,10 @@ body {
 
 .right-0 {
   right: 0px;
+}
+
+.top-0 {
+  top: 0px;
 }
 
 .col-span-1 {
@@ -750,6 +746,10 @@ body {
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .mt-auto {
@@ -886,11 +886,6 @@ body {
 
 .skew-y-3 {
   --tw-skew-y: 3deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-skew-y-6 {
-  --tw-skew-y: -6deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1035,6 +1030,11 @@ body {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-anguilla {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 135 161 / var(--tw-bg-opacity));
+}
+
 .bg-stone {
   --tw-bg-opacity: 1;
   background-color: rgb(66 65 64 / var(--tw-bg-opacity));
@@ -1043,11 +1043,6 @@ body {
 .bg-tahiti {
   --tw-bg-opacity: 1;
   background-color: rgb(64 181 195 / var(--tw-bg-opacity));
-}
-
-.bg-anguilla {
-  --tw-bg-opacity: 1;
-  background-color: rgb(26 135 161 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#f5f4f0\] {
@@ -1068,14 +1063,6 @@ body {
 .bg-\[\#ebe9e1\] {
   --tw-bg-opacity: 1;
   background-color: rgb(235 233 225 / var(--tw-bg-opacity));
-}
-
-.bg-gradient-to-b {
-  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
-}
-
-.to-stone {
-  --tw-gradient-to: #424140;
 }
 
 .bg-fixed {
@@ -1129,6 +1116,11 @@ body {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .px-12 {
@@ -1189,6 +1181,10 @@ body {
   font-family: IBM Plex Sans, sans-serif;
 }
 
+.font-bitter {
+  font-family: Bitter, serif;
+}
+
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -1199,13 +1195,18 @@ body {
   line-height: 1.25rem;
 }
 
-.text-\[10px\] {
-  font-size: 10px;
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
 }
 
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-\[10px\] {
+  font-size: 10px;
 }
 
 .text-2xl {
@@ -1290,6 +1291,11 @@ body {
 .text-ecru {
   --tw-text-opacity: 1;
   color: rgb(245 244 240 / var(--tw-text-opacity));
+}
+
+.text-\[\#000000\] {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .text-black {
